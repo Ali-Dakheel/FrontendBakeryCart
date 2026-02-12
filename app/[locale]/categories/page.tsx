@@ -1,12 +1,14 @@
 "use client";
 
 import { useCategories } from "@/lib/hooks/useCategories";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { ChevronRight, Package } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useTranslations } from "next-intl";
 
 export default function CategoriesPage() {
   const { data: categories, isLoading } = useCategories();
+  const t = useTranslations();
 
   // Get only parent categories (no parent_id)
   const parentCategories = categories?.filter((cat) => !cat.parent) || [];
@@ -34,10 +36,10 @@ export default function CategoriesPage() {
         <div className="container mx-auto px-4 py-12 md:py-16">
           <div className="text-center space-y-4">
             <h1 className="font-display text-4xl md:text-5xl font-bold text-navy">
-              Browse by Category
+              {t('categories.pageTitle')}
             </h1>
             <p className="text-navy/70 max-w-2xl mx-auto text-base md:text-lg">
-              Discover our wide selection of artisan baked goods, from buttery croissants to wholesome breads
+              {t('categories.pageSubtitle')}
             </p>
           </div>
         </div>
@@ -64,7 +66,7 @@ export default function CategoriesPage() {
                 <div className="w-16 h-16 rounded-full bg-gradient-to-br from-sky/10 to-sky-dark/10 flex items-center justify-center text-4xl group-hover:scale-110 transition-transform">
                   {category.icon || "📦"}
                 </div>
-                <ChevronRight className="w-6 h-6 text-sky opacity-0 group-hover:opacity-100 transition-opacity" />
+                <ChevronRight className="w-6 h-6 text-sky opacity-0 group-hover:opacity-100 transition-opacity rtl:rotate-180" />
               </div>
 
               {/* Content */}
@@ -80,12 +82,12 @@ export default function CategoriesPage() {
                 {hasChildren && (
                   <span className="flex items-center gap-1">
                     <Package className="w-3 h-3" />
-                    Subcategories available
+                    {t('categories.subcategoriesAvailable')}
                   </span>
                 )}
                 {productCount > 0 && (
                   <span className="font-medium">
-                    {productCount} {productCount === 1 ? "product" : "products"}
+                    {productCount} {productCount === 1 ? t('categories.product') : t('categories.products')}
                   </span>
                 )}
               </div>
@@ -104,10 +106,10 @@ export default function CategoriesPage() {
             <Package className="w-12 h-12 text-sky" />
           </div>
           <h2 className="font-display text-2xl font-bold text-navy mb-2">
-            No categories found
+            {t('categories.noCategories')}
           </h2>
           <p className="text-navy/60">
-            Check back soon as we add more categories!
+            {t('categories.checkBackSoon')}
           </p>
         </div>
         )}

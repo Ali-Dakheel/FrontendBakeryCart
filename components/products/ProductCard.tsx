@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ShoppingCart, ShoppingBag } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -14,7 +15,7 @@ import { useUIStore } from "@/lib/stores/ui-store";
 import { getProduct } from "@/lib/api/products";
 import type { Product } from "@/lib/types";
 import { getValidImageUrl } from "@/lib/utils/image";
-import { getPricingUnit } from "@/lib/utils/pricing";
+import { getPricingUnitKey } from "@/lib/utils/pricing";
 
 interface ProductCardProps {
   product: Product;
@@ -22,6 +23,7 @@ interface ProductCardProps {
 }
 
 function ProductCardComponent({ product, index = 0 }: ProductCardProps) {
+  const t = useTranslations();
   const addToCart = useAddToCart();
   const { openCart } = useUIStore();
   const queryClient = useQueryClient();
@@ -107,11 +109,11 @@ function ProductCardComponent({ product, index = 0 }: ProductCardProps) {
               <div className="absolute top-3 left-3 flex flex-col gap-2">
                 {product.is_featured && (
                   <Badge className="bg-sky text-white shadow-sm font-handwritten text-base">
-                    Featured
+                    {t('products.featured')}
                   </Badge>
                 )}
                 {!product.is_available && (
-                  <Badge variant="destructive">Out of Stock</Badge>
+                  <Badge variant="destructive">{t('products.outOfStock')}</Badge>
                 )}
               </div>
             </div>
@@ -134,11 +136,11 @@ function ProductCardComponent({ product, index = 0 }: ProductCardProps) {
                   <PriceDisplay
                     amount={displayPrice}
                     className="text-xl md:text-2xl font-bold text-sky"
-                    unit={getPricingUnit(product.name || "Unknown Product")}
+                    unit={t(getPricingUnitKey(product.name || "Unknown Product"))}
                   />
                   {product.has_variants && product.variants && product.variants.length > 0 && (
                     <span className="text-xs text-navy/60 font-medium">
-                      {product.variants.length} option{product.variants.length > 1 ? 's' : ''}
+                      {product.variants.length} {product.variants.length === 1 ? t('products.option') : t('products.options')}
                     </span>
                   )}
                 </div>
@@ -147,16 +149,17 @@ function ProductCardComponent({ product, index = 0 }: ProductCardProps) {
                   size="sm"
                   onClick={handleAddToCart}
                   disabled={!product.is_available || addToCart.isPending}
+                  className="rtl:flex-row-reverse"
                 >
                   {addToCart.isPending ? (
                     <>
-                      <div className="h-4 w-4 mr-1 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                      Adding...
+                      <div className="h-4 w-4 mr-1 rtl:ml-1 rtl:mr-0 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      {t('products.adding')}
                     </>
                   ) : (
                     <>
-                      <ShoppingCart className="h-4 w-4 mr-1" />
-                      Add
+                      <ShoppingCart className="h-4 w-4 mr-1 rtl:ml-1 rtl:mr-0" />
+                      {t('products.add')}
                     </>
                   )}
                 </Button>

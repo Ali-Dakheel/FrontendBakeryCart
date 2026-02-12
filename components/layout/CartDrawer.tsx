@@ -11,14 +11,17 @@ import { Minus, Plus, Trash2, ShoppingBag } from "lucide-react";
 import { VAT_RATE } from "@/lib/utils/constants";
 import { calculateVAT, calculateTotalWithVAT } from "@/lib/utils/formatters";
 import { getValidImageUrl } from "@/lib/utils/image";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import Image from "next/image";
+import { useTranslations, useLocale } from "next-intl";
 
 export function CartDrawer() {
   const { isCartOpen, closeCart } = useUIStore();
   const { data: cart, isLoading } = useCart();
   const updateCartItem = useUpdateCartItem();
   const removeFromCart = useRemoveFromCart();
+  const t = useTranslations();
+  const locale = useLocale();
 
   const cartItems = cart?.items || [];
   const { subtotal, vat, total } = usePriceCalculation(cartItems);
@@ -36,21 +39,24 @@ export function CartDrawer() {
 
   return (
     <Sheet open={isCartOpen} onOpenChange={closeCart}>
-      <SheetContent className="w-full sm:max-w-lg bg-cream flex flex-col">
+      <SheetContent
+        side={locale === 'ar' ? 'left' : 'right'}
+        className="w-full sm:max-w-lg bg-cream flex flex-col"
+      >
         <SheetHeader>
-          <SheetTitle className="font-display text-2xl text-navy">Shopping Cart</SheetTitle>
+          <SheetTitle className="font-display text-2xl text-navy">{t('cart.title')}</SheetTitle>
         </SheetHeader>
 
         {isLoading ? (
           <div className="flex-1 flex items-center justify-center">
-            <p className="text-navy/60">Loading cart...</p>
+            <p className="text-navy/60">{t('cart.loadingCart')}</p>
           </div>
         ) : cartItems.length === 0 ? (
           <div className="flex-1 flex flex-col items-center justify-center space-y-4">
             <ShoppingBag className="h-16 w-16 text-navy/20" />
-            <p className="text-navy/60">Your cart is empty</p>
+            <p className="text-navy/60">{t('cart.empty')}</p>
             <Button onClick={closeCart} asChild>
-              <Link href="/products">Shop Products</Link>
+              <Link href="/products">{t('cart.shopProducts')}</Link>
             </Button>
           </div>
         ) : (
@@ -135,29 +141,29 @@ export function CartDrawer() {
             <div className="border-t pt-4 space-y-4">
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between text-navy/70">
-                  <span>Subtotal</span>
+                  <span>{t('common.subtotal')}</span>
                   <PriceDisplay amount={subtotal} className="text-sm font-normal" />
                 </div>
                 <div className="flex justify-between text-navy/70">
-                  <span>VAT (10%)</span>
+                  <span>{t('common.tax')} (10%)</span>
                   <PriceDisplay amount={vat} className="text-sm font-normal" />
                 </div>
                 <Separator />
                 <div className="flex justify-between font-semibold text-navy text-base">
-                  <span>Total</span>
+                  <span>{t('common.total')}</span>
                   <PriceDisplay amount={total} className="text-xl" />
                 </div>
               </div>
 
               <Button asChild className="w-full bg-navy hover:bg-navy-light" size="lg">
-                <Link href="/checkout">Proceed to Checkout</Link>
+                <Link href="/checkout">{t('cart.checkout')}</Link>
               </Button>
               <Button
                 variant="outline"
                 className="w-full"
                 asChild
               >
-                <Link href="/cart">View Full Cart</Link>
+                <Link href="/cart">{t('cart.viewFullCart')}</Link>
               </Button>
             </div>
           </>

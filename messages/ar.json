@@ -1,4 +1,15 @@
 {
+  "brand": {
+    "name": "إيزي بيك",
+    "tagline": "مخبز حرفي"
+  },
+  "businessHours": {
+    "openTime": "6:00 صباحاً",
+    "closeTime": "2:00 ظهراً",
+    "workingDays": "السبت - الخميس",
+    "closedDay": "الجمعة"
+  },
+  "location": "سار-المقابة، مجمع 509، البحرين",
   "nav": {
     "home": "الرئيسية",
     "products": "المنتجات",
@@ -11,7 +22,9 @@
     "register": "إنشاء حساب",
     "logout": "تسجيل الخروج",
     "profile": "الملف الشخصي",
-    "addresses": "العناوين"
+    "addresses": "العناوين",
+    "account": "الحساب",
+    "menu": "القائمة"
   },
   "common": {
     "search": "بحث",
@@ -25,12 +38,287 @@
     "add": "إضافة",
     "viewAll": "عرض الكل",
     "learnMore": "اعرف المزيد",
-    "continueAsGuest": "متابعة كزائر"
+    "continueAsGuest": "متابعة كزائر",
+    "shoppingCart": "سلة التسوق",
+    "userMenu": "قائمة المستخدم",
+    "welcome": "مرحباً",
+    "seeMore": "شاهد المزيد",
+    "price": "السعر",
+    "quantity": "الكمية",
+    "total": "المجموع",
+    "subtotal": "المجموع الفرعي",
+    "tax": "الضريبة",
+    "shipping": "الشحن",
+    "discount": "الخصم",
+    "grandTotal": "المجموع الإجمالي",
+    "continue": "متابعة",
+    "back": "رجوع",
+    "submit": "إرسال",
+    "confirm": "تأكيد",
+    "yes": "نعم",
+    "no": "لا",
+    "close": "إغلاق",
+    "refresh": "تحديث",
+    "or": "أو",
+    "and": "و",
+    "currency": "د.ب"
+  },
+  "home": {
+    "hero": {
+      "title": "مخبز فرنسي",
+      "titleAccent": "حرفي",
+      "subtitle": "من أفراننا إلى طاولتك. كرواسون طازج، باجيت، وخبز ساوردو مصنوع بشغف في قلب البحرين.",
+      "cta": "تسوق الآن"
+    },
+    "featured": {
+      "title": "المنتجات المميزة",
+      "subtitle": "اكتشف منتجاتنا المفضلة من الخبز والمعجنات الحرفية، مخبوزة طازجة كل صباح",
+      "viewAll": "عرض جميع المنتجات",
+      "noProducts": "لا توجد منتجات مميزة متاحة في الوقت الحالي."
+    },
+    "quickInfo": {
+      "artisanQuality": "جودة حرفية",
+      "location": "سار، البحرين"
+    },
+    "aboutSection": {
+      "description": "نحن مخبز فرنسي متخصص في تقديم الخبز والمعجنات الحرفية الأصيلة إلى البحرين. كل منتج مصنوع بتقنيات تقليدية وأجود المكونات."
+    }
+  },
+  "about": {
+    "title": "من نحن - إيزي بيك",
+    "subtitle": "نقدم تجربة الخبز الفرنسي الحرفي الأصيل إلى البحرين",
+    "storyTitle": "قصتنا",
+    "storyParagraph1": "إيزي بيك (فرانس فاكتوري) هو مخبز فرنسي متخصص في تقديم الخبز والمعجنات الحرفية الأصيلة إلى البحرين. كل منتج مصنوع بتقنيات تقليدية وأجود المكونات.",
+    "storyParagraph2": "من الكرواسون المقرمش إلى الباجيت الطازج وخبز الساوردو اللذيذ، نحن نحترم تقاليد الخبز الفرنسية العريقة بينما نخدم مجتمعنا المحلي.",
+    "valuesTitle": "ما نؤمن به",
+    "values": {
+      "artisanQuality": {
+        "title": "جودة حرفية",
+        "description": "مصنوع يدوياً بعناية باستخدام تقنيات فرنسية تقليدية"
+      },
+      "passion": {
+        "title": "شغف بالخبز",
+        "description": "كل رغيف مخبوز بحب وتفاني"
+      },
+      "ingredients": {
+        "title": "أجود المكونات",
+        "description": "فقط مكونات عالية الجودة تدخل أفراننا"
+      },
+      "community": {
+        "title": "المجتمع أولاً",
+        "description": "نخدم البحرين بفخر والتزام"
+      }
+    },
+    "visitUs": "زرنا",
+    "locationLabel": "الموقع",
+    "hoursLabel": "الساعات",
+    "closed": "مغلق"
+  },
+  "contact": {
+    "title": "تواصل معنا",
+    "subtitle": "هل لديك أسئلة حول منتجاتنا أو طلبات الجملة؟ نود أن نسمع منك.",
+    "locationLabel": "الموقع",
+    "hoursLabel": "ساعات العمل",
+    "socialLabel": "وسائل التواصل الاجتماعي",
+    "wholesaleTitle": "طلبات الجملة",
+    "wholesaleDescription": "إيزي بيك متخصص في طلبات الجملة للمطاعم والمقاهي والفنادق. تواصل معنا عبر إنستغرام لمناقشة متطلبات طلبك بالجملة وخيارات التوصيل.",
+    "messageOnInstagram": "راسلنا على إنستغرام",
+    "closed": "مغلق"
+  },
+  "categories": {
+    "pageTitle": "تصفح حسب الفئة",
+    "pageSubtitle": "اكتشف مجموعتنا الواسعة من المخبوزات الحرفية، من الكرواسون الزبدي إلى الخبز الصحي",
+    "subcategoriesAvailable": "فئات فرعية متاحة",
+    "product": "منتج",
+    "products": "منتجات",
+    "noCategories": "لم يتم العثور على فئات",
+    "checkBackSoon": "تحقق مرة أخرى قريباً حيث نضيف المزيد من الفئات!"
+  },
+  "products": {
+    "title": "المنتجات",
+    "allProducts": "جميع المنتجات",
+    "featured": "مميز",
+    "popular": "المنتجات الشائعة",
+    "new": "منتجات جديدة",
+    "add": "إضافة",
+    "addToCart": "أضف إلى السلة",
+    "outOfStock": "غير متوفر",
+    "inStock": "متوفر",
+    "viewDetails": "عرض التفاصيل",
+    "selectVariant": "اختر نوع",
+    "noProducts": "لم يتم العثور على منتجات",
+    "filters": "التصفية",
+    "sortBy": "ترتيب حسب",
+    "priceRange": "نطاق السعر",
+    "category": "الفئة",
+    "availability": "التوفر",
+    "perBox": "للعلبة",
+    "perKg": "للكيلو",
+    "perPiece": "للقطعة",
+    "option": "خيار",
+    "options": "خيارات",
+    "ourProducts": "منتجاتنا",
+    "subtitle": "خبز ومعجنات حرفية، مخبوزة طازجة يومياً بتقنيات تقليدية",
+    "showing": "عرض",
+    "of": "من",
+    "productsCount": "منتج",
+    "searchPlaceholder": "ابحث عن الكرواسون، السوردو، المعجنات...",
+    "allCategories": "جميع الفئات",
+    "allPrices": "جميع الأسعار",
+    "allAvailability": "جميع المنتجات",
+    "underOne": "أقل من 1 دينار",
+    "oneToThree": "1 - 3 دينار",
+    "threeToFive": "3 - 5 دينار",
+    "fivePlus": "5+ دينار",
+    "sortFeatured": "مميز",
+    "sortNewest": "الأحدث أولاً",
+    "sortOldest": "الأقدم أولاً",
+    "sortPriceLow": "السعر: من الأقل للأعلى",
+    "sortPriceHigh": "السعر: من الأعلى للأقل",
+    "sortPopular": "الأكثر شعبية",
+    "clearFilters": "مسح",
+    "noMatchingProducts": "لا توجد منتجات تطابق الفلاتر. حاول تعديل معايير البحث.",
+    "freshDaily": "طازج يومياً",
+    "freshDailyDesc": "مخبوز طازج كل صباح",
+    "openHours": "ساعات العمل",
+    "description": "الوصف",
+    "backToProducts": "رجوع",
+    "onlyLeft": "فقط",
+    "leftInStock": "متبقي",
+    "adding": "جاري الإضافة...",
+    "perPack": "للعبوة",
+    "productNotFound": "المنتج غير موجود"
+  },
+  "cart": {
+    "title": "سلة التسوق",
+    "empty": "سلة التسوق فارغة",
+    "continueShopping": "متابعة التسوق",
+    "checkout": "إتمام الطلب",
+    "remove": "إزالة",
+    "updateQuantity": "تحديث الكمية",
+    "itemAdded": "تمت إضافة المنتج إلى السلة",
+    "itemRemoved": "تمت إزالة المنتج من السلة",
+    "itemUpdated": "تم تحديث السلة",
+    "shopProducts": "تسوق المنتجات",
+    "viewFullCart": "عرض السلة كاملة",
+    "loadingCart": "جاري تحميل السلة..."
+  },
+  "checkout": {
+    "title": "إتمام الطلب",
+    "shippingAddress": "عنوان الشحن",
+    "billingAddress": "عنوان الفاتورة",
+    "paymentMethod": "طريقة الدفع",
+    "orderSummary": "ملخص الطلب",
+    "placeOrder": "تأكيد الطلب",
+    "processing": "جاري المعالجة...",
+    "success": "تم تأكيد الطلب بنجاح!",
+    "selectAddress": "اختر عنوان",
+    "addNewAddress": "إضافة عنوان جديد",
+    "deliveryNotes": "ملاحظات التوصيل"
+  },
+  "auth": {
+    "welcomeBack": "مرحباً بعودتك",
+    "loginSubtitle": "سجل الدخول إلى حسابك في إيزي بيك",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "forgotPassword": "نسيت كلمة المرور؟",
+    "signingIn": "جاري تسجيل الدخول...",
+    "signIn": "تسجيل الدخول",
+    "noAccount": "ليس لديك حساب؟",
+    "createAccount": "إنشاء حساب",
+    "continueAsGuest": "المتابعة كزائر",
+    "backToHome": "العودة للرئيسية",
+    "joinEasyBake": "انضم إلى إيزي بيك",
+    "registerSubtitle": "أنشئ حسابك وابدأ التسوق",
+    "fullName": "الاسم الكامل",
+    "phone": "رقم الهاتف (اختياري)",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "creatingAccount": "جاري إنشاء الحساب...",
+    "haveAccount": "لديك حساب بالفعل؟",
+    "termsAgreement": "بإنشاء حساب، فإنك توافق على",
+    "terms": "شروط الخدمة",
+    "privacy": "سياسة الخصوصية",
+    "login": {
+      "title": "تسجيل الدخول",
+      "subtitle": "مرحباً بعودتك",
+      "email": "البريد الإلكتروني",
+      "password": "كلمة المرور",
+      "rememberMe": "تذكرني",
+      "forgotPassword": "نسيت كلمة المرور؟",
+      "submit": "تسجيل الدخول",
+      "noAccount": "ليس لديك حساب؟",
+      "signUp": "إنشاء حساب",
+      "success": "تم تسجيل الدخول بنجاح",
+      "error": "بيانات الدخول غير صحيحة"
+    },
+    "register": {
+      "title": "إنشاء حساب",
+      "subtitle": "انضم إلى إيزي بيك",
+      "name": "الاسم الكامل",
+      "email": "البريد الإلكتروني",
+      "password": "كلمة المرور",
+      "confirmPassword": "تأكيد كلمة المرور",
+      "submit": "إنشاء حساب",
+      "hasAccount": "لديك حساب بالفعل؟",
+      "signIn": "تسجيل الدخول",
+      "success": "تم إنشاء الحساب بنجاح",
+      "error": "فشل إنشاء الحساب"
+    }
+  },
+  "validation": {
+    "emailRequired": "البريد الإلكتروني مطلوب",
+    "emailInvalid": "يرجى إدخال بريد إلكتروني صحيح",
+    "passwordRequired": "كلمة المرور مطلوبة",
+    "passwordMin": "يجب أن تكون كلمة المرور {min} أحرف على الأقل",
+    "passwordMinLogin": "يجب أن تكون كلمة المرور 6 أحرف على الأقل",
+    "passwordMinRegister": "يجب أن تكون كلمة المرور 8 أحرف على الأقل",
+    "nameRequired": "الاسم مطلوب",
+    "nameMin": "يجب أن يكون الاسم حرفين على الأقل",
+    "passwordConfirmRequired": "يرجى تأكيد كلمة المرور",
+    "passwordsNoMatch": "كلمات المرور غير متطابقة"
+  },
+  "profile": {
+    "title": "ملفي الشخصي",
+    "personalInfo": "المعلومات الشخصية",
+    "updateProfile": "تحديث الملف الشخصي",
+    "changePassword": "تغيير كلمة المرور",
+    "currentPassword": "كلمة المرور الحالية",
+    "newPassword": "كلمة المرور الجديدة",
+    "confirmNewPassword": "تأكيد كلمة المرور الجديدة"
+  },
+  "addresses": {
+    "title": "عناويني",
+    "addAddress": "إضافة عنوان",
+    "editAddress": "تعديل العنوان",
+    "deleteAddress": "حذف العنوان",
+    "setDefault": "تعيين كافتراضي",
+    "default": "افتراضي",
+    "street": "عنوان الشارع",
+    "city": "المدينة",
+    "state": "المنطقة",
+    "country": "الدولة",
+    "postalCode": "الرمز البريدي",
+    "phoneNumber": "رقم الهاتف"
+  },
+  "orders": {
+    "title": "طلباتي",
+    "orderNumber": "رقم الطلب",
+    "orderDate": "تاريخ الطلب",
+    "status": "الحالة",
+    "viewOrder": "عرض الطلب",
+    "trackOrder": "تتبع الطلب",
+    "noOrders": "لا توجد طلبات بعد",
+    "orderDetails": "تفاصيل الطلب",
+    "cancelOrder": "إلغاء الطلب",
+    "reorder": "إعادة الطلب"
   },
   "footer": {
     "businessHours": "ساعات العمل",
     "location": "الموقع",
     "quickLinks": "روابط سريعة",
-    "allRightsReserved": "جميع الحقوق محفوظة"
+    "allRightsReserved": "جميع الحقوق محفوظة",
+    "description": "مخبز فرنسي حرفي يقدم لك أفضل الكرواسون والباجيت وخبز الساوردو في البحرين.",
+    "logoAlt": "شعار إيزي بيك",
+    "closed": "مغلق"
   }
 }

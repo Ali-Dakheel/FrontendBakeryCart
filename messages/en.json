@@ -1,4 +1,15 @@
 {
+  "brand": {
+    "name": "Easy Bake",
+    "tagline": "Artisan Bakery"
+  },
+  "businessHours": {
+    "openTime": "6:00 AM",
+    "closeTime": "2:00 PM",
+    "workingDays": "Saturday - Thursday",
+    "closedDay": "Friday"
+  },
+  "location": "SAAR-Maqabah, Block 509, Bahrain",
   "nav": {
     "home": "Home",
     "products": "Products",
@@ -11,7 +22,9 @@
     "register": "Register",
     "logout": "Logout",
     "profile": "Profile",
-    "addresses": "Addresses"
+    "addresses": "Addresses",
+    "account": "Account",
+    "menu": "Menu"
   },
   "common": {
     "search": "Search",
@@ -25,12 +38,287 @@
     "add": "Add",
     "viewAll": "View All",
     "learnMore": "Learn More",
-    "continueAsGuest": "Continue as Guest"
+    "continueAsGuest": "Continue as Guest",
+    "shoppingCart": "Shopping cart",
+    "userMenu": "User menu",
+    "welcome": "Welcome",
+    "seeMore": "See More",
+    "price": "Price",
+    "quantity": "Quantity",
+    "total": "Total",
+    "subtotal": "Subtotal",
+    "tax": "Tax",
+    "shipping": "Shipping",
+    "discount": "Discount",
+    "grandTotal": "Grand Total",
+    "continue": "Continue",
+    "back": "Back",
+    "submit": "Submit",
+    "confirm": "Confirm",
+    "yes": "Yes",
+    "no": "No",
+    "close": "Close",
+    "refresh": "Refresh",
+    "or": "or",
+    "and": "and",
+    "currency": "BHD"
+  },
+  "home": {
+    "hero": {
+      "title": "Artisan French",
+      "titleAccent": "Bakery",
+      "subtitle": "From our ovens to your table. Fresh croissants, baguettes, and sourdough crafted with passion in the heart of Bahrain.",
+      "cta": "Shop Now"
+    },
+    "featured": {
+      "title": "Featured Products",
+      "subtitle": "Discover our most loved artisan breads and pastries, baked fresh every morning",
+      "viewAll": "View All Products",
+      "noProducts": "No featured products available at the moment."
+    },
+    "quickInfo": {
+      "artisanQuality": "Artisan Quality",
+      "location": "SAAR, Bahrain"
+    },
+    "aboutSection": {
+      "description": "We are a wholesale French bakery dedicated to bringing authentic artisan bread and pastries to Bahrain. Every product is crafted with traditional techniques and the finest ingredients."
+    }
+  },
+  "about": {
+    "title": "About Easy Bake",
+    "subtitle": "Bringing authentic French artisan baking to Bahrain",
+    "storyTitle": "Our Story",
+    "storyParagraph1": "Easy Bake (France Factory) is a wholesale French bakery dedicated to bringing authentic artisan bread and pastries to Bahrain. Every product is crafted with traditional techniques and the finest ingredients.",
+    "storyParagraph2": "From flaky croissants to crusty baguettes and tangy sourdough, we honor centuries-old French baking traditions while serving our local community.",
+    "valuesTitle": "What We Stand For",
+    "values": {
+      "artisanQuality": {
+        "title": "Artisan Quality",
+        "description": "Handcrafted with care using traditional French techniques"
+      },
+      "passion": {
+        "title": "Passion for Baking",
+        "description": "Every loaf is baked with love and dedication"
+      },
+      "ingredients": {
+        "title": "Finest Ingredients",
+        "description": "Only premium, quality ingredients make it into our ovens"
+      },
+      "community": {
+        "title": "Community First",
+        "description": "Serving Bahrain with pride and commitment"
+      }
+    },
+    "visitUs": "Visit Us",
+    "locationLabel": "Location",
+    "hoursLabel": "Hours",
+    "closed": "Closed"
+  },
+  "contact": {
+    "title": "Get in Touch",
+    "subtitle": "Have questions about our products or wholesale orders? We'd love to hear from you.",
+    "locationLabel": "Location",
+    "hoursLabel": "Business Hours",
+    "socialLabel": "Social Media",
+    "wholesaleTitle": "Wholesale Orders",
+    "wholesaleDescription": "Easy Bake specializes in wholesale orders for restaurants, cafes, and hotels. Contact us through Instagram to discuss your bulk order requirements and delivery options.",
+    "messageOnInstagram": "Message Us on Instagram",
+    "closed": "Closed"
+  },
+  "categories": {
+    "pageTitle": "Browse by Category",
+    "pageSubtitle": "Discover our wide selection of artisan baked goods, from buttery croissants to wholesome breads",
+    "subcategoriesAvailable": "Subcategories available",
+    "product": "product",
+    "products": "products",
+    "noCategories": "No categories found",
+    "checkBackSoon": "Check back soon as we add more categories!"
+  },
+  "products": {
+    "title": "Products",
+    "allProducts": "All Products",
+    "featured": "Featured",
+    "popular": "Popular Products",
+    "new": "New Products",
+    "add": "Add",
+    "addToCart": "Add to Cart",
+    "outOfStock": "Out of Stock",
+    "inStock": "In Stock",
+    "viewDetails": "View Details",
+    "selectVariant": "Select Variant",
+    "noProducts": "No products found",
+    "filters": "Filters",
+    "sortBy": "Sort By",
+    "priceRange": "Price Range",
+    "category": "Category",
+    "availability": "Availability",
+    "perBox": "per box",
+    "perKg": "per kg",
+    "perPiece": "per piece",
+    "option": "option",
+    "options": "options",
+    "ourProducts": "Our Products",
+    "subtitle": "Artisan breads and pastries, baked fresh daily with traditional techniques",
+    "showing": "Showing",
+    "of": "of",
+    "productsCount": "products",
+    "searchPlaceholder": "Search for croissants, sourdough, pastries...",
+    "allCategories": "All Categories",
+    "allPrices": "All Prices",
+    "allAvailability": "All Products",
+    "underOne": "Under 1 BHD",
+    "oneToThree": "1 - 3 BHD",
+    "threeToFive": "3 - 5 BHD",
+    "fivePlus": "5+ BHD",
+    "sortFeatured": "Featured",
+    "sortNewest": "Newest First",
+    "sortOldest": "Oldest First",
+    "sortPriceLow": "Price: Low to High",
+    "sortPriceHigh": "Price: High to Low",
+    "sortPopular": "Most Popular",
+    "clearFilters": "Clear",
+    "noMatchingProducts": "No products match your filters. Try adjusting your search criteria.",
+    "freshDaily": "Fresh Daily",
+    "freshDailyDesc": "Baked fresh every morning",
+    "openHours": "Open Hours",
+    "description": "Description",
+    "backToProducts": "Back",
+    "onlyLeft": "Only",
+    "leftInStock": "left in stock",
+    "adding": "Adding...",
+    "perPack": "per pack",
+    "productNotFound": "Product Not Found"
+  },
+  "cart": {
+    "title": "Shopping Cart",
+    "empty": "Your cart is empty",
+    "continueShopping": "Continue Shopping",
+    "checkout": "Proceed to Checkout",
+    "remove": "Remove",
+    "updateQuantity": "Update Quantity",
+    "itemAdded": "Item added to cart",
+    "itemRemoved": "Item removed from cart",
+    "itemUpdated": "Cart updated",
+    "shopProducts": "Shop Products",
+    "viewFullCart": "View Full Cart",
+    "loadingCart": "Loading cart..."
+  },
+  "checkout": {
+    "title": "Checkout",
+    "shippingAddress": "Shipping Address",
+    "billingAddress": "Billing Address",
+    "paymentMethod": "Payment Method",
+    "orderSummary": "Order Summary",
+    "placeOrder": "Place Order",
+    "processing": "Processing...",
+    "success": "Order placed successfully!",
+    "selectAddress": "Select Address",
+    "addNewAddress": "Add New Address",
+    "deliveryNotes": "Delivery Notes"
+  },
+  "auth": {
+    "welcomeBack": "Welcome Back",
+    "loginSubtitle": "Sign in to your Easy Bake account",
+    "email": "Email Address",
+    "password": "Password",
+    "forgotPassword": "Forgot password?",
+    "signingIn": "Signing in...",
+    "signIn": "Sign In",
+    "noAccount": "Don't have an account?",
+    "createAccount": "Create Account",
+    "continueAsGuest": "Continue as Guest",
+    "backToHome": "Back to Home",
+    "joinEasyBake": "Join Easy Bake",
+    "registerSubtitle": "Create your account and start shopping",
+    "fullName": "Full Name",
+    "phone": "Phone Number (Optional)",
+    "confirmPassword": "Confirm Password",
+    "creatingAccount": "Creating account...",
+    "haveAccount": "Already have an account?",
+    "termsAgreement": "By creating an account, you agree to our",
+    "terms": "Terms of Service",
+    "privacy": "Privacy Policy",
+    "login": {
+      "title": "Login",
+      "subtitle": "Welcome back",
+      "email": "Email",
+      "password": "Password",
+      "rememberMe": "Remember me",
+      "forgotPassword": "Forgot password?",
+      "submit": "Login",
+      "noAccount": "Don't have an account?",
+      "signUp": "Sign up",
+      "success": "Login successful",
+      "error": "Invalid credentials"
+    },
+    "register": {
+      "title": "Create Account",
+      "subtitle": "Join Easy Bake",
+      "name": "Full Name",
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm Password",
+      "submit": "Register",
+      "hasAccount": "Already have an account?",
+      "signIn": "Sign in",
+      "success": "Registration successful",
+      "error": "Registration failed"
+    }
+  },
+  "validation": {
+    "emailRequired": "Email is required",
+    "emailInvalid": "Please enter a valid email address",
+    "passwordRequired": "Password is required",
+    "passwordMin": "Password must be at least {min} characters",
+    "passwordMinLogin": "Password must be at least 6 characters",
+    "passwordMinRegister": "Password must be at least 8 characters",
+    "nameRequired": "Name is required",
+    "nameMin": "Name must be at least 2 characters",
+    "passwordConfirmRequired": "Please confirm your password",
+    "passwordsNoMatch": "Passwords do not match"
+  },
+  "profile": {
+    "title": "My Profile",
+    "personalInfo": "Personal Information",
+    "updateProfile": "Update Profile",
+    "changePassword": "Change Password",
+    "currentPassword": "Current Password",
+    "newPassword": "New Password",
+    "confirmNewPassword": "Confirm New Password"
+  },
+  "addresses": {
+    "title": "My Addresses",
+    "addAddress": "Add Address",
+    "editAddress": "Edit Address",
+    "deleteAddress": "Delete Address",
+    "setDefault": "Set as Default",
+    "default": "Default",
+    "street": "Street Address",
+    "city": "City",
+    "state": "State",
+    "country": "Country",
+    "postalCode": "Postal Code",
+    "phoneNumber": "Phone Number"
+  },
+  "orders": {
+    "title": "My Orders",
+    "orderNumber": "Order #",
+    "orderDate": "Order Date",
+    "status": "Status",
+    "viewOrder": "View Order",
+    "trackOrder": "Track Order",
+    "noOrders": "No orders yet",
+    "orderDetails": "Order Details",
+    "cancelOrder": "Cancel Order",
+    "reorder": "Reorder"
   },
   "footer": {
     "businessHours": "Business Hours",
     "location": "Location",
     "quickLinks": "Quick Links",
-    "allRightsReserved": "All rights reserved"
+    "allRightsReserved": "All rights reserved",
+    "description": "Artisan French bakery bringing you the finest croissants, baguettes, and sourdough in Bahrain.",
+    "logoAlt": "Easy Bake Logo",
+    "closed": "Closed"
   }
 }

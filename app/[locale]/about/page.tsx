@@ -1,11 +1,12 @@
 import { ChefHat, Heart, Award, Users } from "lucide-react";
-import { CONTACT_INFO, BUSINESS_HOURS } from "@/lib/utils/constants";
+import { getTranslations } from "next-intl/server";
 
 /**
  * About Page - Server Component
  * Static content with CSS animations
  */
-export default function AboutPage() {
+export default async function AboutPage() {
+  const t = await getTranslations();
   return (
     <div className="min-h-screen">
       {/* Header */}
@@ -13,10 +14,10 @@ export default function AboutPage() {
         <div className="container mx-auto px-4 py-16 md:py-20">
           <div className="text-center space-y-4 max-w-3xl mx-auto animate-fade-in-up">
             <h1 className="font-display text-4xl md:text-6xl font-bold text-navy">
-              About Easy Bake
+              {t('about.title')}
             </h1>
             <p className="text-navy/70 text-base md:text-lg leading-relaxed">
-              Bringing authentic French artisan baking to Bahrain
+              {t('about.subtitle')}
             </p>
           </div>
         </div>
@@ -27,17 +28,14 @@ export default function AboutPage() {
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto space-y-6 text-center animate-fade-in-up">
             <h2 className="font-display text-3xl md:text-4xl font-bold text-navy">
-              Our Story
+              {t('about.storyTitle')}
             </h2>
             <div className="text-navy/70 text-base md:text-lg space-y-4 leading-relaxed">
               <p>
-                Easy Bake ({CONTACT_INFO.brand}) is a wholesale French bakery dedicated to
-                bringing authentic artisan bread and pastries to Bahrain. Every product is
-                crafted with traditional techniques and the finest ingredients.
+                {t('about.storyParagraph1')}
               </p>
               <p>
-                From flaky croissants to crusty baguettes and tangy sourdough, we honor
-                centuries-old French baking traditions while serving our local community.
+                {t('about.storyParagraph2')}
               </p>
             </div>
           </div>
@@ -48,29 +46,29 @@ export default function AboutPage() {
       <section className="py-16 md:py-24 bg-white">
         <div className="container mx-auto px-4">
           <h2 className="font-display text-3xl md:text-4xl font-bold text-navy text-center mb-12 animate-fade-in-up">
-            What We Stand For
+            {t('about.valuesTitle')}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
             {[
               {
                 icon: ChefHat,
-                title: "Artisan Quality",
-                description: "Handcrafted with care using traditional French techniques"
+                titleKey: 'about.values.artisanQuality.title',
+                descriptionKey: 'about.values.artisanQuality.description'
               },
               {
                 icon: Heart,
-                title: "Passion for Baking",
-                description: "Every loaf is baked with love and dedication"
+                titleKey: 'about.values.passion.title',
+                descriptionKey: 'about.values.passion.description'
               },
               {
                 icon: Award,
-                title: "Finest Ingredients",
-                description: "Only premium, quality ingredients make it into our ovens"
+                titleKey: 'about.values.ingredients.title',
+                descriptionKey: 'about.values.ingredients.description'
               },
               {
                 icon: Users,
-                title: "Community First",
-                description: "Serving Bahrain with pride and commitment"
+                titleKey: 'about.values.community.title',
+                descriptionKey: 'about.values.community.description'
               }
             ].map((value, index) => (
               <div
@@ -82,10 +80,10 @@ export default function AboutPage() {
                   <value.icon className="h-8 w-8 text-sky" />
                 </div>
                 <h3 className="font-display text-xl font-semibold text-navy">
-                  {value.title}
+                  {t(value.titleKey)}
                 </h3>
                 <p className="text-sm text-navy/70 leading-relaxed">
-                  {value.description}
+                  {t(value.descriptionKey)}
                 </p>
               </div>
             ))}
@@ -98,21 +96,21 @@ export default function AboutPage() {
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center space-y-8 animate-fade-in-up">
             <h2 className="font-display text-3xl md:text-4xl font-bold">
-              Visit Us
+              {t('about.visitUs')}
             </h2>
-            <div className="grid md:grid-cols-2 gap-8 text-left">
+            <div className="grid md:grid-cols-2 gap-8 text-left rtl:text-right">
               <div className="space-y-2">
-                <h3 className="font-semibold text-sky text-lg">Location</h3>
-                <p className="text-white/80">{CONTACT_INFO.location}</p>
+                <h3 className="font-semibold text-sky text-lg">{t('about.locationLabel')}</h3>
+                <p className="text-white/80">{t('location')}</p>
               </div>
               <div className="space-y-2">
-                <h3 className="font-semibold text-sky text-lg">Hours</h3>
+                <h3 className="font-semibold text-sky text-lg">{t('about.hoursLabel')}</h3>
                 <p className="text-white/80">
-                  {BUSINESS_HOURS.workingDays}
+                  {t('businessHours.workingDays')}
                   <br />
-                  {BUSINESS_HOURS.openTime} - {BUSINESS_HOURS.closeTime}
+                  {t('businessHours.openTime')} - {t('businessHours.closeTime')}
                   <br />
-                  <span className="text-sky">Closed {BUSINESS_HOURS.closedDay}</span>
+                  <span className="text-sky">{t('about.closed')} {t('businessHours.closedDay')}</span>
                 </p>
               </div>
             </div>

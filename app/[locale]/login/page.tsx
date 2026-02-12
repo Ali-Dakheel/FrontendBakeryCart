@@ -1,7 +1,6 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import { Mail, Lock, ArrowRight } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -10,24 +9,27 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { FormField } from "@/components/forms/FormField";
 import { useLogin } from "@/lib/hooks/useAuth";
-
-// Validation schema
-const loginSchema = z.object({
-  email: z
-    .string()
-    .min(1, "Email is required")
-    .email("Please enter a valid email address"),
-  password: z
-    .string()
-    .min(1, "Password is required")
-    .min(6, "Password must be at least 6 characters"),
-});
-
-type LoginFormData = z.infer<typeof loginSchema>;
+import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 
 export default function LoginPage() {
   const router = useRouter();
   const login = useLogin();
+  const t = useTranslations();
+
+  // Validation schema with translated messages
+  const loginSchema = z.object({
+    email: z
+      .string()
+      .min(1, t('validation.emailRequired'))
+      .email(t('validation.emailInvalid')),
+    password: z
+      .string()
+      .min(1, t('validation.passwordRequired'))
+      .min(6, t('validation.passwordMinLogin')),
+  });
+
+  type LoginFormData = z.infer<typeof loginSchema>;
 
   const {
     register,
@@ -53,10 +55,10 @@ export default function LoginPage() {
           {/* Header */}
           <div className="text-center space-y-2 mb-8">
             <h1 className="font-display text-4xl font-bold text-navy">
-              Welcome Back
+              {t('auth.welcomeBack')}
             </h1>
             <p className="text-navy/60">
-              Sign in to your Easy Bake account
+              {t('auth.loginSubtitle')}
             </p>
           </div>
 
@@ -64,7 +66,7 @@ export default function LoginPage() {
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             <FormField
               id="email"
-              label="Email Address"
+              label={t('auth.email')}
               type="email"
               placeholder="your@email.com"
               icon={Mail}
@@ -75,7 +77,7 @@ export default function LoginPage() {
 
             <FormField
               id="password"
-              label="Password"
+              label={t('auth.password')}
               type="password"
               placeholder="••••••••"
               icon={Lock}
@@ -87,7 +89,7 @@ export default function LoginPage() {
                   href="/forgot-password"
                   className="text-sm text-sky hover:underline"
                 >
-                  Forgot password?
+                  {t('auth.forgotPassword')}
                 </Link>
               }
             />
@@ -101,13 +103,13 @@ export default function LoginPage() {
             >
               {login.isPending ? (
                 <div className="flex items-center justify-center">
-                  <div className="h-5 w-5 mr-2 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                  Signing in...
+                  <div className="h-5 w-5 mr-2 rtl:ml-2 rtl:mr-0 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  {t('auth.signingIn')}
                 </div>
               ) : (
                 <>
-                  Sign In
-                  <ArrowRight className="ml-2 h-4 w-4" />
+                  {t('auth.signIn')}
+                  <ArrowRight className="ml-2 rtl:mr-2 rtl:ml-0 h-4 w-4 rtl:rotate-180" />
                 </>
               )}
             </Button>
@@ -117,19 +119,19 @@ export default function LoginPage() {
           <div className="relative my-6">
             <Separator />
             <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-2 text-sm text-navy/60">
-              or
+              {t('common.or')}
             </span>
           </div>
 
           {/* Register Link */}
           <div className="text-center space-y-4">
             <p className="text-sm text-navy/60">
-              Don't have an account?{" "}
+              {t('auth.noAccount')}{" "}
               <Link
                 href="/register"
                 className="text-sky hover:underline font-semibold"
               >
-                Create one
+                {t('auth.createAccount')}
               </Link>
             </p>
 
@@ -138,7 +140,7 @@ export default function LoginPage() {
               variant="outline"
               className="w-full"
             >
-              <Link href="/">Continue as Guest</Link>
+              <Link href="/">{t('auth.continueAsGuest')}</Link>
             </Button>
           </div>
         </div>
@@ -147,9 +149,10 @@ export default function LoginPage() {
         <div className="text-center mt-6">
           <Link
             href="/"
-            className="text-sm text-navy/60 hover:text-navy transition-colors"
+            className="text-sm text-navy/60 hover:text-navy transition-colors inline-flex items-center gap-1"
           >
-            ← Back to Home
+            <ArrowRight className="h-3 w-3 rotate-180 rtl:rotate-0" />
+            {t('auth.backToHome')}
           </Link>
         </div>
       </div>

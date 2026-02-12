@@ -1,11 +1,15 @@
 import type { Metadata } from "next";
-import { Crimson_Pro, EB_Garamond, Caveat } from "next/font/google";
+import { Crimson_Pro, EB_Garamond, Caveat, Tajawal } from "next/font/google";
+import { NextIntlClientProvider } from 'next-intl';
+import { getMessages } from 'next-intl/server';
+import { notFound } from 'next/navigation';
 import "../globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import { QueryProvider } from "@/lib/providers/QueryProvider";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { CartDrawer } from "@/components/layout/CartDrawer";
+import { locales, localeDirections, type Locale } from "@/i18n.config";
 
 const crimsonPro = Crimson_Pro({
   variable: "--font-display",
@@ -25,6 +29,13 @@ const caveat = Caveat({
   subsets: ["latin"],
   display: "swap",
   weight: ["400", "700"],
+});
+
+const tajawal = Tajawal({
+  variable: "--font-arabic",
+  subsets: ["arabic", "latin"],
+  display: "swap",
+  weight: ["400", "500", "700", "800"],
 });
 
 export const metadata: Metadata = {
@@ -77,25 +88,45 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
+  params,
 }: Readonly<{
   children: React.ReactNode;
+  params: Promise<{ locale: string }>;
 }>) {
+  const { locale } = await params;
+
+  // Validate locale
+  if (!locales.includes(locale as Locale)) {
+    notFound();
+  }
+
+  // Get messages for the locale
+  const messages = await getMessages();
+
+  // Get text direction for the locale
+  const direction = localeDirections[locale as Locale];
+
+  // Choose font based on locale
+  const fontClass = locale === 'ar' ? 'font-arabic' : 'font-sans';
+
   return (
-    <html lang="en">
+    <html lang={locale} dir={direction}>
       <body
-        className={`${crimsonPro.variable} ${ebGaramond.variable} ${caveat.variable} font-sans antialiased grain-texture`}
+        className={`${crimsonPro.variable} ${ebGaramond.variable} ${caveat.variable} ${tajawal.variable} ${fontClass} antialiased grain-texture`}
       >
-        <QueryProvider>
-          <div className="relative flex min-h-screen flex-col">
-            <Header />
-            <main className="flex-1">{children}</main>
-            <Footer />
-          </div>
-          <CartDrawer />
-          <Toaster />
-        </QueryProvider>
+        <NextIntlClientProvider messages={messages}>
+          <QueryProvider>
+            <div className="relative flex min-h-screen flex-col">
+              <Header />
+              <main className="flex-1">{children}</main>
+              <Footer />
+            </div>
+            <CartDrawer />
+            <Toaster />
+          </QueryProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

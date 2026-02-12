@@ -58,7 +58,7 @@ export function AddressSelector({
             <div
               key={address.id}
               className={cn(
-                "relative flex items-start space-x-3 rounded-lg border-2 p-4 cursor-pointer transition-all",
+                "relative flex items-start space-x-3 rtl:space-x-reverse rounded-lg border-2 p-4 cursor-pointer transition-all",
                 selectedAddressId === address.id
                   ? "border-navy bg-navy/5"
                   : "border-border hover:border-navy/50"

@@ -6,8 +6,10 @@ import { ProductGrid } from "@/components/products/ProductGrid";
 import { ProductFilters, type FilterValues } from "@/components/products/ProductFilters";
 import { Pagination } from "@/components/products/Pagination";
 import type { ProductFilters as APIFilters } from "@/lib/api/products";
+import { useTranslations } from "next-intl";
 
 export default function ProductsPage() {
+  const t = useTranslations();
   const [filters, setFilters] = useState<FilterValues>({
     search: "",
     categoryId: null,
@@ -95,10 +97,10 @@ export default function ProductsPage() {
         <div className="container mx-auto px-4 py-12 md:py-16">
           <div className="text-center space-y-4">
             <h1 className="font-display text-4xl md:text-5xl font-bold text-navy">
-              Our Products
+              {t('products.ourProducts')}
             </h1>
             <p className="text-navy/70 max-w-2xl mx-auto text-base md:text-lg">
-              Artisan breads and pastries, baked fresh daily with traditional techniques
+              {t('products.subtitle')}
             </p>
           </div>
         </div>
@@ -118,7 +120,7 @@ export default function ProductsPage() {
         {/* Results Count */}
         {!isLoading && (
           <div className="mb-6 text-sm text-navy/60">
-            Showing {products.length} of {totalCount} products
+            {t('products.showing')} {products.length} {t('products.of')} {totalCount} {t('products.productsCount')}
           </div>
         )}
 
@@ -126,7 +128,7 @@ export default function ProductsPage() {
         <ProductGrid
           products={products}
           isLoading={isLoading}
-          emptyMessage="No products match your filters. Try adjusting your search criteria."
+          emptyMessage={t('products.noMatchingProducts')}
         />
 
         {/* Pagination */}

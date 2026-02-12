@@ -4,17 +4,20 @@ import { format } from "date-fns";
 /**
  * Format price in BHD with 3 decimal places
  * @param amount - The amount to format
- * @returns Formatted string like "0.500 BHD"
+ * @param locale - The locale for currency symbol (default: 'en')
+ * @returns Formatted string like "0.500 BHD" or "0.500 د.ب"
  */
-export function formatBHD(amount: number | string): string {
+export function formatBHD(amount: number | string, locale: string = 'en'): string {
   const numAmount = typeof amount === "string" ? parseFloat(amount) : amount;
 
   // Handle invalid numbers
   if (isNaN(numAmount) || !isFinite(numAmount)) {
-    return `0.000 ${CURRENCY.code}`;
+    const currency = locale === 'ar' ? 'د.ب' : CURRENCY.code;
+    return `0.000 ${currency}`;
   }
 
-  return `${numAmount.toFixed(CURRENCY.decimals)} ${CURRENCY.code}`;
+  const currency = locale === 'ar' ? 'د.ب' : CURRENCY.code;
+  return `${numAmount.toFixed(CURRENCY.decimals)} ${currency}`;
 }
 
 /**

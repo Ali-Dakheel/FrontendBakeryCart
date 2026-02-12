@@ -3,14 +3,16 @@
 import { use } from "react";
 import { useCategory } from "@/lib/hooks/useCategories";
 import { ProductCard } from "@/components/products/ProductCard";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { ChevronRight, ArrowLeft } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
 
 export default function CategoryPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params);
   const { data: category, isLoading } = useCategory(slug);
+  const t = useTranslations();
 
   if (isLoading) {
     return (
@@ -36,8 +38,8 @@ export default function CategoryPage({ params }: { params: Promise<{ slug: strin
         </p>
         <Button asChild>
           <Link href="/categories">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Categories
+            <ArrowLeft className="mr-2 rtl:ml-2 rtl:mr-0 h-4 w-4 rtl:rotate-180" />
+            {t('common.back')}
           </Link>
         </Button>
       </div>
@@ -52,15 +54,15 @@ export default function CategoryPage({ params }: { params: Promise<{ slug: strin
       {/* Breadcrumbs */}
       <nav className="flex items-center gap-2 text-sm text-navy/60 mb-8">
         <Link href="/" className="hover:text-sky transition-colors">
-          Home
+          {t('nav.home')}
         </Link>
-        <ChevronRight className="w-4 h-4" />
+        <ChevronRight className="w-4 h-4 rtl:rotate-180" />
         <Link href="/categories" className="hover:text-sky transition-colors">
-          Categories
+          {t('nav.categories')}
         </Link>
         {category.parent && (
           <>
-            <ChevronRight className="w-4 h-4" />
+            <ChevronRight className="w-4 h-4 rtl:rotate-180" />
             <Link
               href={`/categories/${category.parent.slug}`}
               className="hover:text-sky transition-colors"
@@ -69,7 +71,7 @@ export default function CategoryPage({ params }: { params: Promise<{ slug: strin
             </Link>
           </>
         )}
-        <ChevronRight className="w-4 h-4" />
+        <ChevronRight className="w-4 h-4 rtl:rotate-180" />
         <span className="text-navy font-medium">{category.name}</span>
       </nav>
 

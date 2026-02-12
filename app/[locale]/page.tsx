@@ -1,12 +1,12 @@
 "use client";
 
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, ChefHat, Clock, MapPin } from "lucide-react";
 import { useFeaturedProducts } from "@/lib/hooks/useProducts";
 import { ProductCard } from "@/components/products/ProductCard";
 import { Skeleton } from "@/components/ui/skeleton";
-import { BUSINESS_HOURS, CONTACT_INFO } from "@/lib/utils/constants";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 
 /**
  * Homepage - Client Component with CSS Animations
@@ -14,6 +14,7 @@ import { BUSINESS_HOURS, CONTACT_INFO } from "@/lib/utils/constants";
  */
 export default function Home() {
   const { data: featuredProducts, isLoading } = useFeaturedProducts(6);
+  const t = useTranslations();
 
   return (
     <div className="flex flex-col">
@@ -24,13 +25,12 @@ export default function Home() {
             {/* Main Heading */}
             <div className="space-y-4">
               <h1 className="font-display text-5xl md:text-7xl font-bold text-navy leading-tight animate-fade-in-up">
-                Artisan French
+                {t('home.hero.title')}
                 <br />
-                <span className="text-sky font-handwritten text-6xl md:text-8xl">Bakery</span>
+                <span className="text-sky font-handwritten text-6xl md:text-8xl">{t('home.hero.titleAccent')}</span>
               </h1>
               <p className="text-base md:text-lg text-navy/70 max-w-2xl mx-auto leading-relaxed animate-fade-in-up animate-delay-100">
-                From our ovens to your table. Fresh croissants, baguettes, and sourdough
-                crafted with passion in the heart of Bahrain.
+                {t('home.hero.subtitle')}
               </p>
             </div>
 
@@ -38,8 +38,8 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in-up animate-delay-200">
               <Button asChild size="lg">
                 <Link href="/products">
-                  Shop Now
-                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                  {t('home.hero.cta')}
+                  <ArrowRight className="ml-2 rtl:mr-2 rtl:ml-0 h-5 w-5 rtl:rotate-180 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
                 </Link>
               </Button>
             </div>
@@ -47,9 +47,9 @@ export default function Home() {
             {/* Quick Info */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-8">
               {[
-                { icon: ChefHat, text: "Artisan Quality" },
-                { icon: Clock, text: `${BUSINESS_HOURS.openTime} - ${BUSINESS_HOURS.closeTime}` },
-                { icon: MapPin, text: "SAAR, Bahrain" }
+                { icon: ChefHat, text: t('home.quickInfo.artisanQuality') },
+                { icon: Clock, text: `${t('businessHours.openTime')} - ${t('businessHours.closeTime')}` },
+                { icon: MapPin, text: t('home.quickInfo.location') }
               ].map((item, i) => (
                 <div
                   key={i}
@@ -70,10 +70,10 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="text-center space-y-4 mb-12 animate-fade-in-up">
             <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-navy">
-              Featured Products
+              {t('home.featured.title')}
             </h2>
             <p className="text-base md:text-lg text-navy/70 max-w-2xl mx-auto">
-              Discover our most loved artisan breads and pastries, baked fresh every morning
+              {t('home.featured.subtitle')}
             </p>
           </div>
 
@@ -111,15 +111,15 @@ export default function Home() {
               <div className="text-center animate-fade-in">
                 <Button asChild variant="outline" size="lg">
                   <Link href="/products">
-                    View All Products
-                    <ArrowRight className="ml-2 h-4 w-4" />
+                    {t('home.featured.viewAll')}
+                    <ArrowRight className="ml-2 rtl:mr-2 rtl:ml-0 h-4 w-4 rtl:rotate-180" />
                   </Link>
                 </Button>
               </div>
             </>
           ) : (
             <div className="text-center py-12 animate-fade-in">
-              <p className="text-navy/60">No featured products available at the moment.</p>
+              <p className="text-navy/60">{t('home.featured.noProducts')}</p>
             </div>
           )}
         </div>
@@ -130,12 +130,10 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-3xl text-center space-y-6 animate-fade-in-up">
             <h2 className="font-display text-4xl md:text-5xl font-bold">
-              {CONTACT_INFO.brand}
+              {t('brand.name')}
             </h2>
             <p className="text-lg text-white/80">
-              We are a wholesale French bakery dedicated to bringing authentic artisan bread
-              and pastries to Bahrain. Every product is crafted with traditional techniques
-              and the finest ingredients.
+              {t('home.aboutSection.description')}
             </p>
           </div>
         </div>

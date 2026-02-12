@@ -132,7 +132,7 @@ export function AddressForm({ initialData, onSubmit, onChange }: AddressFormProp
       </div>
 
       {/* Set as Default */}
-      <div className="flex items-center space-x-2">
+      <div className="flex items-center space-x-2 rtl:space-x-reverse">
         <Checkbox
           id="is_default"
           checked={formData.is_default}

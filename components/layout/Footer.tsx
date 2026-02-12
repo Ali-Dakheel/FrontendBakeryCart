@@ -1,84 +1,88 @@
-import Link from "next/link";
+"use client";
+
 import Image from "next/image";
 import { Instagram, MapPin, Clock } from "lucide-react";
-import { BUSINESS_HOURS, CONTACT_INFO } from "@/lib/utils/constants";
+import { CONTACT_INFO } from "@/lib/utils/constants";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 
 export function Footer() {
+  const t = useTranslations();
   return (
     <footer className="border-t-2 border-sky/10 bg-white">
       <div className="container mx-auto px-4 py-12 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12">
           {/* Brand */}
           <div className="space-y-4">
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-3 rtl:space-x-reverse">
               <div className="relative w-12 h-12">
                 <Image
                   src="/logo.png"
-                  alt="Easy Bake Logo"
+                  alt={t('footer.logoAlt')}
                   fill
                   className="object-contain"
                 />
               </div>
               <h3 className="font-display text-2xl font-bold">
-                <span className="text-navy">Easy</span>{" "}
-                <span className="text-sky">Bake</span>
+                <span className="text-navy">{t('brand.name').split(' ')[0]}</span>{" "}
+                <span className="text-sky">{t('brand.name').split(' ')[1]}</span>
               </h3>
             </div>
             <p className="text-sm leading-relaxed text-navy/70 max-w-xs">
-              Artisan French bakery bringing you the finest croissants, baguettes, and sourdough in Bahrain.
+              {t('footer.description')}
             </p>
             <a
               href="https://instagram.com/easybake.bh"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center space-x-2 text-sm text-navy hover:text-sky transition-colors group"
+              className="inline-flex items-center space-x-2 rtl:space-x-reverse text-sm text-navy hover:text-sky transition-colors group"
             >
               <Instagram className="h-5 w-5 text-sky group-hover:scale-110 transition-transform" />
-              <span>{CONTACT_INFO.instagram}</span>
+              <span dir="ltr">{CONTACT_INFO.instagram}</span>
             </a>
           </div>
 
           {/* Hours */}
           <div className="space-y-4">
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 rtl:space-x-reverse">
               <Clock className="h-5 w-5 text-sky" />
-              <h4 className="font-display text-lg font-semibold text-navy">Business Hours</h4>
+              <h4 className="font-display text-lg font-semibold text-navy">{t('footer.businessHours')}</h4>
             </div>
             <div className="space-y-2 text-sm text-navy/70">
-              <p className="font-medium text-navy">{BUSINESS_HOURS.workingDays}</p>
+              <p className="font-medium text-navy">{t('businessHours.workingDays')}</p>
               <p className="text-navy/80">
-                {BUSINESS_HOURS.openTime} - {BUSINESS_HOURS.closeTime}
+                {t('businessHours.openTime')} - {t('businessHours.closeTime')}
               </p>
               <p className="text-navy/60 mt-2">
-                Closed {BUSINESS_HOURS.closedDay}
+                {t('footer.closed')} {t('businessHours.closedDay')}
               </p>
             </div>
           </div>
 
           {/* Location */}
           <div className="space-y-4">
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 rtl:space-x-reverse">
               <MapPin className="h-5 w-5 text-sky" />
-              <h4 className="font-display text-lg font-semibold text-navy">Location</h4>
+              <h4 className="font-display text-lg font-semibold text-navy">{t('footer.location')}</h4>
             </div>
-            <p className="text-sm text-navy/70 leading-relaxed">{CONTACT_INFO.location}</p>
+            <p className="text-sm text-navy/70 leading-relaxed">{t('location')}</p>
             <div className="space-y-3 pt-2">
-              <h5 className="font-display font-semibold text-navy text-sm">Quick Links</h5>
+              <h5 className="font-display font-semibold text-navy text-sm">{t('footer.quickLinks')}</h5>
               <div className="flex flex-col space-y-2 text-sm">
                 <Link href="/" className="text-navy/70 hover:text-sky hover:translate-x-1 transition-all inline-flex">
-                  Home
+                  {t('nav.home')}
                 </Link>
                 <Link href="/products" className="text-navy/70 hover:text-sky hover:translate-x-1 transition-all inline-flex">
-                  Products
+                  {t('nav.products')}
                 </Link>
                 <Link href="/about" className="text-navy/70 hover:text-sky hover:translate-x-1 transition-all inline-flex">
-                  About
+                  {t('nav.about')}
                 </Link>
                 <Link href="/contact" className="text-navy/70 hover:text-sky hover:translate-x-1 transition-all inline-flex">
-                  Contact
+                  {t('nav.contact')}
                 </Link>
                 <Link href="/orders" className="text-navy/70 hover:text-sky hover:translate-x-1 transition-all inline-flex">
-                  Orders
+                  {t('nav.orders')}
                 </Link>
               </div>
             </div>
@@ -88,7 +92,7 @@ export function Footer() {
         {/* Bottom */}
         <div className="mt-12 pt-8 border-t border-sky/10">
           <p className="text-center text-sm text-navy/60">
-            © {new Date().getFullYear()} Easy Bake ({CONTACT_INFO.brand}). All rights reserved.
+            © {new Date().getFullYear()} {t('brand.name')} (France Factory). {t('footer.allRightsReserved')}.
           </p>
         </div>
       </div>

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, use } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, ShoppingCart, Minus, Plus, Package, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -15,6 +14,8 @@ import { ProductImageGallery } from "@/components/products/ProductImageGallery";
 import { VariantSelector } from "@/components/products/VariantSelector";
 import { PriceDisplay } from "@/components/shared/PriceDisplay";
 import { BUSINESS_HOURS } from "@/lib/utils/constants";
+import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 
 export default function ProductDetailPage({
   params,
@@ -27,6 +28,7 @@ export default function ProductDetailPage({
   const { data: product, isLoading } = useProduct(productId);
   const addToCart = useAddToCart();
   const { openCart } = useUIStore();
+  const t = useTranslations();
 
   const [selectedVariantId, setSelectedVariantId] = useState<number | undefined>();
   const [quantity, setQuantity] = useState(1);
@@ -96,9 +98,9 @@ export default function ProductDetailPage({
     return (
       <div className="min-h-screen bg-cream flex items-center justify-center">
         <div className="text-center space-y-4">
-          <h1 className="font-display text-3xl text-navy">Product Not Found</h1>
+          <h1 className="font-display text-3xl text-navy">{t('products.productNotFound')}</h1>
           <Button asChild>
-            <Link href="/products">Back to Products</Link>
+            <Link href="/products">{t('products.backToProducts')}</Link>
           </Button>
         </div>
       </div>
@@ -114,8 +116,8 @@ export default function ProductDetailPage({
           onClick={() => router.back()}
           className="mb-6 text-navy hover:text-sky"
         >
-          <ArrowLeft className="h-4 w-4 mr-2" />
-          Back
+          <ArrowLeft className="h-4 w-4 mr-2 rtl:ml-2 rtl:mr-0 rtl:rotate-180" />
+          {t('products.backToProducts')}
         </Button>
 
         {/* Product Details */}
@@ -134,9 +136,9 @@ export default function ProductDetailPage({
             <div className="space-y-3">
               <div className="flex gap-2">
                 {product.is_featured && (
-                  <Badge className="bg-sky text-white">Featured</Badge>
+                  <Badge className="bg-sky text-white">{t('products.featured')}</Badge>
                 )}
-                {!isAvailable && <Badge variant="destructive">Out of Stock</Badge>}
+                {!isAvailable && <Badge variant="destructive">{t('products.outOfStock')}</Badge>}
               </div>
               <h1 className="font-display text-3xl md:text-4xl font-bold text-navy">
                 {product.name}
@@ -149,7 +151,7 @@ export default function ProductDetailPage({
             {/* Price */}
             <div className="flex items-baseline gap-2">
               <PriceDisplay amount={displayPrice} className="text-4xl" />
-              {product.has_variants && <span className="text-navy/60">per pack</span>}
+              {product.has_variants && <span className="text-navy/60">{t('products.perPack')}</span>}
             </div>
 
             <Separator />
@@ -168,7 +170,7 @@ export default function ProductDetailPage({
 
             {/* Quantity */}
             <div className="space-y-3">
-              <label className="text-base font-semibold text-navy">Quantity</label>
+              <label className="text-base font-semibold text-navy">{t('common.quantity')}</label>
               <div className="flex items-center gap-4">
                 <div className="flex items-center border-2 border-border rounded-lg">
                   <Button
@@ -193,7 +195,7 @@ export default function ProductDetailPage({
                 </div>
                 {maxStock < 10 && isAvailable && (
                   <p className="text-sm text-orange-600">
-                    Only {maxStock} left in stock
+                    {t('products.onlyLeft')} {maxStock} {t('products.leftInStock')}
                   </p>
                 )}
               </div>
@@ -207,13 +209,13 @@ export default function ProductDetailPage({
               className="w-full bg-navy hover:bg-navy-light text-lg"
             >
               {addToCart.isPending ? (
-                "Adding..."
+                t('products.adding')
               ) : !isAvailable ? (
-                "Out of Stock"
+                t('products.outOfStock')
               ) : (
                 <>
-                  <ShoppingCart className="h-5 w-5 mr-2" />
-                  Add to Cart
+                  <ShoppingCart className="h-5 w-5 mr-2 rtl:ml-2 rtl:mr-0" />
+                  {t('products.addToCart')}
                 </>
               )}
             </Button>
@@ -223,16 +225,16 @@ export default function ProductDetailPage({
               <div className="flex items-start gap-3 p-4 bg-cream-dark rounded-lg">
                 <Package className="h-5 w-5 text-sky shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-medium text-navy text-sm">Fresh Daily</p>
-                  <p className="text-xs text-navy/60">Baked fresh every morning</p>
+                  <p className="font-medium text-navy text-sm">{t('products.freshDaily')}</p>
+                  <p className="text-xs text-navy/60">{t('products.freshDailyDesc')}</p>
                 </div>
               </div>
               <div className="flex items-start gap-3 p-4 bg-cream-dark rounded-lg">
                 <Clock className="h-5 w-5 text-sky shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-medium text-navy text-sm">Open Hours</p>
+                  <p className="font-medium text-navy text-sm">{t('products.openHours')}</p>
                   <p className="text-xs text-navy/60">
-                    {BUSINESS_HOURS.openTime} - {BUSINESS_HOURS.closeTime}
+                    {t('businessHours.openTime')} - {t('businessHours.closeTime')}
                   </p>
                 </div>
               </div>
@@ -243,7 +245,7 @@ export default function ProductDetailPage({
             {/* Description */}
             {product.description && (
               <div className="space-y-3">
-                <h3 className="font-semibold text-navy text-lg">Description</h3>
+                <h3 className="font-semibold text-navy text-lg">{t('products.description')}</h3>
                 <p className="text-navy/70 leading-relaxed">{product.description}</p>
               </div>
             )}

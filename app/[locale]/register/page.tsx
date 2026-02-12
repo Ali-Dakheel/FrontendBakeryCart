@@ -1,7 +1,6 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import { Mail, Lock, User, Phone, ArrowRight } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -10,35 +9,38 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { FormField } from "@/components/forms/FormField";
 import { useRegister } from "@/lib/hooks/useAuth";
-
-// Validation schema
-const registerSchema = z
-  .object({
-    name: z
-      .string()
-      .min(1, "Name is required")
-      .min(2, "Name must be at least 2 characters"),
-    email: z
-      .string()
-      .min(1, "Email is required")
-      .email("Please enter a valid email address"),
-    phone: z.string().optional(),
-    password: z
-      .string()
-      .min(1, "Password is required")
-      .min(8, "Password must be at least 8 characters"),
-    password_confirmation: z.string().min(1, "Please confirm your password"),
-  })
-  .refine((data) => data.password === data.password_confirmation, {
-    message: "Passwords do not match",
-    path: ["password_confirmation"],
-  });
-
-type RegisterFormData = z.infer<typeof registerSchema>;
+import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 
 export default function RegisterPage() {
   const router = useRouter();
   const register = useRegister();
+  const t = useTranslations();
+
+  // Validation schema with translated messages
+  const registerSchema = z
+    .object({
+      name: z
+        .string()
+        .min(1, t('validation.nameRequired'))
+        .min(2, t('validation.nameMin')),
+      email: z
+        .string()
+        .min(1, t('validation.emailRequired'))
+        .email(t('validation.emailInvalid')),
+      phone: z.string().optional(),
+      password: z
+        .string()
+        .min(1, t('validation.passwordRequired'))
+        .min(8, t('validation.passwordMinRegister')),
+      password_confirmation: z.string().min(1, t('validation.passwordConfirmRequired')),
+    })
+    .refine((data) => data.password === data.password_confirmation, {
+      message: t('validation.passwordsNoMatch'),
+      path: ["password_confirmation"],
+    });
+
+  type RegisterFormData = z.infer<typeof registerSchema>;
 
   const {
     register: registerField,
@@ -64,10 +66,10 @@ export default function RegisterPage() {
           {/* Header */}
           <div className="text-center space-y-2 mb-8">
             <h1 className="font-display text-4xl font-bold text-navy">
-              Join Easy Bake
+              {t('auth.joinEasyBake')}
             </h1>
             <p className="text-navy/60">
-              Create your account and start shopping
+              {t('auth.registerSubtitle')}
             </p>
           </div>
 
@@ -75,7 +77,7 @@ export default function RegisterPage() {
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <FormField
               id="name"
-              label="Full Name"
+              label={t('auth.fullName')}
               type="text"
               placeholder="John Doe"
               icon={User}
@@ -86,7 +88,7 @@ export default function RegisterPage() {
 
             <FormField
               id="email"
-              label="Email Address"
+              label={t('auth.email')}
               type="email"
               placeholder="your@email.com"
               icon={Mail}
@@ -97,7 +99,7 @@ export default function RegisterPage() {
 
             <FormField
               id="phone"
-              label="Phone Number (Optional)"
+              label={t('auth.phone')}
               type="tel"
               placeholder="+973 XXXX XXXX"
               icon={Phone}
@@ -108,7 +110,7 @@ export default function RegisterPage() {
 
             <FormField
               id="password"
-              label="Password"
+              label={t('auth.password')}
               type="password"
               placeholder="••••••••"
               icon={Lock}
@@ -119,7 +121,7 @@ export default function RegisterPage() {
 
             <FormField
               id="password_confirmation"
-              label="Confirm Password"
+              label={t('auth.confirmPassword')}
               type="password"
               placeholder="••••••••"
               icon={Lock}
@@ -137,13 +139,13 @@ export default function RegisterPage() {
             >
               {register.isPending ? (
                 <div className="flex items-center justify-center">
-                  <div className="h-5 w-5 mr-2 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                  Creating account...
+                  <div className="h-5 w-5 mr-2 rtl:ml-2 rtl:mr-0 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  {t('auth.creatingAccount')}
                 </div>
               ) : (
                 <>
-                  Create Account
-                  <ArrowRight className="ml-2 h-4 w-4" />
+                  {t('auth.createAccount')}
+                  <ArrowRight className="ml-2 rtl:mr-2 rtl:ml-0 h-4 w-4 rtl:rotate-180" />
                 </>
               )}
             </Button>
@@ -153,36 +155,36 @@ export default function RegisterPage() {
           <div className="relative my-6">
             <Separator />
             <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-2 text-sm text-navy/60">
-              or
+              {t('common.or')}
             </span>
           </div>
 
           {/* Login Link */}
           <div className="text-center space-y-4">
             <p className="text-sm text-navy/60">
-              Already have an account?{" "}
+              {t('auth.haveAccount')}{" "}
               <Link
                 href="/login"
                 className="text-sky hover:underline font-semibold"
               >
-                Sign in
+                {t('auth.signIn')}
               </Link>
             </p>
 
             <Button asChild variant="outline" className="w-full">
-              <Link href="/">Continue as Guest</Link>
+              <Link href="/">{t('auth.continueAsGuest')}</Link>
             </Button>
           </div>
 
           {/* Terms */}
           <p className="text-xs text-navy/50 text-center mt-6">
-            By creating an account, you agree to our{" "}
+            {t('auth.termsAgreement')}{" "}
             <Link href="/terms" className="underline hover:text-navy">
-              Terms of Service
+              {t('auth.terms')}
             </Link>{" "}
-            and{" "}
+            {t('common.and')}{" "}
             <Link href="/privacy" className="underline hover:text-navy">
-              Privacy Policy
+              {t('auth.privacy')}
             </Link>
           </p>
         </div>
@@ -191,9 +193,10 @@ export default function RegisterPage() {
         <div className="text-center mt-6">
           <Link
             href="/"
-            className="text-sm text-navy/60 hover:text-navy transition-colors"
+            className="text-sm text-navy/60 hover:text-navy transition-colors inline-flex items-center gap-1"
           >
-            ← Back to Home
+            <ArrowRight className="h-3 w-3 rotate-180 rtl:rotate-0" />
+            {t('auth.backToHome')}
           </Link>
         </div>
       </div>

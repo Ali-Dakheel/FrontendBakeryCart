@@ -1,6 +1,7 @@
 "use client";
 
 import { X } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/badge";
 import type { CategoryWithParent } from "@/lib/types";
 import type { FilterValues } from "../ProductFilters";
@@ -20,6 +21,8 @@ export function ActiveFilterBadges({
   onPriceRangeChange,
   onAvailabilityChange,
 }: ActiveFilterBadgesProps) {
+  const t = useTranslations();
+
   const hasActiveFilters =
     filters.priceRange !== "all" ||
     filters.availability !== "all" ||
@@ -46,7 +49,7 @@ export function ActiveFilterBadges({
       )}
       {filters.priceRange !== "all" && (
         <Badge variant="secondary" className="gap-1">
-          {filters.priceRange} BHD
+          {filters.priceRange} {t('common.currency')}
           <button onClick={() => onPriceRangeChange("all")} className="hover:text-sky">
             <X className="h-3 w-3" />
           </button>

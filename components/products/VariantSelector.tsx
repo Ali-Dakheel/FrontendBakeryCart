@@ -31,7 +31,7 @@ export function VariantSelector({
             <div
               key={variant.id}
               className={cn(
-                "relative flex items-center space-x-3 rounded-lg border-2 p-4 cursor-pointer transition-all",
+                "relative flex items-center space-x-3 rtl:space-x-reverse rounded-lg border-2 p-4 cursor-pointer transition-all",
                 selectedVariantId === variant.id
                   ? "border-navy bg-navy/5"
                   : "border-border hover:border-navy/50",

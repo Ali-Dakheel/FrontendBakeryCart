@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/select";
 import type { CategoryWithParent } from "@/lib/types";
 import type { FilterValues } from "../ProductFilters";
+import { useTranslations } from "next-intl";
 
 interface DesktopFiltersProps {
   filters: FilterValues;
@@ -33,6 +34,7 @@ export function DesktopFilters({
   onSortChange,
   onReset,
 }: DesktopFiltersProps) {
+  const t = useTranslations();
   const hasActiveFilters =
     filters.priceRange !== "all" ||
     filters.availability !== "all" ||
@@ -57,11 +59,11 @@ export function DesktopFilters({
           onValueChange={onCategoryChange}
         >
           <SelectTrigger className="h-11 bg-white border-sky/20 hover:border-sky/40 transition-all shadow-sm" aria-label="Filter by category">
-            <Filter className="h-4 w-4 mr-2 text-sky" />
-            <SelectValue placeholder="All Categories" />
+            <Filter className="h-4 w-4 mr-2 rtl:ml-2 rtl:mr-0 text-sky" />
+            <SelectValue placeholder={t('products.allCategories')} />
           </SelectTrigger>
           <SelectContent className="bg-white">
-            <SelectItem value="all">All Categories</SelectItem>
+            <SelectItem value="all">{t('products.allCategories')}</SelectItem>
             {!categoriesLoading && categories?.map((category: CategoryWithParent) => (
               <SelectItem key={category.id} value={category.id.toString()}>
                 {category.parentName ? `— ${category.name || category.slug}` : (category.translations?.[0]?.name || category.name || category.slug)}
@@ -75,14 +77,14 @@ export function DesktopFilters({
       <div className="min-w-[160px]">
         <Select value={filters.priceRange} onValueChange={onPriceRangeChange}>
           <SelectTrigger className="h-11 bg-white border-sky/20 hover:border-sky/40 transition-all shadow-sm" aria-label="Filter by price range">
-            <SelectValue placeholder="Price" />
+            <SelectValue placeholder={t('products.priceRange')} />
           </SelectTrigger>
           <SelectContent className="bg-white">
-            <SelectItem value="all">All Prices</SelectItem>
-            <SelectItem value="0-1">Under 1 BHD</SelectItem>
-            <SelectItem value="1-3">1 - 3 BHD</SelectItem>
-            <SelectItem value="3-5">3 - 5 BHD</SelectItem>
-            <SelectItem value="5+">5+ BHD</SelectItem>
+            <SelectItem value="all">{t('products.allPrices')}</SelectItem>
+            <SelectItem value="0-1">{t('products.underOne')}</SelectItem>
+            <SelectItem value="1-3">{t('products.oneToThree')}</SelectItem>
+            <SelectItem value="3-5">{t('products.threeToFive')}</SelectItem>
+            <SelectItem value="5+">{t('products.fivePlus')}</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -91,12 +93,12 @@ export function DesktopFilters({
       <div className="min-w-[160px]">
         <Select value={filters.availability} onValueChange={onAvailabilityChange}>
           <SelectTrigger className="h-11 bg-white border-sky/20 hover:border-sky/40 transition-all shadow-sm" aria-label="Filter by availability">
-            <SelectValue placeholder="Availability" />
+            <SelectValue placeholder={t('products.availability')} />
           </SelectTrigger>
           <SelectContent className="bg-white">
-            <SelectItem value="all">All Products</SelectItem>
-            <SelectItem value="in-stock">In Stock</SelectItem>
-            <SelectItem value="out-of-stock">Out of Stock</SelectItem>
+            <SelectItem value="all">{t('products.allAvailability')}</SelectItem>
+            <SelectItem value="in-stock">{t('products.inStock')}</SelectItem>
+            <SelectItem value="out-of-stock">{t('products.outOfStock')}</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -105,15 +107,15 @@ export function DesktopFilters({
       <div className="min-w-[200px]">
         <Select value={filters.sortBy} onValueChange={onSortChange}>
           <SelectTrigger className="h-11 bg-white border-sky/20 hover:border-sky/40 transition-all shadow-sm" aria-label="Sort products by">
-            <SelectValue placeholder="Sort by" />
+            <SelectValue placeholder={t('products.sortBy')} />
           </SelectTrigger>
           <SelectContent className="bg-white">
-            <SelectItem value="featured">Featured</SelectItem>
-            <SelectItem value="-created_at">Newest First</SelectItem>
-            <SelectItem value="created_at">Oldest First</SelectItem>
-            <SelectItem value="price">Price: Low to High</SelectItem>
-            <SelectItem value="-price">Price: High to Low</SelectItem>
-            <SelectItem value="-sales_count">Most Popular</SelectItem>
+            <SelectItem value="featured">{t('products.sortFeatured')}</SelectItem>
+            <SelectItem value="-created_at">{t('products.sortNewest')}</SelectItem>
+            <SelectItem value="created_at">{t('products.sortOldest')}</SelectItem>
+            <SelectItem value="price">{t('products.sortPriceLow')}</SelectItem>
+            <SelectItem value="-price">{t('products.sortPriceHigh')}</SelectItem>
+            <SelectItem value="-sales_count">{t('products.sortPopular')}</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -125,8 +127,8 @@ export function DesktopFilters({
           onClick={onReset}
           className="h-11 text-navy hover:text-sky hover:bg-sky/10 transition-all"
         >
-          <X className="h-4 w-4 mr-2" />
-          Clear ({activeFilterCount})
+          <X className="h-4 w-4 mr-2 rtl:ml-2 rtl:mr-0" />
+          {t('products.clearFilters')} ({activeFilterCount})
         </Button>
       )}
     </div>

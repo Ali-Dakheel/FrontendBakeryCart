@@ -6,6 +6,7 @@ import { DesktopFilters } from "./filters/DesktopFilters";
 import { MobileFilters } from "./filters/MobileFilters";
 import { ActiveFilterBadges } from "./filters/ActiveFilterBadges";
 import type { CategoryWithParent } from "@/lib/types";
+import { useTranslations } from "next-intl";
 
 export interface FilterValues {
   search: string;
@@ -23,6 +24,7 @@ interface ProductFiltersProps {
 
 export function ProductFilters({ filters, onFilterChange, onReset }: ProductFiltersProps) {
   const { data: categories, isLoading: categoriesLoading } = useCategories();
+  const t = useTranslations();
 
   // Flatten categories to include both parents and children
   const flattenedCategories: CategoryWithParent[] = categories?.flatMap((category) => {
@@ -66,7 +68,7 @@ export function ProductFilters({ filters, onFilterChange, onReset }: ProductFilt
       <SearchBar
         value={filters.search}
         onChange={handleSearchChange}
-        placeholder="Search for croissants, sourdough, pastries..."
+        placeholder={t('products.searchPlaceholder')}
       />
 
       {/* Desktop Filters */}

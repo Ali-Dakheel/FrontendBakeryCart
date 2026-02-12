@@ -54,7 +54,7 @@ export function PaymentMethodSelector({
               <div
                 key={method.value}
                 className={cn(
-                  "relative flex items-start space-x-3 rounded-lg border-2 p-4 transition-all",
+                  "relative flex items-start space-x-3 rtl:space-x-reverse rounded-lg border-2 p-4 transition-all",
                   method.available
                     ? "cursor-pointer hover:border-navy/50"
                     : "cursor-not-allowed opacity-60",
