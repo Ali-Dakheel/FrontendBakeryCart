@@ -1,0 +1,102 @@
+import axios from "axios";
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api/v1";
+const BASE_URL = API_URL.replace("/api/v1", "").replace("/api", ""); // Get base URL without /api
+
+// Configure axios defaults for Laravel Sanctum SPA authentication
+axios.defaults.withCredentials = true;
+axios.defaults.withXSRFToken = true;
+
+// Create axios instance
+export const apiClient = axios.create({
+  baseURL: API_URL,
+  withCredentials: true,
+  withXSRFToken: true, // Automatically read XSRF-TOKEN cookie and send as X-XSRF-TOKEN header
+  timeout: 30000, // 30 second timeout for all requests
+  headers: {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+  },
+});
+
+// Request interceptor - Add locale header and logging
+apiClient.interceptors.request.use(
+  (config) => {
+    // Add Accept-Language header based on current locale from URL pathname
+    // URL format: /en/products or /ar/categories
+    if (typeof window !== 'undefined') {
+      const pathSegments = window.location.pathname.split('/').filter(Boolean);
+      const locale = pathSegments[0] === 'ar' ? 'ar' : 'en'; // Default to 'en' if not 'ar'
+      config.headers['Accept-Language'] = locale;
+    }
+
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`[API] ${config.method?.toUpperCase()} ${config.url}`);
+    }
+    return config;
+  },
+  (error) => {
+    console.error("[API] Request error:", error);
+    return Promise.reject(error);
+  }
+);
+
+// Response interceptor - Handle errors
+apiClient.interceptors.response.use(
+  (response) => {
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`[API] ✓ ${response.config.method?.toUpperCase()} ${response.config.url}`);
+    }
+    return response;
+  },
+  (error) => {
+    // Handle timeout errors
+    if (error.code === 'ECONNABORTED') {
+      console.error("[API] Request timeout");
+      error.message = "Request timed out. Please try again.";
+    }
+
+    // Handle 419 CSRF token mismatch (Laravel)
+    if (error.response?.status === 419) {
+      if (process.env.NODE_ENV === 'development') {
+        console.error("[API] CSRF token mismatch. Please refresh the page.");
+      }
+      error.message = "Session expired. Please refresh the page.";
+    }
+
+    // Handle 429 Rate Limiting
+    if (error.response?.status === 429) {
+      console.error("[API] Rate limit exceeded");
+      error.message = "Too many requests. Please slow down.";
+    }
+
+    // Handle network errors
+    if (!error.response && error.message === 'Network Error') {
+      error.message = "Network error. Please check your connection.";
+    }
+
+    // Note: We don't auto-redirect on 401 since guest users are allowed
+    // Each component will handle authentication requirements individually
+
+    // Only log unexpected errors in development (skip 401 as it's expected for guests)
+    if (process.env.NODE_ENV === 'development' && error.response?.status !== 401) {
+      console.error(`[API] ✗ ${error.config?.method?.toUpperCase()} ${error.config?.url}`, error.message);
+    }
+
+    return Promise.reject(error);
+  }
+);
+
+// Initialize CSRF cookie for Sanctum
+export async function initializeCsrf() {
+  try {
+    await axios.get(`${BASE_URL}/sanctum/csrf-cookie`, {
+      withCredentials: true,
+    });
+  } catch (error) {
+    // Only log errors in development
+    if (process.env.NODE_ENV === 'development') {
+      console.error("[CSRF] Failed to initialize CSRF token:", error);
+    }
+  }
+}

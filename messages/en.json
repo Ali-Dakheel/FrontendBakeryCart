@@ -1,0 +1,36 @@
+{
+  "nav": {
+    "home": "Home",
+    "products": "Products",
+    "categories": "Categories",
+    "about": "About",
+    "contact": "Contact",
+    "orders": "Orders",
+    "cart": "Cart",
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "profile": "Profile",
+    "addresses": "Addresses"
+  },
+  "common": {
+    "search": "Search",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "viewAll": "View All",
+    "learnMore": "Learn More",
+    "continueAsGuest": "Continue as Guest"
+  },
+  "footer": {
+    "businessHours": "Business Hours",
+    "location": "Location",
+    "quickLinks": "Quick Links",
+    "allRightsReserved": "All rights reserved"
+  }
+}
