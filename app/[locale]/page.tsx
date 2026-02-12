@@ -36,8 +36,8 @@ export default function Home() {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in-up animate-delay-200">
-              <Button asChild size="lg">
-                <Link href="/products">
+              <Button asChild size="lg" className="group">
+                <Link href="/products" className="flex items-center">
                   {t('home.hero.cta')}
                   <ArrowRight className="ml-2 rtl:mr-2 rtl:ml-0 h-5 w-5 rtl:rotate-180 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
                 </Link>

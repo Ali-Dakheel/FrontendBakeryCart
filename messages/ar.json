@@ -132,7 +132,14 @@
     "product": "منتج",
     "products": "منتجات",
     "noCategories": "لم يتم العثور على فئات",
-    "checkBackSoon": "تحقق مرة أخرى قريباً حيث نضيف المزيد من الفئات!"
+    "checkBackSoon": "تحقق مرة أخرى قريباً حيث نضيف المزيد من الفئات!",
+    "notFound": "الفئة غير موجودة",
+    "notFoundDescription": "الفئة التي تبحث عنها غير موجودة.",
+    "subcategories": "الفئات الفرعية",
+    "allProducts": "جميع المنتجات",
+    "noProductsYet": "لا توجد منتجات بعد",
+    "noProductsDescription": "نحن نعمل على إضافة منتجات لهذه الفئة!",
+    "browseOther": "تصفح فئات أخرى"
   },
   "products": {
     "title": "المنتجات",
@@ -155,6 +162,8 @@
     "perBox": "للعلبة",
     "perKg": "للكيلو",
     "perPiece": "للقطعة",
+    "piece": "قطعة",
+    "pieces": "قطع",
     "option": "خيار",
     "options": "خيارات",
     "ourProducts": "منتجاتنا",

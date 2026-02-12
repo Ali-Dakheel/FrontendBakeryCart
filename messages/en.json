@@ -132,7 +132,14 @@
     "product": "product",
     "products": "products",
     "noCategories": "No categories found",
-    "checkBackSoon": "Check back soon as we add more categories!"
+    "checkBackSoon": "Check back soon as we add more categories!",
+    "notFound": "Category Not Found",
+    "notFoundDescription": "The category you're looking for doesn't exist.",
+    "subcategories": "Subcategories",
+    "allProducts": "All Products",
+    "noProductsYet": "No products yet",
+    "noProductsDescription": "We're working on adding products to this category!",
+    "browseOther": "Browse Other Categories"
   },
   "products": {
     "title": "Products",
@@ -155,6 +162,8 @@
     "perBox": "per box",
     "perKg": "per kg",
     "perPiece": "per piece",
+    "piece": "piece",
+    "pieces": "pieces",
     "option": "option",
     "options": "options",
     "ourProducts": "Our Products",

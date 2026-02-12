@@ -80,11 +80,11 @@ export default async function ContactPage() {
                       className="h-auto p-0 text-sky hover:text-sky-dark text-sm"
                     >
                       <a
-                        href={`https://instagram.com/${CONTACT_INFO.instagram.replace('@', '')}`}
+                        href="https://instagram.com/easybake.bh"
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        <span dir="ltr">{CONTACT_INFO.instagram}</span>
+                        <span dir="ltr">easybake.bh</span>
                       </a>
                     </Button>
                   </div>
@@ -109,7 +109,7 @@ export default async function ContactPage() {
                 className="w-full bg-sky hover:bg-sky-dark text-white font-semibold"
               >
                 <a
-                  href={`https://instagram.com/${CONTACT_INFO.instagram.replace('@', '')}`}
+                  href="https://instagram.com/easybake.bh"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center"

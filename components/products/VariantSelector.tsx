@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { PriceDisplay } from "@/components/shared/PriceDisplay";
@@ -17,11 +18,13 @@ export function VariantSelector({
   selectedVariantId,
   onVariantChange,
 }: VariantSelectorProps) {
+  const t = useTranslations();
+
   if (!variants || variants.length === 0) return null;
 
   return (
     <div className="space-y-3">
-      <Label className="text-base font-semibold text-navy">Select Pack Size</Label>
+      <Label className="text-base font-semibold text-navy">{t('products.selectVariant')}</Label>
       <RadioGroup
         value={selectedVariantId?.toString()}
         onValueChange={(value) => onVariantChange(parseInt(value))}
@@ -56,17 +59,17 @@ export function VariantSelector({
                   <div>
                     <p className="font-medium text-navy">{variant.name}</p>
                     <p className="text-sm text-navy/60">
-                      {variant.quantity} {variant.quantity === 1 ? "piece" : "pieces"}
+                      {variant.quantity} {variant.quantity === 1 ? t('products.piece') : t('products.pieces')}
                     </p>
                   </div>
                   <div className="text-right">
                     <PriceDisplay amount={variant.price} className="text-xl" />
                     {!variant.is_available && (
-                      <p className="text-xs text-red-600 mt-1">Out of Stock</p>
+                      <p className="text-xs text-red-600 mt-1">{t('products.outOfStock')}</p>
                     )}
                     {variant.is_available && variant.stock_quantity !== undefined && variant.stock_quantity < 10 && (
                       <p className="text-xs text-orange-600 mt-1">
-                        Only {variant.stock_quantity} left
+                        {t('products.onlyLeft')} {variant.stock_quantity} {t('products.leftInStock')}
                       </p>
                     )}
                   </div>

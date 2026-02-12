@@ -52,6 +52,8 @@ export const BUSINESS_HOURS = {
 // Contact Information
 export const CONTACT_INFO = {
   instagram: "@easybake.bh",
+  instagramHandle: "easybake.bh", // Without @ for cleaner display
+  instagramUsername: "easybake.bh", // For URL construction
   location: "SAAR-Maqabah, Block 509, Bahrain",
   brand: "France Factory",
 };

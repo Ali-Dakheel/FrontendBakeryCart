@@ -31,10 +31,10 @@ export default function CategoryPage({ params }: { params: Promise<{ slug: strin
     return (
       <div className="container mx-auto px-4 py-20 text-center">
         <h1 className="font-display text-3xl font-bold text-navy mb-4">
-          Category Not Found
+          {t('categories.notFound')}
         </h1>
         <p className="text-navy/60 mb-8">
-          The category you're looking for doesn't exist.
+          {t('categories.notFoundDescription')}
         </p>
         <Button asChild>
           <Link href="/categories">
@@ -89,7 +89,7 @@ export default function CategoryPage({ params }: { params: Promise<{ slug: strin
             </h1>
             {category.products_count !== undefined && (
               <p className="text-navy/60 mt-2">
-                {category.products_count} {category.products_count === 1 ? "product" : "products"}
+                {category.products_count} {category.products_count === 1 ? t('products.product') : t('products.products')}
               </p>
             )}
           </div>
@@ -105,7 +105,7 @@ export default function CategoryPage({ params }: { params: Promise<{ slug: strin
       {hasChildren && (
         <div className="mb-16">
           <h2 className="font-display text-2xl font-bold text-navy mb-6">
-            Subcategories
+            {t('categories.subcategories')}
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {category.children?.map((child) => (
@@ -135,7 +135,7 @@ export default function CategoryPage({ params }: { params: Promise<{ slug: strin
       {hasProducts && (
         <div>
           <h2 className="font-display text-2xl font-bold text-navy mb-6">
-            {hasChildren ? "All Products" : "Products"}
+            {hasChildren ? t('categories.allProducts') : t('categories.products')}
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {category.products?.map((product, index) => (
@@ -152,15 +152,15 @@ export default function CategoryPage({ params }: { params: Promise<{ slug: strin
             <span className="text-5xl">{category.icon || "📦"}</span>
           </div>
           <h2 className="font-display text-2xl font-bold text-navy mb-2">
-            No products yet
+            {t('categories.noProductsYet')}
           </h2>
           <p className="text-navy/60 mb-8">
-            We're working on adding products to this category!
+            {t('categories.noProductsDescription')}
           </p>
           <Button asChild variant="outline">
             <Link href="/categories">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Browse Other Categories
+              <ArrowLeft className="mr-2 rtl:ml-2 rtl:mr-0 h-4 w-4 rtl:rotate-180" />
+              {t('categories.browseOther')}
             </Link>
           </Button>
         </div>

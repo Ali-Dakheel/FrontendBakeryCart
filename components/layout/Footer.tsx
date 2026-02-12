@@ -38,7 +38,7 @@ export function Footer() {
               className="inline-flex items-center space-x-2 rtl:space-x-reverse text-sm text-navy hover:text-sky transition-colors group"
             >
               <Instagram className="h-5 w-5 text-sky group-hover:scale-110 transition-transform" />
-              <span dir="ltr">{CONTACT_INFO.instagram}</span>
+              <span dir="ltr">easybake.bh</span>
             </a>
           </div>
 
