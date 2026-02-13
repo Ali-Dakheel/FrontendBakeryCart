@@ -4,13 +4,13 @@ import { useRouter } from "next/navigation";
 import { Mail, Lock, User, Phone, ArrowRight } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { FormField } from "@/components/forms/FormField";
 import { useRegister } from "@/lib/hooks/useAuth";
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
+import { createRegisterSchema, type RegisterFormData } from "@/lib/schemas/auth";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -18,29 +18,7 @@ export default function RegisterPage() {
   const t = useTranslations();
 
   // Validation schema with translated messages
-  const registerSchema = z
-    .object({
-      name: z
-        .string()
-        .min(1, t('validation.nameRequired'))
-        .min(2, t('validation.nameMin')),
-      email: z
-        .string()
-        .min(1, t('validation.emailRequired'))
-        .email(t('validation.emailInvalid')),
-      phone: z.string().optional(),
-      password: z
-        .string()
-        .min(1, t('validation.passwordRequired'))
-        .min(8, t('validation.passwordMinRegister')),
-      password_confirmation: z.string().min(1, t('validation.passwordConfirmRequired')),
-    })
-    .refine((data) => data.password === data.password_confirmation, {
-      message: t('validation.passwordsNoMatch'),
-      path: ["password_confirmation"],
-    });
-
-  type RegisterFormData = z.infer<typeof registerSchema>;
+  const registerSchema = createRegisterSchema(t);
 
   const {
     register: registerField,

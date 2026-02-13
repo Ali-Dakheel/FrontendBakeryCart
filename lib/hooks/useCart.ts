@@ -1,16 +1,14 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { getCart, addToCart, updateCartItem, removeFromCart, clearCart } from "@/lib/api/cart";
+import { addToCart, updateCartItem, removeFromCart, clearCart } from "@/lib/api/cart";
 import { toast } from "sonner";
 import type { AxiosError } from "axios";
 import type { Cart, CartItem, ApiErrorResponse } from "@/lib/types";
+import { queryKeys } from "@/lib/utils/queryKeys";
+import { cartQueries } from "@/lib/queries/cart";
 
 // Get cart query
 export function useCart() {
-  return useQuery({
-    queryKey: ["cart"],
-    queryFn: getCart,
-    retry: 1,
-  });
+  return useQuery(cartQueries.current());
 }
 
 // Add to cart mutation with optimistic updates
@@ -21,13 +19,13 @@ export function useAddToCart() {
     mutationFn: addToCart,
     onMutate: async (newItem) => {
       // Cancel outgoing refetches
-      await queryClient.cancelQueries({ queryKey: ["cart"] });
+      await queryClient.cancelQueries({ queryKey: queryKeys.cart.all() });
 
       // Snapshot previous value
-      const previousCart = queryClient.getQueryData<{ cart: Cart }>(["cart"]);
+      const previousCart = queryClient.getQueryData<{ cart: Cart }>(queryKeys.cart.all());
 
       // Optimistically add item to cart
-      queryClient.setQueryData<{ cart: Cart }>(["cart"], (old) => {
+      queryClient.setQueryData<{ cart: Cart }>(queryKeys.cart.all(), (old) => {
         if (!old?.cart) return old;
 
         // Check if item already exists in cart
@@ -74,13 +72,13 @@ export function useAddToCart() {
     onError: (error: AxiosError<ApiErrorResponse>, _variables, context) => {
       // Rollback on error
       if (context?.previousCart) {
-        queryClient.setQueryData(["cart"], context.previousCart);
+        queryClient.setQueryData(queryKeys.cart.all(), context.previousCart);
       }
       toast.error(error.response?.data?.message || "Failed to add item to cart");
     },
     onSettled: () => {
       // Refresh cart with server data
-      queryClient.invalidateQueries({ queryKey: ["cart"] });
+      queryClient.invalidateQueries({ queryKey: queryKeys.cart.all() });
     },
   });
 }
@@ -94,13 +92,13 @@ export function useUpdateCartItem() {
       updateCartItem(itemId, quantity),
     onMutate: async ({ itemId, quantity }) => {
       // Cancel outgoing refetches
-      await queryClient.cancelQueries({ queryKey: ["cart"] });
+      await queryClient.cancelQueries({ queryKey: queryKeys.cart.all() });
 
       // Snapshot previous value
-      const previousCart = queryClient.getQueryData<{ cart: Cart }>(["cart"]);
+      const previousCart = queryClient.getQueryData<{ cart: Cart }>(queryKeys.cart.all());
 
       // Optimistically update cart
-      queryClient.setQueryData<{ cart: Cart }>(["cart"], (old) => {
+      queryClient.setQueryData<{ cart: Cart }>(queryKeys.cart.all(), (old) => {
         if (!old?.cart) return old;
 
         return {
@@ -120,12 +118,12 @@ export function useUpdateCartItem() {
     onError: (error: AxiosError<ApiErrorResponse>, _variables, context) => {
       // Rollback on error
       if (context?.previousCart) {
-        queryClient.setQueryData(["cart"], context.previousCart);
+        queryClient.setQueryData(queryKeys.cart.all(), context.previousCart);
       }
       toast.error(error.response?.data?.message || "Failed to update cart item");
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["cart"] });
+      queryClient.invalidateQueries({ queryKey: queryKeys.cart.all() });
     },
   });
 }
@@ -138,13 +136,13 @@ export function useRemoveFromCart() {
     mutationFn: removeFromCart,
     onMutate: async (itemId: number) => {
       // Cancel outgoing refetches
-      await queryClient.cancelQueries({ queryKey: ["cart"] });
+      await queryClient.cancelQueries({ queryKey: queryKeys.cart.all() });
 
       // Snapshot previous value
-      const previousCart = queryClient.getQueryData<{ cart: Cart }>(["cart"]);
+      const previousCart = queryClient.getQueryData<{ cart: Cart }>(queryKeys.cart.all());
 
       // Optimistically remove item
-      queryClient.setQueryData<{ cart: Cart }>(["cart"], (old) => {
+      queryClient.setQueryData<{ cart: Cart }>(queryKeys.cart.all(), (old) => {
         if (!old?.cart) return old;
 
         return {
@@ -163,12 +161,12 @@ export function useRemoveFromCart() {
     onError: (error: AxiosError<ApiErrorResponse>, _variables, context) => {
       // Rollback on error
       if (context?.previousCart) {
-        queryClient.setQueryData(["cart"], context.previousCart);
+        queryClient.setQueryData(queryKeys.cart.all(), context.previousCart);
       }
       toast.error(error.response?.data?.message || "Failed to remove item");
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["cart"] });
+      queryClient.invalidateQueries({ queryKey: queryKeys.cart.all() });
     },
   });
 }
@@ -180,7 +178,7 @@ export function useClearCart() {
   return useMutation({
     mutationFn: clearCart,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["cart"] });
+      queryClient.invalidateQueries({ queryKey: queryKeys.cart.all() });
       toast.success("Cart cleared");
     },
     onError: (error: AxiosError<ApiErrorResponse>) => {

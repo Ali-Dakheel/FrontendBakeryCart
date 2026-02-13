@@ -1,20 +1,14 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { getCurrentUser, login, register, logout, changePassword } from "@/lib/api/auth";
+import { login, register, logout, changePassword } from "@/lib/api/auth";
 import { toast } from "sonner";
 import type { AxiosError } from "axios";
-
-interface ApiErrorResponse {
-  message?: string;
-}
+import type { ApiErrorResponse } from "@/lib/types/api";
+import { queryKeys } from "@/lib/utils/queryKeys";
+import { authQueries } from "@/lib/queries/auth";
 
 // Get current user
 export function useUser() {
-  return useQuery({
-    queryKey: ["user"],
-    queryFn: getCurrentUser,
-    retry: false,
-    staleTime: 5 * 60 * 1000, // 5 minutes
-  });
+  return useQuery(authQueries.currentUser());
 }
 
 // Login mutation
@@ -24,7 +18,7 @@ export function useLogin() {
   return useMutation({
     mutationFn: login,
     onSuccess: (user) => {
-      queryClient.setQueryData(["user"], user);
+      queryClient.setQueryData(queryKeys.user.all(), user);
 
       // Backend handles cart merging automatically via cookies
       queryClient.invalidateQueries({ queryKey: ["cart"] });
@@ -44,7 +38,7 @@ export function useRegister() {
   return useMutation({
     mutationFn: register,
     onSuccess: (user) => {
-      queryClient.setQueryData(["user"], user);
+      queryClient.setQueryData(queryKeys.user.all(), user);
 
       // Backend handles cart merging automatically via cookies
       queryClient.invalidateQueries({ queryKey: ["cart"] });
@@ -52,7 +46,15 @@ export function useRegister() {
       toast.success(`Welcome to Easy Bake, ${user.name}!`);
     },
     onError: (error: AxiosError<ApiErrorResponse>) => {
-      toast.error(error.response?.data?.message || "Registration failed");
+      const message = error.response?.data?.message || "Registration failed";
+
+      // Show validation errors if present
+      if (error.response?.data?.errors) {
+        const validationErrors = Object.values(error.response.data.errors).flat();
+        validationErrors.forEach(err => toast.error(err));
+      } else {
+        toast.error(message);
+      }
     },
   });
 }
@@ -64,7 +66,7 @@ export function useLogout() {
   return useMutation({
     mutationFn: logout,
     onSuccess: () => {
-      queryClient.setQueryData(["user"], null);
+      queryClient.setQueryData(queryKeys.user.all(), null);
 
       // Cart token persists - user becomes guest with same cart
       queryClient.invalidateQueries({ queryKey: ["cart"] });

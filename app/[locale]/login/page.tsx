@@ -4,13 +4,13 @@ import { useRouter } from "next/navigation";
 import { Mail, Lock, ArrowRight } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { FormField } from "@/components/forms/FormField";
 import { useLogin } from "@/lib/hooks/useAuth";
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
+import { createLoginSchema, type LoginFormData } from "@/lib/schemas/auth";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -18,18 +18,7 @@ export default function LoginPage() {
   const t = useTranslations();
 
   // Validation schema with translated messages
-  const loginSchema = z.object({
-    email: z
-      .string()
-      .min(1, t('validation.emailRequired'))
-      .email(t('validation.emailInvalid')),
-    password: z
-      .string()
-      .min(1, t('validation.passwordRequired'))
-      .min(6, t('validation.passwordMinLogin')),
-  });
-
-  type LoginFormData = z.infer<typeof loginSchema>;
+  const loginSchema = createLoginSchema(t);
 
   const {
     register,

@@ -1,4 +1,5 @@
 import axios from "axios";
+import axiosRetry from "axios-retry";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api/v1";
 const BASE_URL = API_URL.replace("/api/v1", "").replace("/api", ""); // Get base URL without /api
@@ -16,6 +17,22 @@ export const apiClient = axios.create({
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
+  },
+});
+
+// Configure retry logic for transient failures
+axiosRetry(apiClient, {
+  retries: 3,
+  retryDelay: axiosRetry.exponentialDelay,
+  retryCondition: (error) => {
+    // Retry on network errors or 5xx server errors
+    return axiosRetry.isNetworkOrIdempotentRequestError(error) ||
+           (error.response?.status ?? 0) >= 500;
+  },
+  onRetry: (retryCount, error, requestConfig) => {
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`[API] Retry attempt ${retryCount} for ${requestConfig.url}`);
+    }
   },
 });
 

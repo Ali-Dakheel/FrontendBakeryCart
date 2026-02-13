@@ -1,23 +1,21 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { getOrders, getOrder, createOrder, cancelOrder } from "@/lib/api/orders";
+import { createOrder, cancelOrder } from "@/lib/api/orders";
 import { toast } from "sonner";
 import { AxiosError } from "axios";
 import { ApiErrorResponse } from "@/lib/types";
+import { queryKeys } from "@/lib/utils/queryKeys";
+import { orderQueries } from "@/lib/queries/orders";
 
 // Get orders list
 export function useOrders(page: number = 1) {
-  return useQuery({
-    queryKey: ["orders", page],
-    queryFn: () => getOrders(page),
-  });
+  return useQuery(orderQueries.list(page));
 }
 
 // Get single order
 export function useOrder(id: number) {
   return useQuery({
-    queryKey: ["order", id],
-    queryFn: () => getOrder(id),
-    enabled: !!id,
+    ...orderQueries.detail(id),
+    enabled: !!id, // Hook-specific logic
   });
 }
 
@@ -28,8 +26,8 @@ export function useCreateOrder() {
   return useMutation({
     mutationFn: createOrder,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["orders"] });
-      queryClient.invalidateQueries({ queryKey: ["cart"] });
+      queryClient.invalidateQueries({ queryKey: queryKeys.orders.all() });
+      queryClient.invalidateQueries({ queryKey: queryKeys.cart.all() });
     },
     onError: (error: AxiosError<ApiErrorResponse>) => {
       toast.error(error.response?.data?.message || "Failed to create order");
@@ -45,7 +43,7 @@ export function useCancelOrder() {
     mutationFn: ({ id, reason }: { id: number; reason: string }) =>
       cancelOrder(id, reason),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["orders"] });
+      queryClient.invalidateQueries({ queryKey: queryKeys.orders.all() });
       toast.success("Order cancelled successfully");
     },
     onError: (error: AxiosError<ApiErrorResponse>) => {
