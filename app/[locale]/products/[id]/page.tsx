@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, use } from "react";
-import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useRouter, useParams } from "next/navigation";
 import dynamic from "next/dynamic";
 import { ArrowLeft, ShoppingCart, Package, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -23,13 +23,9 @@ import { BUSINESS_HOURS } from "@/lib/utils/constants";
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 
-export default function ProductDetailPage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
-  const resolvedParams = use(params);
-  const productId = parseInt(resolvedParams.id);
+export default function ProductDetailPage() {
+  const { id } = useParams<{ id: string }>();
+  const productId = parseInt(id);
   const router = useRouter();
   const { data: product, isLoading } = useProduct(productId);
   const addToCart = useAddToCart();

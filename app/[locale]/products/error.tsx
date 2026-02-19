@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
 import { AlertCircle, RefreshCw, Home, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -16,11 +15,6 @@ export default function ProductsError({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
-  useEffect(() => {
-    // Log product page errors
-    console.error("Products page error:", error);
-  }, [error]);
-
   return (
     <div className="min-h-screen bg-cream">
       {/* Header */}

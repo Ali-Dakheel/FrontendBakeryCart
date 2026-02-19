@@ -45,8 +45,8 @@ export async function getProducts(filters?: ProductFilters): Promise<PaginatedRe
 // Get single product by ID
 export async function getProduct(id: number): Promise<Product> {
   const response = await apiClient.get<ApiResponse<Product>>(`products/${id}?include=translations,images,variants,category`);
-  if (!response.data.success) {
-    throw new Error(response.data.message || "Product not found");
+  if (!response.data.data) {
+    throw new Error("Product not found");
   }
   return response.data.data;
 }
@@ -54,11 +54,13 @@ export async function getProduct(id: number): Promise<Product> {
 // Get featured products
 export async function getFeaturedProducts(limit: number = 6): Promise<Product[]> {
   const response = await apiClient.get<ApiResponse<Product[]>>(`products/featured?limit=${limit}`);
-  return response.data.success ? response.data.data : [];
+  // List endpoints return { data: [...] } without a top-level success field
+  return (response.data as { data?: Product[] }).data || [];
 }
 
 // Get popular products
 export async function getPopularProducts(limit: number = 6): Promise<Product[]> {
   const response = await apiClient.get<ApiResponse<Product[]>>(`products/popular?limit=${limit}`);
-  return response.data.success ? response.data.data : [];
+  // List endpoints return { data: [...] } without a top-level success field
+  return (response.data as { data?: Product[] }).data || [];
 }

@@ -53,7 +53,6 @@ apiClient.interceptors.request.use(
     return config;
   },
   (error) => {
-    console.error("[API] Request error:", error);
     return Promise.reject(error);
   }
 );
@@ -69,15 +68,11 @@ apiClient.interceptors.response.use(
   (error) => {
     // Handle timeout errors
     if (error.code === 'ECONNABORTED') {
-      console.error("[API] Request timeout");
       error.message = "Request timed out. Please try again.";
     }
 
     // Handle 419 CSRF token mismatch (Laravel)
     if (error.response?.status === 419) {
-      if (process.env.NODE_ENV === 'development') {
-        console.error("[API] CSRF token mismatch. Please refresh the page.");
-      }
       error.message = "Session expired. Please refresh the page.";
     }
 
@@ -87,7 +82,6 @@ apiClient.interceptors.response.use(
     if (status === 403) error.message = "You do not have permission to do this.";
     if (status === 404) error.message = "The requested item was not found.";
     if (status === 429) {
-      console.error("[API] Rate limit exceeded");
       error.message = "Too many requests. Please slow down.";
     }
     if (status === 500) error.message = "Server error. Please try again later.";
@@ -101,11 +95,6 @@ apiClient.interceptors.response.use(
     // Note: We don't auto-redirect on 401 since guest users are allowed
     // Each component will handle authentication requirements individually
 
-    // Only log unexpected errors in development (skip 401 as it's expected for guests)
-    if (process.env.NODE_ENV === 'development' && error.response?.status !== 401) {
-      console.error(`[API] ✗ ${error.config?.method?.toUpperCase()} ${error.config?.url}`, error.message);
-    }
-
     return Promise.reject(error);
   }
 );
@@ -116,10 +105,7 @@ export async function initializeCsrf() {
     await axios.get(`${BASE_URL}/sanctum/csrf-cookie`, {
       withCredentials: true,
     });
-  } catch (error) {
-    // Only log errors in development
-    if (process.env.NODE_ENV === 'development') {
-      console.error("[CSRF] Failed to initialize CSRF token:", error);
-    }
+  } catch {
+    // Silently ignore CSRF init failures — requests will retry or user will see an error
   }
 }

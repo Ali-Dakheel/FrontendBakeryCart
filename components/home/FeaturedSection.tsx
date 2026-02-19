@@ -12,7 +12,9 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 
 export function FeaturedSection() {
-  const { data: featuredProducts, isLoading } = useFeaturedProducts(6);
+  // isPending (not isLoading) — isLoading is false during SSR because no fetch runs server-side,
+  // causing a hydration mismatch. isPending is true whenever there's no data yet (server + client).
+  const { data: featuredProducts, isPending } = useFeaturedProducts(6);
   const t = useTranslations();
 
   return (
@@ -27,7 +29,7 @@ export function FeaturedSection() {
           </p>
         </div>
 
-        {isLoading ? (
+        {isPending ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {[...Array(6)].map((_, i) => (
               <div key={i} className={`space-y-4 animate-fade-in-up ${ITEM_DELAYS[i]}`}>

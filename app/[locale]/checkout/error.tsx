@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
 import { AlertCircle, RefreshCw, ArrowLeft, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -16,14 +15,6 @@ export default function CheckoutError({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
-  useEffect(() => {
-    // Log checkout errors for monitoring
-    console.error("Checkout error:", error);
-
-    // TODO: Track checkout abandonment due to errors
-    // Example: analytics.track('checkout_error', { error: error.message });
-  }, [error]);
-
   return (
     <div className="min-h-screen bg-cream flex items-center justify-center p-4">
       <div className="max-w-lg w-full bg-white rounded-lg border-2 border-destructive/50 p-8 space-y-6">

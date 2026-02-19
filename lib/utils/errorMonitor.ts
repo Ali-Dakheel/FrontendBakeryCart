@@ -10,7 +10,6 @@ export function initErrorMonitoring(): void {
 
   window.addEventListener("unhandledrejection", (event) => {
     const reason = event.reason;
-    console.error("Unhandled promise rejection:", reason);
 
     // Show a toast only for network errors — API errors already have toast handling
     const message: string =

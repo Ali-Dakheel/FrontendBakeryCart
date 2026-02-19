@@ -3,19 +3,19 @@ import { ArrowRight, ChefHat, Clock, MapPin } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
-import { getQueryClient } from "@/lib/providers/QueryProvider";
+import { getQueryClient } from "@/lib/utils/queryClient";
 import { getFeaturedProductsServer } from "@/lib/api/server";
 import { queryKeys } from "@/lib/utils/queryKeys";
 import { FeaturedSection } from "@/components/home/FeaturedSection";
 
 /**
  * Homepage - Server Component
- * Pre-fetches featured products so FeaturedSection renders without a skeleton on first load.
+ * Pre-fetches featured products for a warm cache on first render.
+ * If the backend is unreachable during SSR, FeaturedSection fetches client-side silently.
  */
 export default async function Home() {
   const t = await getTranslations();
 
-  // Pre-populate the featured products cache for the client
   const queryClient = getQueryClient();
   await queryClient.prefetchQuery({
     queryKey: queryKeys.products.featured(6),
@@ -71,7 +71,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Featured Products — warm cache means no skeleton on first render */}
+      {/* Featured Products — warm cache if SSR prefetch succeeded, client-side fallback otherwise */}
       <HydrationBoundary state={dehydrate(queryClient)}>
         <FeaturedSection />
       </HydrationBoundary>

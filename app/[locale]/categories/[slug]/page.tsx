@@ -1,6 +1,6 @@
 "use client";
 
-import { use } from "react";
+import { useParams } from "next/navigation";
 import { useCategory } from "@/lib/hooks/useCategories";
 import { ProductCard } from "@/components/products/ProductCard";
 import { Link } from "@/i18n/navigation";
@@ -9,8 +9,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
 
-export default function CategoryPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = use(params);
+export default function CategoryPage() {
+  const { slug } = useParams<{ slug: string }>();
   const { data: category, isLoading } = useCategory(slug);
   const t = useTranslations();
 

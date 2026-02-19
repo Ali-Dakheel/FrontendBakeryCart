@@ -3,7 +3,7 @@
  * Uses native fetch with Next.js caching and revalidation
  */
 
-import type { Product, ApiResponse } from "@/lib/types";
+import type { Product } from "@/lib/types";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
@@ -12,29 +12,23 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
  * Cached for 15 minutes (featured products rarely change)
  */
 export async function getFeaturedProductsServer(limit: number = 6): Promise<Product[]> {
-  try {
-    const response = await fetch(`${API_URL}/api/v1/products/featured?limit=${limit}`, {
-      next: {
-        revalidate: 900, // 15 minutes
-        tags: ['products', 'featured']
-      },
-      headers: {
-        'Accept': 'application/json',
-        'Accept-Language': 'en',
-      },
-    });
+  const response = await fetch(`${API_URL}/api/v1/products/featured?limit=${limit}`, {
+    next: {
+      revalidate: 900, // 15 minutes
+      tags: ['products', 'featured']
+    },
+    headers: {
+      'Accept': 'application/json',
+      'Accept-Language': 'en',
+    },
+  });
 
-    if (!response.ok) {
-      console.error(`Failed to fetch featured products: ${response.status}`);
-      return [];
-    }
-
-    const data: ApiResponse<Product[]> = await response.json();
-    return data.success ? data.data : [];
-  } catch (error) {
-    console.error('Error fetching featured products:', error);
-    return [];
+  if (!response.ok) {
+    throw new Error(`Failed to fetch featured products: ${response.status}`);
   }
+
+  const data = await response.json() as { data?: Product[]; success?: boolean };
+  return data.data || [];
 }
 
 /**
@@ -55,14 +49,12 @@ export async function getPopularProductsServer(limit: number = 6): Promise<Produ
     });
 
     if (!response.ok) {
-      console.error(`Failed to fetch popular products: ${response.status}`);
       return [];
     }
 
-    const data: ApiResponse<Product[]> = await response.json();
-    return data.success ? data.data : [];
-  } catch (error) {
-    console.error('Error fetching popular products:', error);
+    const data = await response.json() as { data?: Product[] };
+    return data.data || [];
+  } catch {
     return [];
   }
 }
@@ -94,10 +86,9 @@ export async function getProductServer(id: number): Promise<Product | null> {
       throw new Error(`Failed to fetch product: ${response.status}`);
     }
 
-    const data: ApiResponse<Product> = await response.json();
-    return data.success ? data.data : null;
-  } catch (error) {
-    console.error(`Error fetching product ${id}:`, error);
+    const data = await response.json() as { data?: Product };
+    return data.data ?? null;
+  } catch {
     return null;
   }
 }
