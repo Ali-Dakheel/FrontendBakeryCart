@@ -2,11 +2,13 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Minus, Plus, Trash2, ShoppingBag } from "lucide-react";
+import { Trash2, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PriceDisplay } from "@/components/shared/PriceDisplay";
+import { QuantityControl } from "@/components/shared/QuantityControl";
 import { useUpdateCartItem, useRemoveFromCart } from "@/lib/hooks/useCart";
 import { getValidImageUrl } from "@/lib/utils/image";
+import { toNumber } from "@/lib/utils/formatters";
 import type { CartItem as CartItemType } from "@/lib/types";
 
 interface CartItemProps {
@@ -17,7 +19,7 @@ export function CartItem({ item }: CartItemProps) {
   const updateCartItem = useUpdateCartItem();
   const removeFromCart = useRemoveFromCart();
 
-  const itemTotal = (typeof item.price_snapshot === 'number' ? item.price_snapshot : parseFloat(item.price_snapshot)) * item.quantity;
+  const itemTotal = toNumber(item.price_snapshot) * item.quantity;
 
   // Get primary image with validation
   const { url: validImageUrl, isPlaceholder } = getValidImageUrl(item.product?.images, true);
@@ -37,7 +39,7 @@ export function CartItem({ item }: CartItemProps) {
       {/* Product Image */}
       <Link
         href={`/products/${item.product_id}`}
-        className="relative h-24 w-24 sm:h-32 sm:w-32 flex-shrink-0 rounded-md overflow-hidden bg-cream-dark hover:opacity-90 transition-opacity"
+        className="relative h-24 w-24 sm:h-32 sm:w-32 shrink-0 rounded-md overflow-hidden bg-cream-dark hover:opacity-90 transition-opacity"
       >
         {validImageUrl ? (
           <Image
@@ -81,32 +83,17 @@ export function CartItem({ item }: CartItemProps) {
 
           {/* Quantity Controls */}
           <div className="flex items-center gap-3">
-            <div className="flex items-center border-2 border-border rounded-lg">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="h-11 w-11"
-                onClick={() => handleUpdateQuantity(item.quantity - 1)}
-                disabled={updateCartItem.isPending || item.quantity <= 1}
-              >
-                <Minus className="h-4 w-4" />
-              </Button>
-              <span className="w-12 text-center font-semibold text-navy">
-                {item.quantity}
-              </span>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="h-11 w-11"
-                onClick={() => handleUpdateQuantity(item.quantity + 1)}
-                disabled={updateCartItem.isPending}
-              >
-                <Plus className="h-4 w-4" />
-              </Button>
-            </div>
+            <QuantityControl
+              value={item.quantity}
+              min={1}
+              onChange={handleUpdateQuantity}
+              disabled={updateCartItem.isPending}
+              size="lg"
+              productName={item.product?.name}
+            />
 
             {/* Item Total */}
-            <div className="hidden sm:block text-right min-w-[100px]">
+            <div className="hidden sm:block text-right min-w-25">
               <PriceDisplay amount={itemTotal} className="text-xl" />
             </div>
 

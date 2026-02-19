@@ -16,11 +16,16 @@ import { useCreateOrder } from "@/lib/hooks/useOrders";
 import { usePriceCalculation } from "@/lib/hooks/usePriceCalculation";
 import { AddressSelector } from "@/components/checkout/AddressSelector";
 import { AddressForm } from "@/components/checkout/AddressForm";
-import { PaymentMethodSelector } from "@/components/checkout/PaymentMethodSelector";
+import dynamic from "next/dynamic";
+
+const PaymentMethodSelector = dynamic(
+  () => import("@/components/checkout/PaymentMethodSelector").then((m) => ({ default: m.PaymentMethodSelector })),
+  { loading: () => <Skeleton className="h-48 w-full rounded-lg" /> }
+);
 import { PriceDisplay } from "@/components/shared/PriceDisplay";
 import { EmptyState } from "@/components/shared/EmptyState";
 import { VAT_RATE, PAYMENT_METHODS } from "@/lib/utils/constants";
-import { calculateVAT, calculateTotalWithVAT } from "@/lib/utils/formatters";
+import { calculateVAT, calculateTotalWithVAT, toNumber } from "@/lib/utils/formatters";
 import type { AddressForm as AddressFormData } from "@/lib/types";
 
 export default function CheckoutPage() {
@@ -142,7 +147,7 @@ export default function CheckoutPage() {
   return (
     <div className="min-h-screen bg-cream">
       {/* Header */}
-      <div className="bg-gradient-to-br from-cream via-cream-dark to-flour border-b border-border/40">
+      <div className="bg-linear-to-br from-cream via-cream-dark to-flour border-b border-border/40">
         <div className="container mx-auto px-4 py-12 md:py-16">
           <Button
             variant="ghost"
@@ -254,7 +259,7 @@ export default function CheckoutPage() {
                     <div className="text-right">
                       <p className="font-medium text-navy">x{item.quantity}</p>
                       <PriceDisplay
-                        amount={(typeof item.price_snapshot === 'number' ? item.price_snapshot : parseFloat(item.price_snapshot)) * item.quantity}
+                        amount={toNumber(item.price_snapshot) * item.quantity}
                         className="text-sm"
                       />
                     </div>

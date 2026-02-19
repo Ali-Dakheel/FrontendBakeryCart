@@ -1,17 +1,8 @@
 // API Response Types
 
-export interface ApiResponse<T> {
-  success: boolean;
-  message?: string;
-  data?: T;
-  errors?: Record<string, string[]>;
-}
-
-export interface ApiErrorResponse {
-  success: false;
-  message: string;
-  errors?: Record<string, string[]>;
-}
+export type ApiResponse<T> =
+  | { success: true; data: T; message?: string }
+  | { success: false; data?: never; message: string; errors?: Record<string, string[]> };
 
 export interface PaginatedResponse<T> {
   success: boolean;

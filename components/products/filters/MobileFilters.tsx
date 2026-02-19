@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { SlidersHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -21,6 +20,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import type { CategoryWithParent } from "@/lib/types";
 import type { FilterValues } from "../ProductFilters";
+import { FilterOptions, getActiveFilterCount } from "./FilterOptions";
 import { useTranslations } from "next-intl";
 
 interface MobileFiltersProps {
@@ -46,14 +46,7 @@ export function MobileFilters({
 }: MobileFiltersProps) {
   const [isOpen, setIsOpen] = useState(false);
   const t = useTranslations();
-
-  const activeFilterCount = [
-    filters.priceRange !== "all",
-    filters.availability !== "all",
-    filters.categoryId !== null,
-    filters.search !== "",
-    filters.sortBy !== "featured" && filters.sortBy !== "",
-  ].filter(Boolean).length;
+  const activeFilterCount = getActiveFilterCount(filters);
 
   return (
     <div className="lg:hidden flex items-center gap-3">
@@ -87,13 +80,14 @@ export function MobileFilters({
             <SheetTitle className="text-navy text-xl">{t('products.filters')}</SheetTitle>
           </SheetHeader>
           <div className="mt-6 space-y-6">
-            <MobileFilterContent
+            <FilterOptions
               filters={filters}
               categories={categories}
               categoriesLoading={categoriesLoading}
               onCategoryChange={onCategoryChange}
               onPriceRangeChange={onPriceRangeChange}
               onAvailabilityChange={onAvailabilityChange}
+              layout="vertical"
             />
             <div className="flex gap-3 pt-4 border-t">
               <Button onClick={onReset} variant="outline" className="flex-1">
@@ -106,79 +100,6 @@ export function MobileFilters({
           </div>
         </SheetContent>
       </Sheet>
-    </div>
-  );
-}
-
-// Mobile Filter Content Component
-function MobileFilterContent({
-  filters,
-  categories,
-  categoriesLoading,
-  onCategoryChange,
-  onPriceRangeChange,
-  onAvailabilityChange,
-}: {
-  filters: FilterValues;
-  categories: CategoryWithParent[];
-  categoriesLoading: boolean;
-  onCategoryChange: (value: string) => void;
-  onPriceRangeChange: (value: string) => void;
-  onAvailabilityChange: (value: string) => void;
-}) {
-  const t = useTranslations();
-
-  return (
-    <div className="space-y-6">
-      {/* Category */}
-      <div className="space-y-3">
-        <Label className="text-navy text-base font-medium">{t('products.category')}</Label>
-        <Select value={filters.categoryId?.toString() || "all"} onValueChange={onCategoryChange}>
-          <SelectTrigger className="w-full" aria-label="Filter by category">
-            <SelectValue placeholder={t('products.allCategories')} />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">{t('products.allCategories')}</SelectItem>
-            {!categoriesLoading && categories?.map((category: CategoryWithParent) => (
-              <SelectItem key={category.id} value={category.id.toString()}>
-                {category.parentName ? `— ${category.name || category.slug}` : (category.translations?.[0]?.name || category.name || category.slug)}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-
-      {/* Price Range */}
-      <div className="space-y-3">
-        <Label className="text-navy text-base font-medium">{t('products.priceRange')}</Label>
-        <Select value={filters.priceRange} onValueChange={onPriceRangeChange}>
-          <SelectTrigger className="w-full" aria-label="Filter by price range">
-            <SelectValue placeholder={t('products.allPrices')} />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">{t('products.allPrices')}</SelectItem>
-            <SelectItem value="0-1">{t('products.underOne')}</SelectItem>
-            <SelectItem value="1-3">{t('products.oneToThree')}</SelectItem>
-            <SelectItem value="3-5">{t('products.threeToFive')}</SelectItem>
-            <SelectItem value="5+">{t('products.fivePlus')}</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-
-      {/* Availability */}
-      <div className="space-y-3">
-        <Label className="text-navy text-base font-medium">{t('products.availability')}</Label>
-        <Select value={filters.availability} onValueChange={onAvailabilityChange}>
-          <SelectTrigger className="w-full" aria-label="Filter by availability">
-            <SelectValue placeholder={t('products.allAvailability')} />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">{t('products.allAvailability')}</SelectItem>
-            <SelectItem value="in-stock">{t('products.inStock')}</SelectItem>
-            <SelectItem value="out-of-stock">{t('products.outOfStock')}</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
     </div>
   );
 }

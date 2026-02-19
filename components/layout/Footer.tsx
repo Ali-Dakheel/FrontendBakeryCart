@@ -67,24 +67,24 @@ export function Footer() {
             </div>
             <p className="text-sm text-navy/70 leading-relaxed">{t('location')}</p>
             <div className="space-y-3 pt-2">
-              <h5 className="font-display font-semibold text-navy text-sm">{t('footer.quickLinks')}</h5>
-              <div className="flex flex-col space-y-2 text-sm">
-                <Link href="/" className="text-navy/70 hover:text-sky hover:translate-x-1 transition-all inline-flex">
-                  {t('nav.home')}
-                </Link>
-                <Link href="/products" className="text-navy/70 hover:text-sky hover:translate-x-1 transition-all inline-flex">
-                  {t('nav.products')}
-                </Link>
-                <Link href="/about" className="text-navy/70 hover:text-sky hover:translate-x-1 transition-all inline-flex">
-                  {t('nav.about')}
-                </Link>
-                <Link href="/contact" className="text-navy/70 hover:text-sky hover:translate-x-1 transition-all inline-flex">
-                  {t('nav.contact')}
-                </Link>
-                <Link href="/orders" className="text-navy/70 hover:text-sky hover:translate-x-1 transition-all inline-flex">
-                  {t('nav.orders')}
-                </Link>
-              </div>
+              <nav aria-label={t('footer.quickLinks')}>
+                <h5 className="font-display font-semibold text-navy text-sm mb-2">{t('footer.quickLinks')}</h5>
+                <ul className="flex flex-col space-y-2 text-sm">
+                  {[
+                    { href: "/", label: t('nav.home') },
+                    { href: "/products", label: t('nav.products') },
+                    { href: "/about", label: t('nav.about') },
+                    { href: "/contact", label: t('nav.contact') },
+                    { href: "/orders", label: t('nav.orders') },
+                  ].map(({ href, label }) => (
+                    <li key={href}>
+                      <Link href={href as any} className="text-navy/70 hover:text-sky hover:translate-x-1 transition-all inline-flex">
+                        {label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
             </div>
           </div>
         </div>

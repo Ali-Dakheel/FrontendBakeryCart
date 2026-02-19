@@ -5,6 +5,7 @@ import Image from "next/image";
 import { ChevronLeft, ChevronRight, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { getImageUrl, getImageAlt } from "@/lib/utils/image";
 import type { ProductImage } from "@/lib/types";
 
 interface ProductImageGalleryProps {
@@ -18,9 +19,8 @@ export function ProductImageGallery({ images, productName }: ProductImageGallery
   // Filter out images with invalid URLs - be very strict
   const validImages = images?.filter((img) => {
     if (!img) return false;
-    const url = img.url || img.image_path;
-    // Check that url is a non-empty string
-    return typeof url === 'string' && url.trim().length > 0;
+    const url = getImageUrl(img);
+    return url.trim().length > 0;
   }) || [];
 
   if (validImages.length === 0) {
@@ -32,7 +32,7 @@ export function ProductImageGallery({ images, productName }: ProductImageGallery
   }
 
   const currentImage = validImages[currentIndex];
-  const imageUrl = currentImage.url || currentImage.image_path || "";
+  const imageUrl = getImageUrl(currentImage);
 
   // Check if this is a placehold.co URL (needs unoptimized flag)
   const isPlaceholder = imageUrl.includes('placehold.co');
@@ -57,7 +57,7 @@ export function ProductImageGallery({ images, productName }: ProductImageGallery
       <div className="relative aspect-square rounded-lg overflow-hidden bg-cream-dark group">
         <Image
           src={imageUrl}
-          alt={currentImage.alt || currentImage.alt_text || productName}
+          alt={getImageAlt(currentImage, productName)}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
           className="object-cover"
@@ -107,7 +107,7 @@ export function ProductImageGallery({ images, productName }: ProductImageGallery
       {validImages.length > 1 && (
         <div className="grid grid-cols-5 gap-2">
           {validImages.map((image, index) => {
-            const thumbUrl = image.url || image.image_path || "";
+            const thumbUrl = getImageUrl(image);
             const isThumbPlaceholder = thumbUrl.includes('placehold.co');
 
             return (
@@ -123,7 +123,7 @@ export function ProductImageGallery({ images, productName }: ProductImageGallery
               >
                 <Image
                   src={thumbUrl}
-                  alt={image.alt || image.alt_text || `${productName} ${index + 1}`}
+                  alt={getImageAlt(image, `${productName} ${index + 1}`)}
                   fill
                   loading="lazy"
                   sizes="(max-width: 768px) 60px, 80px"

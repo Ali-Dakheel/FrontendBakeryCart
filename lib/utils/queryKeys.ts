@@ -21,6 +21,9 @@
 
 import type { ProductFilters } from "@/lib/api/products";
 
+// Ensures each domain has an `all` key factory — the base for hierarchical invalidation
+type KeyFactory = { all: () => readonly [string] };
+
 export const queryKeys = {
   products: {
     all: () => ["products"] as const,
@@ -52,4 +55,4 @@ export const queryKeys = {
     lists: () => [...queryKeys.categories.all(), "list"] as const,
     detail: (slug: string) => [...queryKeys.categories.all(), slug] as const,
   },
-} as const;
+} as const satisfies Record<string, KeyFactory>;

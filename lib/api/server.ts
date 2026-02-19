@@ -30,7 +30,7 @@ export async function getFeaturedProductsServer(limit: number = 6): Promise<Prod
     }
 
     const data: ApiResponse<Product[]> = await response.json();
-    return data.data || [];
+    return data.success ? data.data : [];
   } catch (error) {
     console.error('Error fetching featured products:', error);
     return [];
@@ -60,7 +60,7 @@ export async function getPopularProductsServer(limit: number = 6): Promise<Produ
     }
 
     const data: ApiResponse<Product[]> = await response.json();
-    return data.data || [];
+    return data.success ? data.data : [];
   } catch (error) {
     console.error('Error fetching popular products:', error);
     return [];
@@ -95,7 +95,7 @@ export async function getProductServer(id: number): Promise<Product | null> {
     }
 
     const data: ApiResponse<Product> = await response.json();
-    return data.data || null;
+    return data.success ? data.data : null;
   } catch (error) {
     console.error(`Error fetching product ${id}:`, error);
     return null;

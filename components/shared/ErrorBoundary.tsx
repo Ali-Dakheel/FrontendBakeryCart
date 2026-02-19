@@ -36,7 +36,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
       }
 
       return (
-        <div className="min-h-[400px] flex items-center justify-center p-4">
+        <div role="alert" aria-live="assertive" className="min-h-100 flex items-center justify-center p-4">
           <Card className="max-w-md w-full border-destructive/50">
             <CardHeader>
               <div className="flex items-center gap-2">

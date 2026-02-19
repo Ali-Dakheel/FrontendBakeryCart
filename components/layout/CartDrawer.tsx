@@ -7,9 +7,8 @@ import { useUIStore } from "@/lib/stores/ui-store";
 import { useCart, useUpdateCartItem, useRemoveFromCart } from "@/lib/hooks/useCart";
 import { usePriceCalculation } from "@/lib/hooks/usePriceCalculation";
 import { PriceDisplay } from "@/components/shared/PriceDisplay";
-import { Minus, Plus, Trash2, ShoppingBag } from "lucide-react";
-import { VAT_RATE } from "@/lib/utils/constants";
-import { calculateVAT, calculateTotalWithVAT } from "@/lib/utils/formatters";
+import { QuantityControl } from "@/components/shared/QuantityControl";
+import { Trash2, ShoppingBag } from "lucide-react";
 import { getValidImageUrl } from "@/lib/utils/image";
 import { Link } from "@/i18n/navigation";
 import Image from "next/image";
@@ -26,8 +25,7 @@ export function CartDrawer() {
   const cartItems = cart?.items || [];
   const { subtotal, vat, total } = usePriceCalculation(cartItems);
 
-  const handleUpdateQuantity = (itemId: number, currentQty: number, change: number) => {
-    const newQuantity = currentQty + change;
+  const handleUpdateQuantity = (itemId: number, newQuantity: number) => {
     if (newQuantity > 0) {
       updateCartItem.mutate({ itemId, quantity: newQuantity });
     }
@@ -47,6 +45,13 @@ export function CartDrawer() {
           <SheetTitle className="font-display text-2xl text-navy">{t('cart.title')}</SheetTitle>
         </SheetHeader>
 
+        {/* Screen reader announcement for cart changes */}
+        <div aria-live="polite" aria-atomic="true" className="sr-only">
+          {cartItems.length > 0
+            ? `Cart updated: ${cartItems.length} item${cartItems.length === 1 ? "" : "s"}`
+            : "Cart is empty"}
+        </div>
+
         {isLoading ? (
           <div className="flex-1 flex items-center justify-center">
             <p className="text-navy/60">{t('cart.loadingCart')}</p>
@@ -62,14 +67,14 @@ export function CartDrawer() {
         ) : (
           <>
             {/* Cart Items */}
-            <div className="flex-1 overflow-y-auto space-y-4 py-4">
+            <ul aria-label={t('cart.title')} className="flex-1 overflow-y-auto space-y-4 py-4">
               {cartItems.map((item) => (
-                <div
+                <li
                   key={item.id}
                   className="flex gap-4 bg-white rounded-lg border border-border p-4"
                 >
                   {/* Product Image */}
-                  <div className="relative h-20 w-20 flex-shrink-0 rounded-md overflow-hidden bg-cream-dark">
+                  <div className="relative h-20 w-20 shrink-0 rounded-md overflow-hidden bg-cream-dark">
                     {(() => {
                       const { url: validUrl, isPlaceholder } = getValidImageUrl(item.product?.images, false);
 
@@ -101,41 +106,29 @@ export function CartDrawer() {
 
                     {/* Quantity Controls */}
                     <div className="flex items-center gap-2 mt-2">
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        className="h-7 w-7"
-                        onClick={() => handleUpdateQuantity(item.id, item.quantity, -1)}
+                      <QuantityControl
+                        value={item.quantity}
+                        min={1}
+                        onChange={(newQty) => handleUpdateQuantity(item.id, newQty)}
                         disabled={updateCartItem.isPending}
-                      >
-                        <Minus className="h-3 w-3" />
-                      </Button>
-                      <span className="text-sm font-medium text-navy w-8 text-center">
-                        {item.quantity}
-                      </span>
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        className="h-7 w-7"
-                        onClick={() => handleUpdateQuantity(item.id, item.quantity, 1)}
-                        disabled={updateCartItem.isPending}
-                      >
-                        <Plus className="h-3 w-3" />
-                      </Button>
+                        size="sm"
+                        productName={item.product?.name}
+                      />
                       <Button
                         variant="ghost"
                         size="icon"
                         className="h-7 w-7 ml-auto text-red-600 hover:text-red-700 hover:bg-red-50"
                         onClick={() => handleRemove(item.id)}
                         disabled={removeFromCart.isPending}
+                        aria-label={`Remove ${item.product?.name || "item"} from cart`}
                       >
                         <Trash2 className="h-3 w-3" />
                       </Button>
                     </div>
                   </div>
-                </div>
+                </li>
               ))}
-            </div>
+            </ul>
 
             {/* Cart Summary */}
             <div className="border-t pt-4 space-y-4">

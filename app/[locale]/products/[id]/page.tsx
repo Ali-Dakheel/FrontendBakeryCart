@@ -2,7 +2,8 @@
 
 import { useState, use } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, ShoppingCart, Minus, Plus, Package, Clock } from "lucide-react";
+import dynamic from "next/dynamic";
+import { ArrowLeft, ShoppingCart, Package, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
@@ -10,9 +11,14 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useProduct } from "@/lib/hooks/useProducts";
 import { useAddToCart } from "@/lib/hooks/useCart";
 import { useUIStore } from "@/lib/stores/ui-store";
-import { ProductImageGallery } from "@/components/products/ProductImageGallery";
 import { VariantSelector } from "@/components/products/VariantSelector";
+
+const ProductImageGallery = dynamic(
+  () => import("@/components/products/ProductImageGallery").then((m) => ({ default: m.ProductImageGallery })),
+  { loading: () => <Skeleton className="aspect-square w-full rounded-lg" /> }
+);
 import { PriceDisplay } from "@/components/shared/PriceDisplay";
+import { QuantityControl } from "@/components/shared/QuantityControl";
 import { BUSINESS_HOURS } from "@/lib/utils/constants";
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
@@ -49,13 +55,6 @@ export default function ProductDetailPage({
   const isAvailable = selectedVariant
     ? (selectedVariant.is_available ?? true)
     : product?.is_available || false;
-
-  const handleQuantityChange = (change: number) => {
-    const newQuantity = quantity + change;
-    if (newQuantity >= 1 && newQuantity <= maxStock) {
-      setQuantity(newQuantity);
-    }
-  };
 
   const handleAddToCart = () => {
     if (!product || !isAvailable) return;
@@ -172,27 +171,14 @@ export default function ProductDetailPage({
             <div className="space-y-3">
               <label className="text-base font-semibold text-navy">{t('common.quantity')}</label>
               <div className="flex items-center gap-4">
-                <div className="flex items-center border-2 border-border rounded-lg">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => handleQuantityChange(-1)}
-                    disabled={quantity <= 1}
-                  >
-                    <Minus className="h-4 w-4" />
-                  </Button>
-                  <span className="w-12 text-center font-semibold text-navy">
-                    {quantity}
-                  </span>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => handleQuantityChange(1)}
-                    disabled={quantity >= maxStock}
-                  >
-                    <Plus className="h-4 w-4" />
-                  </Button>
-                </div>
+                <QuantityControl
+                  value={quantity}
+                  min={1}
+                  max={maxStock}
+                  onChange={setQuantity}
+                  size="md"
+                  productName={product?.name}
+                />
                 {maxStock < 10 && isAvailable && (
                   <p className="text-sm text-orange-600">
                     {t('products.onlyLeft')} {maxStock} {t('products.leftInStock')}

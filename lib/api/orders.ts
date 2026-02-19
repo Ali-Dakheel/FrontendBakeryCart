@@ -10,8 +10,8 @@ export async function getOrders(page: number = 1): Promise<PaginatedResponse<Ord
 // Get single order
 export async function getOrder(id: number): Promise<Order> {
   const response = await apiClient.get<ApiResponse<Order>>(`/orders/${id}?include=items,status_histories`);
-  if (!response.data.data) {
-    throw new Error("Order not found");
+  if (!response.data.success) {
+    throw new Error(response.data.message || "Order not found");
   }
   return response.data.data;
 }
@@ -19,7 +19,7 @@ export async function getOrder(id: number): Promise<Order> {
 // Create order (checkout)
 export async function createOrder(data: CheckoutForm): Promise<Order> {
   const response = await apiClient.post<ApiResponse<Order>>("/orders", data);
-  if (!response.data.data) {
+  if (!response.data.success) {
     throw new Error(response.data.message || "Failed to create order");
   }
   return response.data.data;
@@ -28,7 +28,7 @@ export async function createOrder(data: CheckoutForm): Promise<Order> {
 // Cancel order
 export async function cancelOrder(id: number, reason: string): Promise<Order> {
   const response = await apiClient.post<ApiResponse<Order>>(`/orders/${id}/cancel`, { reason });
-  if (!response.data.data) {
+  if (!response.data.success) {
     throw new Error(response.data.message || "Failed to cancel order");
   }
   return response.data.data;

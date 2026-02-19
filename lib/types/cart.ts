@@ -8,7 +8,7 @@ export interface CartItem {
   product_id: number;
   product_variant_id?: number;
   quantity: number;
-  price_snapshot: number;
+  price_snapshot: number | string;
   created_at: string;
   updated_at: string;
   product?: Product;

@@ -81,11 +81,17 @@ apiClient.interceptors.response.use(
       error.message = "Session expired. Please refresh the page.";
     }
 
-    // Handle 429 Rate Limiting
-    if (error.response?.status === 429) {
+    // Handle distinct HTTP status codes with user-friendly messages
+    const status = error.response?.status;
+    if (status === 400) error.message = "Bad request. Please check your input.";
+    if (status === 403) error.message = "You do not have permission to do this.";
+    if (status === 404) error.message = "The requested item was not found.";
+    if (status === 429) {
       console.error("[API] Rate limit exceeded");
       error.message = "Too many requests. Please slow down.";
     }
+    if (status === 500) error.message = "Server error. Please try again later.";
+    if (status === 503) error.message = "Service temporarily unavailable. Please try again later.";
 
     // Handle network errors
     if (!error.response && error.message === 'Network Error') {

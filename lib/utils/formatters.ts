@@ -2,6 +2,13 @@ import { CURRENCY } from "./constants";
 import { format } from "date-fns";
 
 /**
+ * Safely convert a number or numeric string to a number
+ */
+export function toNumber(value: number | string): number {
+  return typeof value === "number" ? value : parseFloat(value);
+}
+
+/**
  * Format price in BHD with 3 decimal places
  * @param amount - The amount to format
  * @param locale - The locale for currency symbol (default: 'en')

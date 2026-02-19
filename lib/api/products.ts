@@ -1,6 +1,9 @@
 import { apiClient } from "./client";
 import type { Product, PaginatedResponse, ApiResponse } from "@/lib/types";
 
+type SortField = "price" | "created_at" | "sales_count" | "name";
+export type SortOption = SortField | `-${SortField}`;
+
 export interface ProductFilters {
   page?: number;
   per_page?: number;
@@ -10,7 +13,7 @@ export interface ProductFilters {
   is_available?: boolean;
   min_price?: number;
   max_price?: number;
-  sort?: string; // e.g., "price", "-price", "created_at", "-created_at"
+  sort?: SortOption;
 }
 
 // Get paginated products list
@@ -42,8 +45,8 @@ export async function getProducts(filters?: ProductFilters): Promise<PaginatedRe
 // Get single product by ID
 export async function getProduct(id: number): Promise<Product> {
   const response = await apiClient.get<ApiResponse<Product>>(`products/${id}?include=translations,images,variants,category`);
-  if (!response.data.data) {
-    throw new Error("Product not found");
+  if (!response.data.success) {
+    throw new Error(response.data.message || "Product not found");
   }
   return response.data.data;
 }
@@ -51,11 +54,11 @@ export async function getProduct(id: number): Promise<Product> {
 // Get featured products
 export async function getFeaturedProducts(limit: number = 6): Promise<Product[]> {
   const response = await apiClient.get<ApiResponse<Product[]>>(`products/featured?limit=${limit}`);
-  return response.data.data || [];
+  return response.data.success ? response.data.data : [];
 }
 
 // Get popular products
 export async function getPopularProducts(limit: number = 6): Promise<Product[]> {
   const response = await apiClient.get<ApiResponse<Product[]>>(`products/popular?limit=${limit}`);
-  return response.data.data || [];
+  return response.data.success ? response.data.data : [];
 }

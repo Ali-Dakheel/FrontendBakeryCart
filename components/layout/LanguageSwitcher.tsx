@@ -1,25 +1,25 @@
 "use client";
 
+import { useTransition } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useLocale } from "next-intl";
 import { Button } from "@/components/ui/button";
-import { localeNames, type Locale } from "@/i18n.config";
+import { type Locale } from "@/i18n.config";
 
 export function LanguageSwitcher() {
   const locale = useLocale() as Locale;
   const router = useRouter();
   const pathname = usePathname();
+  const [isPending, startTransition] = useTransition();
 
   const toggleLocale = () => {
-    // Switch to the opposite locale
-    const newLocale: Locale = locale === 'en' ? 'ar' : 'en';
+    const newLocale: Locale = locale === "en" ? "ar" : "en";
+    const pathnameWithoutLocale = pathname.replace(`/${locale}`, "");
 
-    // Remove the current locale from pathname
-    const pathnameWithoutLocale = pathname.replace(`/${locale}`, '');
-
-    // Navigate to the same page with new locale
-    router.push(`/${newLocale}${pathnameWithoutLocale || '/'}`);
-    router.refresh();
+    startTransition(() => {
+      router.push(`/${newLocale}${pathnameWithoutLocale || "/"}`);
+      router.refresh();
+    });
   };
 
   return (
@@ -27,10 +27,12 @@ export function LanguageSwitcher() {
       variant="ghost"
       size="sm"
       onClick={toggleLocale}
-      className="text-navy hover:text-sky hover:bg-sky/10 font-semibold"
+      disabled={isPending}
+      aria-busy={isPending}
       aria-label="Change language"
+      className="text-navy hover:text-sky hover:bg-sky/10 font-semibold"
     >
-      {locale === 'en' ? 'العربية' : 'English'}
+      {locale === "en" ? "العربية" : "English"}
     </Button>
   );
 }

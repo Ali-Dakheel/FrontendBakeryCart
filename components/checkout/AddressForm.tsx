@@ -1,54 +1,78 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import type { AddressForm as AddressFormData } from "@/lib/types";
+import { createAddressSchema, type AddressFormData } from "@/lib/schemas/address";
+import type { AddressForm as AddressFormValues } from "@/lib/types";
+import { useTranslations } from "next-intl";
 
 interface AddressFormProps {
-  initialData?: Partial<AddressFormData>;
-  onSubmit?: (data: AddressFormData) => void;
-  onChange?: (data: AddressFormData) => void;
+  initialData?: Partial<AddressFormValues>;
+  onSubmit?: (data: AddressFormValues) => void;
+  onChange?: (data: AddressFormValues) => void;
 }
 
 export function AddressForm({ initialData, onSubmit, onChange }: AddressFormProps) {
-  const [formData, setFormData] = useState<AddressFormData>({
-    label: initialData?.label || "",
-    street_address: initialData?.street_address || "",
-    building: initialData?.building || "",
-    flat: initialData?.flat || "",
-    area: initialData?.area || "",
-    city: initialData?.city || "Bahrain",
-    block: initialData?.block || "",
-    additional_directions: initialData?.additional_directions || "",
-    is_default: initialData?.is_default || false,
+  const t = useTranslations();
+  const schema = createAddressSchema((key) => t(key as never));
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    formState: { errors, isValid },
+  } = useForm<AddressFormData>({
+    resolver: zodResolver(schema),
+    mode: "onChange",
+    defaultValues: {
+      label: initialData?.label ?? "",
+      street_address: initialData?.street_address ?? "",
+      building: initialData?.building ?? "",
+      flat: initialData?.flat ?? "",
+      area: initialData?.area ?? "",
+      city: initialData?.city ?? "Bahrain",
+      block: initialData?.block ?? "",
+      additional_directions: initialData?.additional_directions ?? "",
+      is_default: initialData?.is_default ?? false,
+    },
   });
 
-  const handleChange = (field: keyof AddressFormData, value: string | boolean) => {
-    const newData = { ...formData, [field]: value };
-    setFormData(newData);
-    onChange?.(newData);
-  };
+  // Notify parent of live data when form is valid
+  const watched = watch();
+  useEffect(() => {
+    if (onChange && isValid) {
+      onChange(watched as AddressFormValues);
+    }
+  }, [JSON.stringify(watched), isValid]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSubmit?.(formData);
+  const handleFormSubmit = (data: AddressFormData) => {
+    onSubmit?.(data as AddressFormValues);
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-4">
       {/* Label */}
       <div className="space-y-2">
         <Label htmlFor="label">Address Label *</Label>
         <Input
           id="label"
           placeholder="e.g., Home, Work, Office"
-          value={formData.label}
-          onChange={(e) => handleChange("label", e.target.value)}
-          required
+          aria-required="true"
+          aria-invalid={!!errors.label}
+          aria-describedby={errors.label ? "label-error" : undefined}
+          {...register("label")}
         />
+        {errors.label && (
+          <p id="label-error" role="alert" className="text-xs text-destructive">
+            {errors.label.message}
+          </p>
+        )}
       </div>
 
       {/* Street Address */}
@@ -57,10 +81,16 @@ export function AddressForm({ initialData, onSubmit, onChange }: AddressFormProp
         <Input
           id="street_address"
           placeholder="Street name and number"
-          value={formData.street_address}
-          onChange={(e) => handleChange("street_address", e.target.value)}
-          required
+          aria-required="true"
+          aria-invalid={!!errors.street_address}
+          aria-describedby={errors.street_address ? "street-error" : undefined}
+          {...register("street_address")}
         />
+        {errors.street_address && (
+          <p id="street-error" role="alert" className="text-xs text-destructive">
+            {errors.street_address.message}
+          </p>
+        )}
       </div>
 
       {/* Building & Flat */}
@@ -70,8 +100,7 @@ export function AddressForm({ initialData, onSubmit, onChange }: AddressFormProp
           <Input
             id="building"
             placeholder="Building no."
-            value={formData.building}
-            onChange={(e) => handleChange("building", e.target.value)}
+            {...register("building")}
           />
         </div>
         <div className="space-y-2">
@@ -79,8 +108,7 @@ export function AddressForm({ initialData, onSubmit, onChange }: AddressFormProp
           <Input
             id="flat"
             placeholder="Flat no."
-            value={formData.flat}
-            onChange={(e) => handleChange("flat", e.target.value)}
+            {...register("flat")}
           />
         </div>
       </div>
@@ -92,18 +120,23 @@ export function AddressForm({ initialData, onSubmit, onChange }: AddressFormProp
           <Input
             id="area"
             placeholder="e.g., SAAR, Juffair"
-            value={formData.area}
-            onChange={(e) => handleChange("area", e.target.value)}
-            required
+            aria-required="true"
+            aria-invalid={!!errors.area}
+            aria-describedby={errors.area ? "area-error" : undefined}
+            {...register("area")}
           />
+          {errors.area && (
+            <p id="area-error" role="alert" className="text-xs text-destructive">
+              {errors.area.message}
+            </p>
+          )}
         </div>
         <div className="space-y-2">
           <Label htmlFor="block">Block</Label>
           <Input
             id="block"
             placeholder="Block no."
-            value={formData.block}
-            onChange={(e) => handleChange("block", e.target.value)}
+            {...register("block")}
           />
         </div>
       </div>
@@ -113,10 +146,16 @@ export function AddressForm({ initialData, onSubmit, onChange }: AddressFormProp
         <Label htmlFor="city">City *</Label>
         <Input
           id="city"
-          value={formData.city}
-          onChange={(e) => handleChange("city", e.target.value)}
-          required
+          aria-required="true"
+          aria-invalid={!!errors.city}
+          aria-describedby={errors.city ? "city-error" : undefined}
+          {...register("city")}
         />
+        {errors.city && (
+          <p id="city-error" role="alert" className="text-xs text-destructive">
+            {errors.city.message}
+          </p>
+        )}
       </div>
 
       {/* Additional Directions */}
@@ -125,9 +164,8 @@ export function AddressForm({ initialData, onSubmit, onChange }: AddressFormProp
         <Textarea
           id="additional_directions"
           placeholder="Landmarks, special instructions..."
-          value={formData.additional_directions}
-          onChange={(e) => handleChange("additional_directions", e.target.value)}
           rows={3}
+          {...register("additional_directions")}
         />
       </div>
 
@@ -135,15 +173,10 @@ export function AddressForm({ initialData, onSubmit, onChange }: AddressFormProp
       <div className="flex items-center space-x-2 rtl:space-x-reverse">
         <Checkbox
           id="is_default"
-          checked={formData.is_default}
-          onCheckedChange={(checked) =>
-            handleChange("is_default", checked === true)
-          }
+          onCheckedChange={(checked) => setValue("is_default", checked === true)}
+          defaultChecked={initialData?.is_default ?? false}
         />
-        <Label
-          htmlFor="is_default"
-          className="text-sm font-normal cursor-pointer"
-        >
+        <Label htmlFor="is_default" className="text-sm font-normal cursor-pointer">
           Set as default address
         </Label>
       </div>

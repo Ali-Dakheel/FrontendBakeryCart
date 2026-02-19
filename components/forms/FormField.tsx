@@ -24,14 +24,23 @@ export function FormField({
   icon: Icon,
   error,
   register,
+  required,
   autoComplete,
   helperText,
 }: FormFieldProps) {
+  const errorId = error ? `${id}-error` : undefined;
+  const helperId = helperText ? `${id}-helper` : undefined;
+  const describedBy = [errorId, helperId].filter(Boolean).join(" ") || undefined;
+
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between">
         <Label htmlFor={id}>{label}</Label>
-        {helperText}
+        {helperText && (
+          <span id={helperId} className="text-xs text-navy/60">
+            {helperText}
+          </span>
+        )}
       </div>
       <div className="relative">
         {Icon && (
@@ -45,10 +54,12 @@ export function FormField({
           autoComplete={autoComplete}
           {...register}
           aria-invalid={error ? "true" : "false"}
+          aria-required={required}
+          aria-describedby={describedBy}
         />
       </div>
       {error && (
-        <p className="text-sm text-red-600 mt-1" role="alert">
+        <p id={errorId} className="text-sm text-red-600 mt-1" role="alert">
           {error}
         </p>
       )}

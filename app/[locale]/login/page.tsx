@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams, useParams } from "next/navigation";
 import { Mail, Lock, ArrowRight } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -14,8 +14,13 @@ import { createLoginSchema, type LoginFormData } from "@/lib/schemas/auth";
 
 export default function LoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const { locale } = useParams<{ locale: string }>();
   const login = useLogin();
   const t = useTranslations();
+
+  // proxy.ts stores the path without locale prefix (e.g. /checkout)
+  const redirectPath = searchParams.get('redirect');
 
   // Validation schema with translated messages
   const loginSchema = createLoginSchema(t);
@@ -32,7 +37,10 @@ export default function LoginPage() {
   const onSubmit = async (data: LoginFormData) => {
     login.mutate(data, {
       onSuccess: () => {
-        router.push("/");
+        const destination = redirectPath
+          ? `/${locale}${redirectPath}`
+          : `/${locale}`;
+        router.push(destination);
       },
     });
   };

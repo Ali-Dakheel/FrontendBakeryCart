@@ -351,6 +351,10 @@
   .animate-delay-400 {
     animation-delay: 400ms;
   }
+
+  .animate-delay-500 {
+    animation-delay: 500ms;
+  }
 }
 
 /* Accessibility: Respect reduced motion preferences */

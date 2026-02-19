@@ -8,8 +8,8 @@ interface AuthResponse {
 // Get current authenticated user
 export async function getCurrentUser(): Promise<User> {
   const response = await apiClient.get<ApiResponse<{ user: User }>>("/auth/user");
-  if (!response.data.data?.user) {
-    throw new Error("User data not found");
+  if (!response.data.success) {
+    throw new Error(response.data.message || "User data not found");
   }
   return response.data.data.user;
 }
@@ -21,7 +21,7 @@ export async function login(credentials: LoginForm): Promise<User> {
 
   const response = await apiClient.post<ApiResponse<AuthResponse>>("/auth/login", credentials);
 
-  if (!response.data.data?.user) {
+  if (!response.data.success) {
     throw new Error(response.data.message || "Login failed");
   }
 
@@ -36,7 +36,7 @@ export async function register(data: RegisterForm): Promise<User> {
 
   const response = await apiClient.post<ApiResponse<AuthResponse>>("/auth/register", data);
 
-  if (!response.data.data?.user) {
+  if (!response.data.success) {
     throw new Error(response.data.message || "Registration failed");
   }
 

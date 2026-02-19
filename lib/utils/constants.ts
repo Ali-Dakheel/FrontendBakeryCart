@@ -8,23 +8,25 @@ export const ORDER_STATUS = {
   CANCELLED: "cancelled",
 } as const;
 
-export const ORDER_STATUS_LABELS: Record<string, string> = {
+type OrderStatusValue = (typeof ORDER_STATUS)[keyof typeof ORDER_STATUS];
+
+export const ORDER_STATUS_LABELS = {
   pending: "Pending",
   confirmed: "Confirmed",
   preparing: "Preparing",
   out_for_delivery: "Out for Delivery",
   delivered: "Delivered",
   cancelled: "Cancelled",
-};
+} satisfies Record<OrderStatusValue, string>;
 
-export const ORDER_STATUS_COLORS: Record<string, string> = {
+export const ORDER_STATUS_COLORS = {
   pending: "bg-yellow-100 text-yellow-800",
   confirmed: "bg-blue-100 text-blue-800",
   preparing: "bg-purple-100 text-purple-800",
   out_for_delivery: "bg-indigo-100 text-indigo-800",
   delivered: "bg-green-100 text-green-800",
   cancelled: "bg-red-100 text-red-800",
-};
+} satisfies Record<OrderStatusValue, string>;
 
 // Payment Methods
 export const PAYMENT_METHODS = {
@@ -34,12 +36,14 @@ export const PAYMENT_METHODS = {
   BANK_TRANSFER: "bank_transfer",
 } as const;
 
-export const PAYMENT_METHOD_LABELS: Record<string, string> = {
+type PaymentMethodValue = (typeof PAYMENT_METHODS)[keyof typeof PAYMENT_METHODS];
+
+export const PAYMENT_METHOD_LABELS = {
   cash: "Cash on Delivery",
   card: "Credit/Debit Card",
   benefit_pay: "Benefit Pay",
   bank_transfer: "Bank Transfer",
-};
+} satisfies Record<PaymentMethodValue, string>;
 
 // Business Hours
 export const BUSINESS_HOURS = {
