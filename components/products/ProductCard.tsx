@@ -16,6 +16,7 @@ import { getProduct } from "@/lib/api/products";
 import type { Product } from "@/lib/types";
 import { getValidImageUrl } from "@/lib/utils/image";
 import { getPricingUnitKey } from "@/lib/utils/pricing";
+import { WishlistButton } from "@/components/products/WishlistButton";
 
 interface ProductCardProps {
   product: Product;
@@ -115,6 +116,11 @@ function ProductCardComponent({ product, index = 0 }: ProductCardProps) {
                 {!product.is_available && (
                   <Badge variant="destructive">{t('products.outOfStock')}</Badge>
                 )}
+              </div>
+
+              {/* Wishlist button */}
+              <div className="absolute top-3 right-3">
+                <WishlistButton productId={product.id} variant="icon" />
               </div>
             </div>
 

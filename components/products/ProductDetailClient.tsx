@@ -12,6 +12,8 @@ import { useProduct } from "@/lib/hooks/useProducts";
 import { useAddToCart } from "@/lib/hooks/useCart";
 import { useUIStore } from "@/lib/stores/ui-store";
 import { VariantSelector } from "@/components/products/VariantSelector";
+import { WishlistButton } from "@/components/products/WishlistButton";
+import { ProductReviews } from "@/components/products/ProductReviews";
 
 const ProductImageGallery = dynamic(
   () => import("@/components/products/ProductImageGallery").then((m) => ({ default: m.ProductImageGallery })),
@@ -115,7 +117,7 @@ export function ProductDetailClient() {
         </Button>
 
         {/* Product Details */}
-        <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
+        <div className="grid md:grid-cols-2 gap-8 lg:gap-12" id="product-main">
           {/* Image Gallery */}
           <div>
             <ProductImageGallery
@@ -182,24 +184,27 @@ export function ProductDetailClient() {
               </div>
             </div>
 
-            {/* Add to Cart */}
-            <Button
-              size="lg"
-              onClick={handleAddToCart}
-              disabled={!isAvailable || addToCart.isPending}
-              className="w-full bg-navy hover:bg-navy-light text-lg"
-            >
-              {addToCart.isPending ? (
-                t('products.adding')
-              ) : !isAvailable ? (
-                t('products.outOfStock')
-              ) : (
-                <>
-                  <ShoppingCart className="h-5 w-5 mr-2 rtl:ml-2 rtl:mr-0" />
-                  {t('products.addToCart')}
-                </>
-              )}
-            </Button>
+            {/* Add to Cart + Wishlist */}
+            <div className="flex gap-3">
+              <Button
+                size="lg"
+                onClick={handleAddToCart}
+                disabled={!isAvailable || addToCart.isPending}
+                className="flex-1 bg-navy hover:bg-navy-light text-lg"
+              >
+                {addToCart.isPending ? (
+                  t('products.adding')
+                ) : !isAvailable ? (
+                  t('products.outOfStock')
+                ) : (
+                  <>
+                    <ShoppingCart className="h-5 w-5 mr-2 rtl:ml-2 rtl:mr-0" />
+                    {t('products.addToCart')}
+                  </>
+                )}
+              </Button>
+              <WishlistButton productId={productId} variant="full" />
+            </div>
 
             {/* Info Cards */}
             <div className="grid grid-cols-2 gap-4 pt-4">
@@ -231,6 +236,11 @@ export function ProductDetailClient() {
               </div>
             )}
           </div>
+        </div>
+
+        {/* Reviews */}
+        <div className="mt-12 pt-8 border-t border-navy/10">
+          <ProductReviews productId={productId} />
         </div>
       </div>
     </div>

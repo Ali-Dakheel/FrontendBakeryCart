@@ -323,6 +323,30 @@
     "cancelOrder": "إلغاء الطلب",
     "reorder": "إعادة الطلب"
   },
+  "reviews": {
+    "title": "التقييمات",
+    "reviewsCount": "تقييم",
+    "writeReview": "اكتب تقييماً",
+    "yourRating": "تقييمك",
+    "yourComment": "تعليقك",
+    "commentPlaceholder": "شارك تجربتك مع هذا المنتج...",
+    "submit": "إرسال التقييم",
+    "noReviews": "لا توجد تقييمات بعد. كن أول من يقيّم!",
+    "loginToReview": "سجل الدخول لكتابة تقييم.",
+    "verified": "شراء موثّق",
+    "anonymous": "مجهول",
+    "helpful": "مفيد",
+    "delete": "حذف التقييم",
+    "adminResponse": "رد المخبز"
+  },
+  "wishlist": {
+    "add": "أضف إلى المفضلة",
+    "remove": "إزالة من المفضلة",
+    "title": "مفضلتي",
+    "empty": "قائمة المفضلة فارغة",
+    "emptyDescription": "احفظ منتجاتك المفضلة لشرائها لاحقاً.",
+    "continueShopping": "تصفح المنتجات"
+  },
   "footer": {
     "businessHours": "ساعات العمل",
     "location": "الموقع",

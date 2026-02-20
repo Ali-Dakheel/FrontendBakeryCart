@@ -52,4 +52,11 @@ export const queryKeys = {
     lists: () => [...queryKeys.categories.all(), "list"] as const,
     detail: (slug: string) => [...queryKeys.categories.all(), slug] as const,
   },
+  reviews: {
+    all: () => ["reviews"] as const,
+    list: (productId: number, page?: number) => [...queryKeys.reviews.all(), productId, page] as const,
+  },
+  wishlist: {
+    all: () => ["wishlist"] as const,
+  },
 } as const;

@@ -323,6 +323,30 @@
     "cancelOrder": "Cancel Order",
     "reorder": "Reorder"
   },
+  "reviews": {
+    "title": "Reviews",
+    "reviewsCount": "reviews",
+    "writeReview": "Write a Review",
+    "yourRating": "Your Rating",
+    "yourComment": "Your Comment",
+    "commentPlaceholder": "Share your experience with this product...",
+    "submit": "Submit Review",
+    "noReviews": "No reviews yet. Be the first to review!",
+    "loginToReview": "Log in to write a review.",
+    "verified": "Verified Purchase",
+    "anonymous": "Anonymous",
+    "helpful": "Helpful",
+    "delete": "Delete review",
+    "adminResponse": "Response from bakery"
+  },
+  "wishlist": {
+    "add": "Add to Wishlist",
+    "remove": "Remove from Wishlist",
+    "title": "My Wishlist",
+    "empty": "Your wishlist is empty",
+    "emptyDescription": "Save your favorite products to buy them later.",
+    "continueShopping": "Browse Products"
+  },
   "footer": {
     "businessHours": "Business Hours",
     "location": "Location",
