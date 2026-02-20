@@ -78,7 +78,7 @@ export function Footer() {
                     { href: "/orders", label: t('nav.orders') },
                   ].map(({ href, label }) => (
                     <li key={href}>
-                      <Link href={href as any} className="text-navy/70 hover:text-sky hover:translate-x-1 transition-all inline-flex">
+                      <Link href={href} className="text-navy/70 hover:text-sky hover:translate-x-1 transition-all inline-flex">
                         {label}
                       </Link>
                     </li>

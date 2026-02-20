@@ -2,8 +2,9 @@
  * Server-side API functions for Server Components
  * Uses native fetch with Next.js caching and revalidation
  */
+import 'server-only';
 
-import type { Product } from "@/lib/types";
+import type { Product, Category } from "@/lib/types";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
@@ -63,7 +64,7 @@ export async function getPopularProductsServer(limit: number = 6): Promise<Produ
  * Get single product for server components
  * Cached for 5 minutes
  */
-export async function getProductServer(id: number): Promise<Product | null> {
+export async function getProductServer(id: number, locale = 'en'): Promise<Product | null> {
   try {
     const response = await fetch(
       `${API_URL}/api/v1/products/${id}?include=translations,images,variants,category`,
@@ -74,7 +75,7 @@ export async function getProductServer(id: number): Promise<Product | null> {
         },
         headers: {
           'Accept': 'application/json',
-          'Accept-Language': 'en',
+          'Accept-Language': locale,
         },
       }
     );
@@ -87,6 +88,38 @@ export async function getProductServer(id: number): Promise<Product | null> {
     }
 
     const data = await response.json() as { data?: Product };
+    return data.data ?? null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Get single category by slug for server components
+ * Cached for 10 minutes
+ */
+export async function getCategoryServer(slug: string, locale = 'en'): Promise<Category | null> {
+  try {
+    const response = await fetch(
+      `${API_URL}/api/v1/categories/${slug}?include=translations,children,children.translations,products,products.translations,products.images`,
+      {
+        next: {
+          revalidate: 600, // 10 minutes
+          tags: ['categories', `category-${slug}`]
+        },
+        headers: {
+          'Accept': 'application/json',
+          'Accept-Language': locale,
+        },
+      }
+    );
+
+    if (!response.ok) {
+      if (response.status === 404) return null;
+      throw new Error(`Failed to fetch category: ${response.status}`);
+    }
+
+    const data = await response.json() as { data?: Category };
     return data.data ?? null;
   } catch {
     return null;
