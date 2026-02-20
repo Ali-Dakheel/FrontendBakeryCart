@@ -57,9 +57,7 @@ export async function changePassword(data: {
   password: string;
   password_confirmation: string;
 }): Promise<void> {
-  const response = await apiClient.post<ApiResponse<null>>("/auth/change-password", data);
-
-  if (!response.data.success) {
-    throw new Error(response.data.message || "Password change failed");
-  }
+  // On success the backend returns 200 — no body check needed.
+  // On failure (401/422) the axios interceptor throws with a user-friendly message.
+  await apiClient.post("/auth/change-password", data);
 }

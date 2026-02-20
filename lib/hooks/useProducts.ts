@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { productQueries } from "@/lib/queries/products";
 import type { ProductFilters } from "@/lib/api/products";
 
@@ -23,4 +23,9 @@ export function useFeaturedProducts(limit?: number) {
 // Get popular products
 export function usePopularProducts(limit?: number) {
   return useQuery(productQueries.popular(limit));
+}
+
+// Suspense variant — data is always defined, pairs with <Suspense> boundary
+export function useProductSuspense(id: number) {
+  return useSuspenseQuery(productQueries.detail(id));
 }

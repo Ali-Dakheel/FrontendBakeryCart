@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Activity } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -31,11 +31,6 @@ export function ProductImageGallery({ images, productName }: ProductImageGallery
     );
   }
 
-  const currentImage = validImages[currentIndex];
-  const imageUrl = getImageUrl(currentImage);
-
-  // Check if this is a placehold.co URL (needs unoptimized flag)
-  const isPlaceholder = imageUrl.includes('placehold.co');
   const hasPrevious = currentIndex > 0;
   const hasNext = currentIndex < validImages.length - 1;
 
@@ -53,17 +48,24 @@ export function ProductImageGallery({ images, productName }: ProductImageGallery
 
   return (
     <div className="space-y-4">
-      {/* Main Image */}
+      {/* Main Image — Activity keeps each image mounted so interaction state (zoom, hover) persists across switches */}
       <div className="relative aspect-square rounded-lg overflow-hidden bg-cream-dark group">
-        <Image
-          src={imageUrl}
-          alt={getImageAlt(currentImage, productName)}
-          fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
-          className="object-cover"
-          priority={currentIndex === 0}
-          unoptimized={isPlaceholder}
-        />
+        {validImages.map((image, index) => {
+          const imageUrl = getImageUrl(image);
+          return (
+            <Activity key={image.id} mode={currentIndex === index ? "visible" : "hidden"}>
+              <Image
+                src={imageUrl}
+                alt={getImageAlt(image, productName)}
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
+                className="object-cover"
+                priority={index === 0}
+                unoptimized={imageUrl.includes("placehold.co")}
+              />
+            </Activity>
+          );
+        })}
 
         {/* Navigation Arrows */}
         {validImages.length > 1 && (

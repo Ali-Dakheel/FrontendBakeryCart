@@ -7,6 +7,11 @@ const withBundleAnalyzer = withBundleAnalyzerFactory({
   enabled: process.env.ANALYZE === 'true',
 });
 
+// Strip /api/v1 suffix so connect-src points to the API origin, not the versioned path
+const apiOrigin = (process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:8000/api/v1')
+  .replace(/\/api\/v1$/, '')
+  .replace(/\/api$/, '');
+
 const nextConfig: NextConfig = {
   // Enable React 19.2 Compiler (automatic memoization)
   reactCompiler: true,
@@ -70,7 +75,7 @@ const nextConfig: NextConfig = {
           },
           {
             key: 'Content-Security-Policy',
-            value: "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https: http:; font-src 'self' data:; connect-src 'self' http://localhost:8000;"
+            value: `default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' ${apiOrigin};`,
           },
           {
             key: 'Permissions-Policy',

@@ -2,6 +2,13 @@
 
 import { AlertTriangle, RefreshCw } from "lucide-react";
 
+// Detect locale from the URL path since next-intl context is unavailable here.
+// Falls back to 'en' for any non-Arabic locale.
+function getLocale(): string {
+  if (typeof window === "undefined") return "en";
+  return window.location.pathname.split("/")[1] === "ar" ? "ar" : "en";
+}
+
 /**
  * Global Error Boundary
  * Catches errors in the root layout
@@ -15,7 +22,7 @@ export default function GlobalError({
   reset: () => void;
 }) {
   return (
-    <html lang="en">
+    <html lang={getLocale()} dir={getLocale() === "ar" ? "rtl" : "ltr"}>
       <body>
         <div style={{
           minHeight: '100vh',

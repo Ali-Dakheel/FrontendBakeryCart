@@ -4,6 +4,11 @@ export type ApiResponse<T> =
   | { success: true; data: T; message?: string }
   | { success: false; data?: never; message: string; errors?: Record<string, string[]> };
 
+export type ApiErrorResponse = {
+  message: string;
+  errors?: Record<string, string[]>;
+};
+
 export interface PaginatedResponse<T> {
   success: boolean;
   data: T[];
