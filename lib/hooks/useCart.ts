@@ -106,7 +106,7 @@ export function useUpdateCartItem() {
             ...old.cart,
             items: old.cart.items?.map((item: CartItem) =>
               item.id === itemId
-                ? { ...item, quantity, subtotal: item.price_snapshot * quantity }
+                ? { ...item, quantity, subtotal: Number(item.price_snapshot) * quantity }
                 : item
             ),
           },

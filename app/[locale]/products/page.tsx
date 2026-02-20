@@ -5,7 +5,7 @@ import { useProducts } from "@/lib/hooks/useProducts";
 import { ProductGrid } from "@/components/products/ProductGrid";
 import { ProductFilters, type FilterValues } from "@/components/products/ProductFilters";
 import { Pagination } from "@/components/products/Pagination";
-import type { ProductFilters as APIFilters } from "@/lib/api/products";
+import type { ProductFilters as APIFilters, SortOption } from "@/lib/api/products";
 import { useTranslations } from "next-intl";
 
 export default function ProductsPage() {
@@ -40,9 +40,9 @@ export default function ProductsPage() {
     if (filters.sortBy) {
       if (filters.sortBy === "featured") {
         // Sort by is_featured descending (featured items first)
-        params.sort = "-is_featured";
+        params.sort = "-is_featured" as SortOption;
       } else {
-        params.sort = filters.sortBy;
+        params.sort = filters.sortBy as SortOption;
       }
     }
 

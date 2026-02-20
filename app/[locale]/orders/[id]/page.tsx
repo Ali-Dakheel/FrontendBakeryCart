@@ -210,7 +210,7 @@ export default function OrderDetailPage({
                 <h2 className="font-semibold text-navy text-lg">Payment Method</h2>
               </div>
               <p className="text-navy/70">
-                {PAYMENT_METHOD_LABELS[order.payment_method] || order.payment_method}
+                {(PAYMENT_METHOD_LABELS as Record<string, string>)[order.payment_method] || order.payment_method}
               </p>
               <p className="text-sm text-navy/50 mt-1">
                 Status: <span className="capitalize">{order.payment_status}</span>

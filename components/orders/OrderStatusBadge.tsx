@@ -7,8 +7,8 @@ interface OrderStatusBadgeProps {
 }
 
 export function OrderStatusBadge({ status, className }: OrderStatusBadgeProps) {
-  const statusColor = ORDER_STATUS_COLORS[status] || "bg-gray-100 text-gray-800";
-  const statusLabel = ORDER_STATUS_LABELS[status] || status;
+  const statusColor = (ORDER_STATUS_COLORS as Record<string, string>)[status] || "bg-gray-100 text-gray-800";
+  const statusLabel = (ORDER_STATUS_LABELS as Record<string, string>)[status] || status;
 
   return (
     <Badge className={`${statusColor} ${className}`}>

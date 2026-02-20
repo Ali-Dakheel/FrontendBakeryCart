@@ -6,7 +6,9 @@ import 'server-only';
 
 import type { Product, Category } from "@/lib/types";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+const API_URL = (process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:8000/api/v1')
+  .replace(/\/api\/v1$/, '')
+  .replace(/\/api$/, '');
 
 /**
  * Get featured products for server components

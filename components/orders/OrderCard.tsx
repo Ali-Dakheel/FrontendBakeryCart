@@ -17,8 +17,8 @@ interface OrderCardProps {
 }
 
 function OrderCardComponent({ order, index = 0 }: OrderCardProps) {
-  const statusColor = ORDER_STATUS_COLORS[order.status] || "bg-gray-100 text-gray-800";
-  const statusLabel = ORDER_STATUS_LABELS[order.status] || order.status;
+  const statusColor = (ORDER_STATUS_COLORS as Record<string, string>)[order.status] || "bg-gray-100 text-gray-800";
+  const statusLabel = (ORDER_STATUS_LABELS as Record<string, string>)[order.status] || order.status;
 
   return (
     <div
