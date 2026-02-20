@@ -176,7 +176,7 @@ export function ProductDetailClient() {
                   size="md"
                   productName={product?.name}
                 />
-                {maxStock < 10 && isAvailable && (
+                {maxStock > 0 && maxStock < 10 && isAvailable && (
                   <p className="text-sm text-orange-600">
                     {t('products.onlyLeft')} {maxStock} {t('products.leftInStock')}
                   </p>

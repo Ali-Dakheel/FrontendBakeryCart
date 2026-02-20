@@ -87,7 +87,7 @@ export function CategoryDetailClient() {
             <h1 className="font-display text-4xl md:text-5xl font-bold text-navy">
               {category.name}
             </h1>
-            {category.products_count !== undefined && (
+            {category.products_count !== undefined && !(hasChildren && category.products_count === 0) && (
               <p className="text-navy/60 mt-2">
                 {category.products_count} {category.products_count === 1 ? t('products.product') : t('products.products')}
               </p>
@@ -135,7 +135,7 @@ export function CategoryDetailClient() {
       {hasProducts && (
         <div>
           <h2 className="font-display text-2xl font-bold text-navy mb-6">
-            {hasChildren ? t('categories.allProducts') : t('categories.products')}
+            {t('categories.allProducts')}
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {category.products?.map((product, index) => (

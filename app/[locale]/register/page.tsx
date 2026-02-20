@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Mail, Lock, User, Phone, ArrowRight } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -14,6 +14,8 @@ import { createRegisterSchema, type RegisterFormData } from "@/lib/schemas/auth"
 
 export default function RegisterPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectPath = searchParams.get('redirect');
   const register = useRegister();
   const t = useTranslations();
 
@@ -150,7 +152,7 @@ export default function RegisterPage() {
             </p>
 
             <Button asChild variant="outline" className="w-full">
-              <Link href="/">{t('auth.continueAsGuest')}</Link>
+              <Link href={redirectPath || "/"}>{t('auth.continueAsGuest')}</Link>
             </Button>
           </div>
 

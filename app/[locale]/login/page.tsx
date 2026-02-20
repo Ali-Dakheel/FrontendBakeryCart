@@ -137,7 +137,7 @@ export default function LoginPage() {
               variant="outline"
               className="w-full"
             >
-              <Link href="/">{t('auth.continueAsGuest')}</Link>
+              <Link href={redirectPath || "/"}>{t('auth.continueAsGuest')}</Link>
             </Button>
           </div>
         </div>
