@@ -24,11 +24,7 @@ export const apiClient = axios.create({
 axiosRetry(apiClient, {
   retries: 3,
   retryDelay: axiosRetry.exponentialDelay,
-  retryCondition: (error) => {
-    // Retry on network errors or 5xx server errors
-    return axiosRetry.isNetworkOrIdempotentRequestError(error) ||
-           (error.response?.status ?? 0) >= 500;
-  },
+  retryCondition: (error) => axiosRetry.isNetworkError(error),
   onRetry: (retryCount, error, requestConfig) => {
     if (process.env.NODE_ENV === 'development') {
       console.log(`[API] Retry attempt ${retryCount} for ${requestConfig.url}`);

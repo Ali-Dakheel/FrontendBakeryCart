@@ -5,7 +5,7 @@ import { Link } from "@/i18n/navigation";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { getQueryClient } from "@/lib/utils/queryClient";
 import { getFeaturedProductsServer } from "@/lib/api/server";
-import { queryKeys } from "@/lib/utils/queryKeys";
+import { productQueries } from "@/lib/queries/products";
 import { FeaturedSection } from "@/components/home/FeaturedSection";
 
 /**
@@ -18,7 +18,7 @@ export default async function Home() {
 
   const queryClient = getQueryClient();
   await queryClient.prefetchQuery({
-    queryKey: queryKeys.products.featured(6),
+    ...productQueries.featured(6),
     queryFn: () => getFeaturedProductsServer(6),
   });
 
