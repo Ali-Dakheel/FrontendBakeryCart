@@ -1,23 +1,12 @@
 import { apiClient } from "./client";
 import type { WishlistItem } from "@/lib/types";
 
-export interface WishlistResponse {
-  data: WishlistItem[];
-  count: number;
+export async function getWishlist(): Promise<WishlistItem[]> {
+  const response = await apiClient.get("wishlist");
+  return (response.data as { data?: { wishlist?: WishlistItem[] } }).data?.wishlist ?? [];
 }
 
-export interface ToggleWishlistResponse {
-  in_wishlist: boolean;
-}
-
-export async function getWishlist(): Promise<WishlistResponse> {
-  const response = await apiClient.get<WishlistResponse>("wishlist");
-  return response.data;
-}
-
-export async function toggleWishlist(productId: number): Promise<ToggleWishlistResponse> {
-  const response = await apiClient.post<ToggleWishlistResponse>(
-    `wishlist/products/${productId}`
-  );
-  return response.data;
+export async function toggleWishlist(productId: number): Promise<boolean> {
+  const response = await apiClient.post(`wishlist/products/${productId}`);
+  return (response.data as { data?: { in_wishlist?: boolean } }).data?.in_wishlist ?? false;
 }

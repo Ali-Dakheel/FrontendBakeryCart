@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { addToCart, updateCartItem, removeFromCart, clearCart } from "@/lib/api/cart";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 import type { AxiosError } from "axios";
 import type { Cart, CartItem, ApiErrorResponse } from "@/lib/types";
 import { queryKeys } from "@/lib/utils/queryKeys";
@@ -11,6 +12,7 @@ export function useCart() {
 }
 
 export function useAddToCart() {
+  const t = useTranslations("cart");
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -60,7 +62,7 @@ export function useAddToCart() {
       return { previousCart };
     },
     onSuccess: () => {
-      toast.success("Added to cart!");
+      toast.success(t("itemAdded"));
     },
     onError: (error: AxiosError<ApiErrorResponse>, _variables, context) => {
       if (context?.previousCart) {
@@ -115,6 +117,7 @@ export function useUpdateCartItem() {
 }
 
 export function useRemoveFromCart() {
+  const t = useTranslations("cart");
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -138,7 +141,7 @@ export function useRemoveFromCart() {
       return { previousCart };
     },
     onSuccess: () => {
-      toast.success("Item removed from cart");
+      toast.success(t("itemRemoved"));
     },
     onError: (error: AxiosError<ApiErrorResponse>, _variables, context) => {
       if (context?.previousCart) {
@@ -153,13 +156,14 @@ export function useRemoveFromCart() {
 }
 
 export function useClearCart() {
+  const t = useTranslations("cart");
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: clearCart,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.cart.all() });
-      toast.success("Cart cleared");
+      toast.success(t("cleared"));
     },
     onError: (error: AxiosError<ApiErrorResponse>) => {
       toast.error(error.response?.data?.message || "Failed to clear cart");

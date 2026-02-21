@@ -61,7 +61,8 @@
     "refresh": "تحديث",
     "or": "أو",
     "and": "و",
-    "currency": "د.ب"
+    "currency": "د.ب",
+    "comingSoon": "قريباً"
   },
   "home": {
     "hero": {
@@ -212,7 +213,8 @@
     "itemUpdated": "تم تحديث السلة",
     "shopProducts": "تسوق المنتجات",
     "viewFullCart": "عرض السلة كاملة",
-    "loadingCart": "جاري تحميل السلة..."
+    "loadingCart": "جاري تحميل السلة...",
+    "cleared": "تم مسح السلة"
   },
   "checkout": {
     "title": "إتمام الطلب",
@@ -245,7 +247,11 @@
     "successStep3": "سيتواصل معك فريق التوصيل قبل التوصيل",
     "successStep4": "تابع حالة طلبك في حسابك",
     "successViewOrder": "عرض تفاصيل الطلب",
-    "successNeedHelp": "تحتاج مساعدة؟ تواصل معنا على إنستغرام"
+    "successNeedHelp": "تحتاج مساعدة؟ تواصل معنا على إنستغرام",
+    "paymentCashDesc": "ادفع نقداً عند استلام طلبك",
+    "paymentCardDesc": "ادفع بأمان ببطاقتك الائتمانية أو بطاقة الخصم",
+    "paymentBenefitDesc": "ادفع باستخدام تطبيق بنفت باي",
+    "paymentCodNote": "للدفع عند الاستلام، يرجى إحضار المبلغ بالضبط. سيتولى فريق التوصيل تحصيل الدفع عند وصول طلبك."
   },
   "auth": {
     "welcomeBack": "مرحباً بعودتك",
@@ -269,6 +275,16 @@
     "termsAgreement": "بإنشاء حساب، فإنك توافق على",
     "terms": "شروط الخدمة",
     "privacy": "سياسة الخصوصية",
+    "forgotPasswordTitle": "نسيت كلمة المرور؟",
+    "forgotPasswordSubtitle": "أدخل بريدك الإلكتروني وسنرسل لك رابط إعادة التعيين.",
+    "sendResetLink": "إرسال رابط الاستعادة",
+    "checkYourEmail": "تحقق من بريدك الإلكتروني",
+    "resetEmailSent": "إذا كان حساب موجود للبريد {email}، ستتلقى رابط إعادة تعيين كلمة المرور قريباً. تحقق أيضاً من مجلد البريد غير المرغوب.",
+    "backToLogin": "العودة لتسجيل الدخول",
+    "welcomeBackUser": "مرحباً بعودتك، {name}!",
+    "welcomeNewUser": "مرحباً بك في إيزي بيك، {name}!",
+    "loginFailed": "فشل تسجيل الدخول",
+    "logoutSuccess": "تم تسجيل الخروج بنجاح",
     "login": {
       "title": "تسجيل الدخول",
       "subtitle": "مرحباً بعودتك",
@@ -315,7 +331,12 @@
     "changePassword": "تغيير كلمة المرور",
     "currentPassword": "كلمة المرور الحالية",
     "newPassword": "كلمة المرور الجديدة",
-    "confirmNewPassword": "تأكيد كلمة المرور الجديدة"
+    "confirmNewPassword": "تأكيد كلمة المرور الجديدة",
+    "loginRequired": "يرجى تسجيل الدخول لعرض ملفك الشخصي",
+    "contactSupport": "لتحديث معلومات ملفك الشخصي، يرجى التواصل مع الدعم.",
+    "passwordMismatch": "كلمات المرور غير متطابقة",
+    "updating": "جاري التحديث...",
+    "updatePassword": "تحديث كلمة المرور"
   },
   "addresses": {
     "title": "عناويني",
@@ -329,7 +350,24 @@
     "state": "المنطقة",
     "country": "الدولة",
     "postalCode": "الرمز البريدي",
-    "phoneNumber": "رقم الهاتف"
+    "phoneNumber": "رقم الهاتف",
+    "label": "تسمية العنوان",
+    "labelPlaceholder": "مثل: المنزل، العمل، المكتب",
+    "streetPlaceholder": "اسم ورقم الشارع",
+    "building": "المبنى",
+    "buildingPlaceholder": "رقم المبنى",
+    "flat": "الشقة/الوحدة",
+    "flatPlaceholder": "رقم الشقة",
+    "area": "المنطقة",
+    "areaPlaceholder": "مثل: سار، الجفير",
+    "block": "المجمع",
+    "blockPlaceholder": "رقم المجمع",
+    "additionalDirections": "توجيهات إضافية",
+    "directionsPlaceholder": "معالم، تعليمات خاصة...",
+    "addSuccess": "تمت إضافة العنوان بنجاح",
+    "updateSuccess": "تم تحديث العنوان بنجاح",
+    "deleteSuccess": "تم حذف العنوان بنجاح",
+    "setDefaultSuccess": "تم تحديث العنوان الافتراضي"
   },
   "orders": {
     "title": "طلباتي",
@@ -341,7 +379,10 @@
     "noOrders": "لا توجد طلبات بعد",
     "orderDetails": "تفاصيل الطلب",
     "cancelOrder": "إلغاء الطلب",
-    "reorder": "إعادة الطلب"
+    "reorder": "إعادة الطلب",
+    "subtitle": "تتبع طلباتك وإدارتها",
+    "emptyDescription": "ابدأ التسوق لتقديم طلبك الأول!",
+    "cancelSuccess": "تم إلغاء الطلب بنجاح"
   },
   "reviews": {
     "title": "التقييمات",

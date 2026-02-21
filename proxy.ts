@@ -24,7 +24,7 @@ export function proxy(request: NextRequest) {
 
   const pathnameWithoutLocale = isValidLocale ? pathname.slice(locale.length + 1) || '/' : pathname;
 
-  const hasAuthToken = request.cookies.has('easy_bake_session');
+  const hasAuthToken = request.cookies.has('easybake_auth');
   const isAuthenticated = hasAuthToken;
 
   const protectedRoutes = ['/checkout', '/orders', '/account'];

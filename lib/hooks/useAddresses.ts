@@ -7,6 +7,7 @@ import {
   setDefaultAddress,
 } from "@/lib/api/addresses";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 import { AxiosError } from "axios";
 import { ApiErrorResponse, AddressForm } from "@/lib/types";
 import { queryKeys } from "@/lib/utils/queryKeys";
@@ -25,13 +26,14 @@ export function useAddress(id: number) {
 }
 
 export function useCreateAddress() {
+  const t = useTranslations("addresses");
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: createAddress,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.addresses.all() });
-      toast.success("Address added successfully");
+      toast.success(t("addSuccess"));
     },
     onError: (error: AxiosError<ApiErrorResponse>) => {
       toast.error(error.response?.data?.message || "Failed to add address");
@@ -40,13 +42,14 @@ export function useCreateAddress() {
 }
 
 export function useUpdateAddress() {
+  const t = useTranslations("addresses");
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: ({ id, data }: { id: number; data: AddressForm }) => updateAddress(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.addresses.all() });
-      toast.success("Address updated successfully");
+      toast.success(t("updateSuccess"));
     },
     onError: (error: AxiosError<ApiErrorResponse>) => {
       toast.error(error.response?.data?.message || "Failed to update address");
@@ -55,13 +58,14 @@ export function useUpdateAddress() {
 }
 
 export function useDeleteAddress() {
+  const t = useTranslations("addresses");
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: deleteAddress,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.addresses.all() });
-      toast.success("Address deleted successfully");
+      toast.success(t("deleteSuccess"));
     },
     onError: (error: AxiosError<ApiErrorResponse>) => {
       toast.error(error.response?.data?.message || "Failed to delete address");
@@ -70,13 +74,14 @@ export function useDeleteAddress() {
 }
 
 export function useSetDefaultAddress() {
+  const t = useTranslations("addresses");
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: setDefaultAddress,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.addresses.all() });
-      toast.success("Default address updated");
+      toast.success(t("setDefaultSuccess"));
     },
     onError: (error: AxiosError<ApiErrorResponse>) => {
       toast.error(error.response?.data?.message || "Failed to set default address");

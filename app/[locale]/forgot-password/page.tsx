@@ -6,8 +6,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 
 export default function ForgotPasswordPage() {
+  const t = useTranslations("auth");
   const [submitted, setSubmitted] = useState(false);
   const [email, setEmail] = useState("");
 
@@ -27,13 +29,12 @@ export default function ForgotPasswordPage() {
               <div className="w-16 h-16 rounded-full bg-green-50 flex items-center justify-center mx-auto">
                 <CheckCircle className="h-8 w-8 text-green-500" />
               </div>
-              <h2 className="font-display text-2xl font-bold text-navy">Check your email</h2>
+              <h2 className="font-display text-2xl font-bold text-navy">{t("checkYourEmail")}</h2>
               <p className="text-navy/60 text-sm leading-relaxed">
-                If an account exists for <strong>{email}</strong>, you will receive a password
-                reset link shortly. Please also check your spam folder.
+                {t("resetEmailSent", { email })}
               </p>
               <Button asChild className="w-full bg-navy hover:bg-navy-light mt-4">
-                <Link href="/login">Back to Login</Link>
+                <Link href="/login">{t("backToLogin")}</Link>
               </Button>
             </div>
           ) : (
@@ -42,16 +43,16 @@ export default function ForgotPasswordPage() {
                 <div className="w-12 h-12 rounded-full bg-sky/10 flex items-center justify-center mx-auto mb-4">
                   <Mail className="h-6 w-6 text-sky" />
                 </div>
-                <h1 className="font-display text-3xl font-bold text-navy">Forgot Password?</h1>
+                <h1 className="font-display text-3xl font-bold text-navy">{t("forgotPasswordTitle")}</h1>
                 <p className="text-navy/60 text-sm">
-                  Enter your email and we&apos;ll send you a reset link.
+                  {t("forgotPasswordSubtitle")}
                 </p>
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div className="space-y-2">
                   <Label htmlFor="email" className="text-navy font-medium">
-                    Email Address
+                    {t("email")}
                   </Label>
                   <Input
                     id="email"
@@ -69,7 +70,7 @@ export default function ForgotPasswordPage() {
                   size="lg"
                   className="w-full bg-navy hover:bg-navy-light"
                 >
-                  Send Reset Link
+                  {t("sendResetLink")}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </form>
@@ -83,7 +84,7 @@ export default function ForgotPasswordPage() {
             className="text-sm text-navy/60 hover:text-navy transition-colors inline-flex items-center gap-1"
           >
             <ArrowRight className="h-3 w-3 rotate-180" />
-            Back to Login
+            {t("backToLogin")}
           </Link>
         </div>
       </div>

@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter, useParams } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useParams } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import dynamic from "next/dynamic";
 import { ArrowLeft, ShoppingCart, Package, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -37,12 +38,14 @@ export function ProductDetailClient() {
   const [quantity, setQuantity] = useState(1);
 
   // Set default variant when product loads
-  if (product && !selectedVariantId && product.has_variants && product.variants?.length) {
-    const availableVariant = product.variants.find((v) => v.is_available);
-    if (availableVariant) {
-      setSelectedVariantId(availableVariant.id);
+  useEffect(() => {
+    if (product && !selectedVariantId && product.has_variants && product.variants?.length) {
+      const availableVariant = product.variants.find((v) => v.is_available);
+      if (availableVariant) {
+        setSelectedVariantId(availableVariant.id);
+      }
     }
-  }
+  }, [product, selectedVariantId]);
 
   const selectedVariant = product?.variants?.find((v) => v.id === selectedVariantId);
   const displayPrice = selectedVariant?.price || product?.price || product?.base_price || 0;

@@ -61,7 +61,8 @@
     "refresh": "Refresh",
     "or": "or",
     "and": "and",
-    "currency": "BHD"
+    "currency": "BHD",
+    "comingSoon": "Coming Soon"
   },
   "home": {
     "hero": {
@@ -212,7 +213,8 @@
     "itemUpdated": "Cart updated",
     "shopProducts": "Shop Products",
     "viewFullCart": "View Full Cart",
-    "loadingCart": "Loading cart..."
+    "loadingCart": "Loading cart...",
+    "cleared": "Cart cleared"
   },
   "checkout": {
     "title": "Checkout",
@@ -245,7 +247,11 @@
     "successStep3": "Our delivery team will contact you before delivery",
     "successStep4": "Track your order status in your account",
     "successViewOrder": "View Order Details",
-    "successNeedHelp": "Need help? Contact us on Instagram"
+    "successNeedHelp": "Need help? Contact us on Instagram",
+    "paymentCashDesc": "Pay with cash when your order is delivered",
+    "paymentCardDesc": "Pay securely with your credit or debit card",
+    "paymentBenefitDesc": "Pay using Benefit Pay mobile app",
+    "paymentCodNote": "For cash on delivery, please have exact change ready. Our delivery team will collect payment when your order arrives."
   },
   "auth": {
     "welcomeBack": "Welcome Back",
@@ -269,6 +275,16 @@
     "termsAgreement": "By creating an account, you agree to our",
     "terms": "Terms of Service",
     "privacy": "Privacy Policy",
+    "forgotPasswordTitle": "Forgot Password?",
+    "forgotPasswordSubtitle": "Enter your email and we'll send you a reset link.",
+    "sendResetLink": "Send Reset Link",
+    "checkYourEmail": "Check your email",
+    "resetEmailSent": "If an account exists for {email}, you will receive a password reset link shortly. Please also check your spam folder.",
+    "backToLogin": "Back to Login",
+    "welcomeBackUser": "Welcome back, {name}!",
+    "welcomeNewUser": "Welcome to Easy Bake, {name}!",
+    "loginFailed": "Login failed",
+    "logoutSuccess": "Logged out successfully",
     "login": {
       "title": "Login",
       "subtitle": "Welcome back",
@@ -315,7 +331,12 @@
     "changePassword": "Change Password",
     "currentPassword": "Current Password",
     "newPassword": "New Password",
-    "confirmNewPassword": "Confirm New Password"
+    "confirmNewPassword": "Confirm New Password",
+    "loginRequired": "Please log in to view your profile",
+    "contactSupport": "To update your profile information, please contact support.",
+    "passwordMismatch": "Passwords do not match",
+    "updating": "Updating...",
+    "updatePassword": "Update Password"
   },
   "addresses": {
     "title": "My Addresses",
@@ -329,7 +350,24 @@
     "state": "State",
     "country": "Country",
     "postalCode": "Postal Code",
-    "phoneNumber": "Phone Number"
+    "phoneNumber": "Phone Number",
+    "label": "Address Label",
+    "labelPlaceholder": "e.g., Home, Work, Office",
+    "streetPlaceholder": "Street name and number",
+    "building": "Building",
+    "buildingPlaceholder": "Building no.",
+    "flat": "Flat/Apartment",
+    "flatPlaceholder": "Flat no.",
+    "area": "Area",
+    "areaPlaceholder": "e.g., SAAR, Juffair",
+    "block": "Block",
+    "blockPlaceholder": "Block no.",
+    "additionalDirections": "Additional Directions",
+    "directionsPlaceholder": "Landmarks, special instructions...",
+    "addSuccess": "Address added successfully",
+    "updateSuccess": "Address updated successfully",
+    "deleteSuccess": "Address deleted successfully",
+    "setDefaultSuccess": "Default address updated"
   },
   "orders": {
     "title": "My Orders",
@@ -341,7 +379,10 @@
     "noOrders": "No orders yet",
     "orderDetails": "Order Details",
     "cancelOrder": "Cancel Order",
-    "reorder": "Reorder"
+    "reorder": "Reorder",
+    "subtitle": "Track and manage your orders",
+    "emptyDescription": "Start shopping to place your first order!",
+    "cancelSuccess": "Order cancelled successfully"
   },
   "reviews": {
     "title": "Reviews",

@@ -59,10 +59,10 @@ export function AddressForm({ initialData, onSubmit, onChange }: AddressFormProp
     <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-4">
       {/* Label */}
       <div className="space-y-2">
-        <Label htmlFor="label">Address Label *</Label>
+        <Label htmlFor="label">{t("addresses.label")} *</Label>
         <Input
           id="label"
-          placeholder="e.g., Home, Work, Office"
+          placeholder={t("addresses.labelPlaceholder")}
           aria-required="true"
           aria-invalid={!!errors.label}
           aria-describedby={errors.label ? "label-error" : undefined}
@@ -77,10 +77,10 @@ export function AddressForm({ initialData, onSubmit, onChange }: AddressFormProp
 
       {/* Street Address */}
       <div className="space-y-2">
-        <Label htmlFor="street_address">Street Address *</Label>
+        <Label htmlFor="street_address">{t("addresses.street")} *</Label>
         <Input
           id="street_address"
-          placeholder="Street name and number"
+          placeholder={t("addresses.streetPlaceholder")}
           aria-required="true"
           aria-invalid={!!errors.street_address}
           aria-describedby={errors.street_address ? "street-error" : undefined}
@@ -96,18 +96,18 @@ export function AddressForm({ initialData, onSubmit, onChange }: AddressFormProp
       {/* Building & Flat */}
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">
-          <Label htmlFor="building">Building</Label>
+          <Label htmlFor="building">{t("addresses.building")}</Label>
           <Input
             id="building"
-            placeholder="Building no."
+            placeholder={t("addresses.buildingPlaceholder")}
             {...register("building")}
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="flat">Flat/Apartment</Label>
+          <Label htmlFor="flat">{t("addresses.flat")}</Label>
           <Input
             id="flat"
-            placeholder="Flat no."
+            placeholder={t("addresses.flatPlaceholder")}
             {...register("flat")}
           />
         </div>
@@ -116,10 +116,10 @@ export function AddressForm({ initialData, onSubmit, onChange }: AddressFormProp
       {/* Area & Block */}
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">
-          <Label htmlFor="area">Area *</Label>
+          <Label htmlFor="area">{t("addresses.area")} *</Label>
           <Input
             id="area"
-            placeholder="e.g., SAAR, Juffair"
+            placeholder={t("addresses.areaPlaceholder")}
             aria-required="true"
             aria-invalid={!!errors.area}
             aria-describedby={errors.area ? "area-error" : undefined}
@@ -132,10 +132,10 @@ export function AddressForm({ initialData, onSubmit, onChange }: AddressFormProp
           )}
         </div>
         <div className="space-y-2">
-          <Label htmlFor="block">Block</Label>
+          <Label htmlFor="block">{t("addresses.block")}</Label>
           <Input
             id="block"
-            placeholder="Block no."
+            placeholder={t("addresses.blockPlaceholder")}
             {...register("block")}
           />
         </div>
@@ -143,7 +143,7 @@ export function AddressForm({ initialData, onSubmit, onChange }: AddressFormProp
 
       {/* City */}
       <div className="space-y-2">
-        <Label htmlFor="city">City *</Label>
+        <Label htmlFor="city">{t("addresses.city")} *</Label>
         <Input
           id="city"
           aria-required="true"
@@ -160,10 +160,10 @@ export function AddressForm({ initialData, onSubmit, onChange }: AddressFormProp
 
       {/* Additional Directions */}
       <div className="space-y-2">
-        <Label htmlFor="additional_directions">Additional Directions</Label>
+        <Label htmlFor="additional_directions">{t("addresses.additionalDirections")}</Label>
         <Textarea
           id="additional_directions"
-          placeholder="Landmarks, special instructions..."
+          placeholder={t("addresses.directionsPlaceholder")}
           rows={3}
           {...register("additional_directions")}
         />
@@ -177,7 +177,7 @@ export function AddressForm({ initialData, onSubmit, onChange }: AddressFormProp
           defaultChecked={initialData?.is_default ?? false}
         />
         <Label htmlFor="is_default" className="text-sm font-normal cursor-pointer">
-          Set as default address
+          {t("addresses.setDefault")}
         </Label>
       </div>
     </form>

@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { PAYMENT_METHODS, PAYMENT_METHOD_LABELS } from "@/lib/utils/constants";
+import { useTranslations } from "next-intl";
 
 interface PaymentMethodSelectorProps {
   selectedMethod: string;
@@ -16,19 +17,21 @@ export function PaymentMethodSelector({
   selectedMethod,
   onMethodChange,
 }: PaymentMethodSelectorProps) {
+  const t = useTranslations();
+
   const paymentMethods = [
     {
       value: PAYMENT_METHODS.CASH,
       label: PAYMENT_METHOD_LABELS.cash,
       icon: Banknote,
-      description: "Pay with cash when your order is delivered",
+      description: t("checkout.paymentCashDesc"),
       available: true,
     },
     {
       value: PAYMENT_METHODS.CARD,
       label: PAYMENT_METHOD_LABELS.card,
       icon: CreditCard,
-      description: "Pay securely with your credit or debit card",
+      description: t("checkout.paymentCardDesc"),
       available: false,
       comingSoon: true,
     },
@@ -36,7 +39,7 @@ export function PaymentMethodSelector({
       value: PAYMENT_METHODS.BENEFIT_PAY,
       label: PAYMENT_METHOD_LABELS.benefit_pay,
       icon: Wallet,
-      description: "Pay using Benefit Pay mobile app",
+      description: t("checkout.paymentBenefitDesc"),
       available: false,
       comingSoon: true,
     },
@@ -44,7 +47,7 @@ export function PaymentMethodSelector({
 
   return (
     <div className="space-y-4">
-      <h3 className="font-semibold text-navy">Payment Method</h3>
+      <h3 className="font-semibold text-navy">{t("checkout.paymentMethod")}</h3>
 
       <RadioGroup value={selectedMethod} onValueChange={onMethodChange}>
         <div className="space-y-3">
@@ -88,7 +91,7 @@ export function PaymentMethodSelector({
                         </span>
                         {method.comingSoon && (
                           <Badge variant="secondary" className="text-xs">
-                            Coming Soon
+                            {t("common.comingSoon")}
                           </Badge>
                         )}
                       </div>
@@ -105,8 +108,7 @@ export function PaymentMethodSelector({
       {/* Info Note */}
       <div className="bg-sky/10 border border-sky/20 rounded-lg p-3">
         <p className="text-xs text-navy/70">
-          <strong>Note:</strong> For cash on delivery, please have exact change ready.
-          Our delivery team will collect payment when your order arrives.
+          {t("checkout.paymentCodNote")}
         </p>
       </div>
     </div>

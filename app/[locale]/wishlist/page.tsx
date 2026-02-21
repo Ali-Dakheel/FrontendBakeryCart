@@ -49,7 +49,7 @@ export default function WishlistPage() {
 
   if (!isLoggedIn) return null;
 
-  const items = wishlistData?.data ?? [];
+  const items = wishlistData ?? [];
 
   return (
     <div className="min-h-screen bg-cream">

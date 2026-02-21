@@ -7,8 +7,23 @@ import { toast } from "sonner";
 import { useOnlineStatus } from "@/lib/hooks/useOnlineStatus";
 import { initErrorMonitoring } from "@/lib/utils/errorMonitor";
 import { getQueryClient } from "@/lib/utils/queryClient";
+import { useUser } from "@/lib/hooks/useAuth";
 
 export { getQueryClient };
+
+function AuthSync() {
+  const { data: user, isError } = useUser();
+
+  useEffect(() => {
+    if (user) {
+      document.cookie = 'easybake_auth=1; path=/; SameSite=Lax';
+    } else if (isError) {
+      document.cookie = 'easybake_auth=; path=/; SameSite=Lax; Max-Age=0';
+    }
+  }, [user, isError]);
+
+  return null;
+}
 
 function AppMonitor() {
   const isOnline = useOnlineStatus();
@@ -33,6 +48,7 @@ export function QueryProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <AuthSync />
       <AppMonitor />
       {children}
       <ReactQueryDevtools initialIsOpen={false} />

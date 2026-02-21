@@ -23,7 +23,7 @@ export function WishlistButton({ productId, variant = "icon", className }: Wishl
 
   if (!isLoggedIn) return null;
 
-  const isInWishlist = wishlistData?.data?.some((item) => item.product.id === productId) ?? false;
+  const isInWishlist = wishlistData?.some((item) => item.product.id === productId) ?? false;
 
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();

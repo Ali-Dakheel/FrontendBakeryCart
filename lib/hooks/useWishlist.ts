@@ -13,9 +13,9 @@ export function useToggleWishlist() {
 
   return useMutation({
     mutationFn: (productId: number) => toggleWishlist(productId),
-    onSuccess: (data) => {
+    onSuccess: (inWishlist) => {
       queryClient.invalidateQueries({ queryKey: queryKeys.wishlist.all() });
-      toast.success(data.in_wishlist ? "Added to wishlist" : "Removed from wishlist");
+      toast.success(inWishlist ? "Added to wishlist" : "Removed from wishlist");
     },
     onError: () => {
       toast.error("Failed to update wishlist");

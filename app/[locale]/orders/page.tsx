@@ -9,8 +9,10 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useOrders } from "@/lib/hooks/useOrders";
 import { OrderCard } from "@/components/orders/OrderCard";
 import { Pagination } from "@/components/products/Pagination";
+import { useTranslations } from "next-intl";
 
 export default function OrdersPage() {
+  const t = useTranslations();
   const [currentPage, setCurrentPage] = useState(1);
   const { data: ordersResponse, isLoading } = useOrders(currentPage);
 
@@ -35,7 +37,7 @@ export default function OrdersPage() {
   return (
     <div className="min-h-screen bg-cream">
       {/* Header */}
-      <div className="bg-gradient-to-br from-cream via-cream-dark to-flour border-b border-border/40">
+      <div className="bg-linear-to-br from-cream via-cream-dark to-flour border-b border-border/40">
         <div className="container mx-auto px-4 py-12 md:py-16">
           <Button
             variant="ghost"
@@ -44,17 +46,17 @@ export default function OrdersPage() {
           >
             <Link href="/">
               <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to Home
+              {t("auth.backToHome")}
             </Link>
           </Button>
           <div className="flex items-center space-x-3">
             <Package className="h-8 w-8 text-sky" />
             <h1 className="font-display text-4xl md:text-5xl font-bold text-navy">
-              My Orders
+              {t("orders.title")}
             </h1>
           </div>
           <p className="text-navy/70 mt-2">
-            Track and manage your orders
+            {t("orders.subtitle")}
           </p>
         </div>
       </div>
@@ -64,10 +66,10 @@ export default function OrdersPage() {
         {orders.length === 0 ? (
           <EmptyState
             icon={Package}
-            title="No orders yet"
-            description="Start shopping to place your first order!"
+            title={t("orders.noOrders")}
+            description={t("orders.emptyDescription")}
             action={{
-              label: "Browse Products",
+              label: t("wishlist.continueShopping"),
               href: "/products",
             }}
           />

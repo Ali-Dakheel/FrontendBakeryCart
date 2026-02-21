@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { createOrder, cancelOrder } from "@/lib/api/orders";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 import { AxiosError } from "axios";
 import { ApiErrorResponse } from "@/lib/types";
 import { queryKeys } from "@/lib/utils/queryKeys";
@@ -33,6 +34,7 @@ export function useCreateOrder() {
 }
 
 export function useCancelOrder() {
+  const t = useTranslations("orders");
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -40,7 +42,7 @@ export function useCancelOrder() {
       cancelOrder(id, reason),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.orders.all() });
-      toast.success("Order cancelled successfully");
+      toast.success(t("cancelSuccess"));
     },
     onError: (error: AxiosError<ApiErrorResponse>) => {
       toast.error(error.response?.data?.message || "Failed to cancel order");
