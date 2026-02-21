@@ -9,33 +9,33 @@ import {
 } from "@/lib/api/products";
 
 export const productQueries = {
-  list: (filters?: ProductFilters) =>
+  list: (filters?: ProductFilters, locale?: string) =>
     queryOptions({
-      queryKey: queryKeys.products.list(filters),
+      queryKey: queryKeys.products.list(filters, locale),
       queryFn: () => getProducts(filters),
       staleTime: 30 * 60 * 1000,
       gcTime: 60 * 60 * 1000,
     }),
 
-  detail: (id: number) =>
+  detail: (id: number, locale?: string) =>
     queryOptions({
-      queryKey: queryKeys.products.detail(id),
+      queryKey: queryKeys.products.detail(id, locale),
       queryFn: () => getProduct(id),
       staleTime: 30 * 60 * 1000,
       gcTime: 60 * 60 * 1000,
     }),
 
-  featured: (limit?: number) =>
+  featured: (limit?: number, locale?: string) =>
     queryOptions({
-      queryKey: queryKeys.products.featured(limit),
+      queryKey: queryKeys.products.featured(limit, locale),
       queryFn: () => getFeaturedProducts(limit),
       staleTime: 60 * 60 * 1000,
       gcTime: 120 * 60 * 1000,
     }),
 
-  popular: (limit?: number) =>
+  popular: (limit?: number, locale?: string) =>
     queryOptions({
-      queryKey: queryKeys.products.popular(limit),
+      queryKey: queryKeys.products.popular(limit, locale),
       queryFn: () => getPopularProducts(limit),
       staleTime: 45 * 60 * 1000,
       gcTime: 90 * 60 * 1000,

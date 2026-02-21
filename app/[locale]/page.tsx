@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, ChefHat, Clock, MapPin } from "lucide-react";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, getLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { getQueryClient } from "@/lib/utils/queryClient";
@@ -8,18 +8,13 @@ import { getFeaturedProductsServer } from "@/lib/api/server";
 import { productQueries } from "@/lib/queries/products";
 import { FeaturedSection } from "@/components/home/FeaturedSection";
 
-/**
- * Homepage - Server Component
- * Pre-fetches featured products for a warm cache on first render.
- * If the backend is unreachable during SSR, FeaturedSection fetches client-side silently.
- */
 export default async function Home() {
-  const t = await getTranslations();
+  const [t, locale] = await Promise.all([getTranslations(), getLocale()]);
 
   const queryClient = getQueryClient();
   await queryClient.prefetchQuery({
-    ...productQueries.featured(6),
-    queryFn: () => getFeaturedProductsServer(6),
+    ...productQueries.featured(6, locale),
+    queryFn: () => getFeaturedProductsServer(6, locale),
   });
 
   return (

@@ -14,7 +14,7 @@ const API_URL = (process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:8000/api/v
  * Get featured products for server components
  * Cached for 15 minutes (featured products rarely change)
  */
-export async function getFeaturedProductsServer(limit: number = 6): Promise<Product[]> {
+export async function getFeaturedProductsServer(limit: number = 6, locale = 'en'): Promise<Product[]> {
   const response = await fetch(`${API_URL}/api/v1/products/featured?limit=${limit}`, {
     next: {
       revalidate: 900, // 15 minutes
@@ -22,7 +22,7 @@ export async function getFeaturedProductsServer(limit: number = 6): Promise<Prod
     },
     headers: {
       'Accept': 'application/json',
-      'Accept-Language': 'en',
+      'Accept-Language': locale,
     },
   });
 
@@ -38,7 +38,7 @@ export async function getFeaturedProductsServer(limit: number = 6): Promise<Prod
  * Get popular products for server components
  * Cached for 10 minutes
  */
-export async function getPopularProductsServer(limit: number = 6): Promise<Product[]> {
+export async function getPopularProductsServer(limit: number = 6, locale = 'en'): Promise<Product[]> {
   try {
     const response = await fetch(`${API_URL}/api/v1/products/popular?limit=${limit}`, {
       next: {
@@ -47,7 +47,7 @@ export async function getPopularProductsServer(limit: number = 6): Promise<Produ
       },
       headers: {
         'Accept': 'application/json',
-        'Accept-Language': 'en',
+        'Accept-Language': locale,
       },
     });
 

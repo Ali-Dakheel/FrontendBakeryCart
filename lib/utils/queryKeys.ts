@@ -5,10 +5,10 @@ export const queryKeys = {
   products: {
     all: () => ["products"] as const,
     lists: () => [...queryKeys.products.all(), "list"] as const,
-    list: (filters?: ProductFilters) => [...queryKeys.products.lists(), { filters }] as const,
-    detail: (id: number) => [...queryKeys.products.all(), id] as const,
-    featured: (limit?: number) => [...queryKeys.products.all(), "featured", limit] as const,
-    popular: (limit?: number) => [...queryKeys.products.all(), "popular", limit] as const,
+    list: (filters?: ProductFilters, locale?: string) => [...queryKeys.products.lists(), locale, { filters }] as const,
+    detail: (id: number, locale?: string) => [...queryKeys.products.all(), id, locale] as const,
+    featured: (limit?: number, locale?: string) => [...queryKeys.products.all(), "featured", locale, limit] as const,
+    popular: (limit?: number, locale?: string) => [...queryKeys.products.all(), "popular", locale, limit] as const,
   },
   cart: {
     all: () => ["cart"] as const,
@@ -29,8 +29,8 @@ export const queryKeys = {
   },
   categories: {
     all: () => ["categories"] as const,
-    lists: () => [...queryKeys.categories.all(), "list"] as const,
-    detail: (slug: string) => [...queryKeys.categories.all(), slug] as const,
+    list: (locale?: string) => [...queryKeys.categories.all(), "list", locale] as const,
+    detail: (slug: string, locale?: string) => [...queryKeys.categories.all(), slug, locale] as const,
   },
   reviews: {
     all: () => ["reviews"] as const,
@@ -38,5 +38,6 @@ export const queryKeys = {
   },
   wishlist: {
     all: () => ["wishlist"] as const,
+    current: (locale?: string) => [...queryKeys.wishlist.all(), locale] as const,
   },
 } as const;

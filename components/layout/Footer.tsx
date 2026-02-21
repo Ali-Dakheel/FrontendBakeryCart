@@ -14,7 +14,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12">
           {/* Brand */}
           <div className="space-y-4">
-            <div className="flex items-center space-x-3 rtl:space-x-reverse">
+            <div className="flex items-center gap-3">
               <div className="relative w-12 h-12">
                 <Image
                   src="/logo.png"
@@ -35,7 +35,7 @@ export function Footer() {
               href="https://instagram.com/easybake.bh"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center space-x-2 rtl:space-x-reverse text-sm text-navy hover:text-sky transition-colors group"
+              className="inline-flex items-center gap-2 text-sm text-navy hover:text-sky transition-colors group"
             >
               <Instagram className="h-5 w-5 text-sky group-hover:scale-110 transition-transform" />
               <span dir="ltr">easybake.bh</span>
@@ -44,7 +44,7 @@ export function Footer() {
 
           {/* Hours */}
           <div className="space-y-4">
-            <div className="flex items-center space-x-2 rtl:space-x-reverse">
+            <div className="flex items-center gap-2">
               <Clock className="h-5 w-5 text-sky" />
               <h4 className="font-display text-lg font-semibold text-navy">{t('footer.businessHours')}</h4>
             </div>
@@ -61,7 +61,7 @@ export function Footer() {
 
           {/* Location */}
           <div className="space-y-4">
-            <div className="flex items-center space-x-2 rtl:space-x-reverse">
+            <div className="flex items-center gap-2">
               <MapPin className="h-5 w-5 text-sky" />
               <h4 className="font-display text-lg font-semibold text-navy">{t('footer.location')}</h4>
             </div>

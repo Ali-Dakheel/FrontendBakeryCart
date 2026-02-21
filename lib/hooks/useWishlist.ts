@@ -1,11 +1,13 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useLocale } from "next-intl";
 import { toast } from "sonner";
 import { wishlistQueries } from "@/lib/queries/wishlist";
 import { queryKeys } from "@/lib/utils/queryKeys";
 import { toggleWishlist } from "@/lib/api/wishlist";
 
 export function useWishlist() {
-  return useQuery(wishlistQueries.current());
+  const locale = useLocale();
+  return useQuery(wishlistQueries.current(locale));
 }
 
 export function useToggleWishlist() {
