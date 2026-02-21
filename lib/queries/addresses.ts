@@ -1,8 +1,3 @@
-/**
- * Address Query Options
- * Centralized query configurations for address-related queries
- */
-
 import { queryOptions } from "@tanstack/react-query";
 import { queryKeys } from "@/lib/utils/queryKeys";
 import { getAddresses } from "@/lib/api/addresses";

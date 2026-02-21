@@ -1,8 +1,3 @@
-/**
- * Auth Query Options
- * Centralized query configurations for auth-related queries
- */
-
 import { queryOptions } from "@tanstack/react-query";
 import { queryKeys } from "@/lib/utils/queryKeys";
 import { getCurrentUser } from "@/lib/api/auth";

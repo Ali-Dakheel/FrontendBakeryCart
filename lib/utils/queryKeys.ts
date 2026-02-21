@@ -1,23 +1,3 @@
-/**
- * Query Key Factory
- * Centralized query keys for TanStack Query
- *
- * Benefits:
- * - TypeScript autocomplete for all query keys
- * - No typos or key mismatches
- * - Hierarchical cache invalidation
- * - Single source of truth
- *
- * @example
- * // Use in hooks
- * queryKey: queryKeys.products.detail(id)
- *
- * // Invalidate all products
- * queryClient.invalidateQueries({ queryKey: queryKeys.products.all() })
- *
- * // Invalidate only product lists (not details)
- * queryClient.invalidateQueries({ queryKey: queryKeys.products.lists() })
- */
 
 import type { ProductFilters } from "@/lib/api/products";
 

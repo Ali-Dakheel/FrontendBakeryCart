@@ -45,7 +45,7 @@ export interface Product {
   sku: string;
   slug?: string;
   price: number;
-  base_price?: number; // Legacy field, some APIs might use this
+  base_price?: number; 
   compare_at_price?: number | null;
   stock_quantity?: number;
   in_stock?: boolean;

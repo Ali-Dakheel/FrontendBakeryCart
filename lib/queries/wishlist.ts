@@ -7,7 +7,7 @@ export const wishlistQueries = {
     queryOptions({
       queryKey: queryKeys.wishlist.all(),
       queryFn: getWishlist,
-      staleTime: 2 * 60 * 1000,
-      gcTime: 5 * 60 * 1000,
+      staleTime: 5 * 60 * 1000,
+      gcTime: 10 * 60 * 1000,
     }),
 };

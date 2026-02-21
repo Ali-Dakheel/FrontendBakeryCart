@@ -2,11 +2,6 @@
 
 import { useState, useEffect } from "react";
 
-/**
- * Returns whether the browser is currently online.
- * React Query's `networkMode: 'online'` already pauses queries when offline —
- * this hook provides visible feedback to the user.
- */
 export function useOnlineStatus(): boolean {
   const [isOnline, setIsOnline] = useState(
     typeof navigator !== "undefined" ? navigator.onLine : true

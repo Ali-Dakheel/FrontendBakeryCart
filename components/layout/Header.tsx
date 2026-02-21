@@ -8,7 +8,6 @@ import { Badge } from "@/components/ui/badge";
 import { useUIStore } from "@/lib/stores/ui-store";
 import { useCart } from "@/lib/hooks/useCart";
 import { useUser } from "@/lib/hooks/useAuth";
-import { useMounted } from "@/lib/hooks/useMounted";
 import { useTranslations } from "next-intl";
 import { NavLinks } from "@/components/layout/NavLinks";
 import { UserMenu } from "@/components/layout/UserMenu";
@@ -17,14 +16,13 @@ import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
 
 export function Header() {
   const t = useTranslations();
-  const mounted = useMounted();
   const { openCart } = useUIStore();
-  const { data: cart } = useCart();
+  const { data: cart, isPending: cartPending } = useCart();
   const { data: user } = useUser();
 
-  const cartItemsCount = mounted
-    ? (cart?.items?.reduce((sum, item) => sum + item.quantity, 0) || 0)
-    : 0;
+  const cartItemsCount = cartPending
+    ? 0
+    : (cart?.items?.reduce((sum, item) => sum + item.quantity, 0) ?? 0);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b-2 border-sky/10 bg-white backdrop-blur-sm shadow-sm">

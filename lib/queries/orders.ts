@@ -1,8 +1,3 @@
-/**
- * Order Query Options
- * Centralized query configurations for order-related queries
- */
-
 import { queryOptions } from "@tanstack/react-query";
 import { queryKeys } from "@/lib/utils/queryKeys";
 import { getOrders, getOrder } from "@/lib/api/orders";

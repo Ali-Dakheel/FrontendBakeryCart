@@ -1,12 +1,10 @@
-// Export barrel - Re-export all types from domain files
-
-export * from "./auth";
-export * from "./address";
-export * from "./category";
-export * from "./product";
-export * from "./cart";
-export * from "./order";
-export * from "./api";
-export * from "./form";
-export * from "./review";
-export * from "./wishlist";
+export type * from "./auth";
+export type * from "./address";
+export type * from "./category";
+export type * from "./product";
+export type * from "./cart";
+export type * from "./order";
+export type * from "./api";
+export type * from "./form";
+export type * from "./review";
+export type * from "./wishlist";

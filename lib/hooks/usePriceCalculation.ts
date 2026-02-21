@@ -9,10 +9,7 @@ interface PriceCalculation {
   total: number;
 }
 
-/**
- * Hook to calculate cart prices (subtotal, VAT, total)
- * Handles type coercion for price_snapshot which can be string or number
- */
+
 export function usePriceCalculation(items: CartItem[] = []): PriceCalculation {
   return useMemo(() => {
     const subtotal = items.reduce((sum, item) => {

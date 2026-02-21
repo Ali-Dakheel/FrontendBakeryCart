@@ -4,12 +4,12 @@ function makeQueryClient() {
   return new QueryClient({
     queryCache: new QueryCache({
       onError: (error: Error, query) => {
-        if (isServer) return; // SSR prefetch failures are expected — client will fetch on mount
+        if (isServer) return;
 
         const isUserQuery = query.queryKey[0] === "user";
         const is401Error = error.message.includes("401");
 
-        if (isUserQuery && is401Error) return; // Silent — guests are expected to get 401
+        if (isUserQuery && is401Error) return; 
       },
     }),
     mutationCache: new MutationCache({
@@ -17,7 +17,7 @@ function makeQueryClient() {
         const is401Error = error.message.includes("401");
         const is422Error = error.message.includes("422");
 
-        if (is401Error || is422Error) return; // Handled by individual mutation onError
+        if (is401Error || is422Error) return; 
       },
     }),
     defaultOptions: {
@@ -35,8 +35,6 @@ function makeQueryClient() {
         retry: 0,
         networkMode: "online",
       },
-      // Official TanStack Query SSR pattern: also dehydrate pending queries so
-      // in-flight server prefetches can be streamed to the client via Suspense.
       dehydrate: {
         shouldDehydrateQuery: (query) =>
           defaultShouldDehydrateQuery(query) || query.state.status === "pending",

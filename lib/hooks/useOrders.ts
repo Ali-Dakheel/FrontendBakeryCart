@@ -6,20 +6,17 @@ import { ApiErrorResponse } from "@/lib/types";
 import { queryKeys } from "@/lib/utils/queryKeys";
 import { orderQueries } from "@/lib/queries/orders";
 
-// Get orders list
 export function useOrders(page: number = 1) {
   return useQuery(orderQueries.list(page));
 }
 
-// Get single order
 export function useOrder(id: number) {
   return useQuery({
     ...orderQueries.detail(id),
-    enabled: !!id, // Hook-specific logic
+    enabled: !!id, 
   });
 }
 
-// Create order mutation
 export function useCreateOrder() {
   const queryClient = useQueryClient();
 
@@ -35,7 +32,6 @@ export function useCreateOrder() {
   });
 }
 
-// Cancel order mutation
 export function useCancelOrder() {
   const queryClient = useQueryClient();
 

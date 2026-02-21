@@ -1,14 +1,6 @@
 import { apiClient } from "./client";
 import type { ApiResponse, Review, ReviewStats } from "@/lib/types";
 
-// Shape returned by the backend
-interface ReviewsApiData {
-  reviews: Review[];
-  meta: { current_page: number; last_page: number; per_page: number; total: number };
-  product_stats: ReviewStats;
-}
-
-// Normalized shape used by the frontend
 export interface ReviewsResponse {
   data: Review[];
   stats: ReviewStats;
@@ -22,15 +14,15 @@ export interface CreateReviewData {
 }
 
 export async function getProductReviews(productId: number, page = 1): Promise<ReviewsResponse> {
-  const response = await apiClient.get<{ data: ReviewsApiData }>(
-    `products/${productId}/reviews?page=${page}`
-  );
+  const response = await apiClient.get<{
+    data: {
+      reviews: Review[];
+      meta: { current_page: number; last_page: number; per_page: number; total: number };
+      product_stats: ReviewStats;
+    };
+  }>(`products/${productId}/reviews?page=${page}`);
   const { reviews, product_stats, meta } = response.data.data;
-  return {
-    data: reviews ?? [],
-    stats: product_stats,
-    meta,
-  };
+  return { data: reviews ?? [], stats: product_stats, meta };
 }
 
 export async function createReview(productId: number, data: CreateReviewData): Promise<Review> {

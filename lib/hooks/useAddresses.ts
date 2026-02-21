@@ -12,12 +12,10 @@ import { ApiErrorResponse, AddressForm } from "@/lib/types";
 import { queryKeys } from "@/lib/utils/queryKeys";
 import { addressQueries } from "@/lib/queries/addresses";
 
-// Get all addresses
 export function useAddresses() {
   return useQuery(addressQueries.all());
 }
 
-// Get single address
 export function useAddress(id: number) {
   return useQuery({
     queryKey: ["address", id],
@@ -26,7 +24,6 @@ export function useAddress(id: number) {
   });
 }
 
-// Create address mutation
 export function useCreateAddress() {
   const queryClient = useQueryClient();
 
@@ -42,7 +39,6 @@ export function useCreateAddress() {
   });
 }
 
-// Update address mutation
 export function useUpdateAddress() {
   const queryClient = useQueryClient();
 
@@ -58,7 +54,6 @@ export function useUpdateAddress() {
   });
 }
 
-// Delete address mutation
 export function useDeleteAddress() {
   const queryClient = useQueryClient();
 
@@ -74,7 +69,6 @@ export function useDeleteAddress() {
   });
 }
 
-// Set default address mutation
 export function useSetDefaultAddress() {
   const queryClient = useQueryClient();
 

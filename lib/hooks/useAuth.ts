@@ -6,12 +6,10 @@ import type { ApiErrorResponse } from "@/lib/types/api";
 import { queryKeys } from "@/lib/utils/queryKeys";
 import { authQueries } from "@/lib/queries/auth";
 
-// Get current user
 export function useUser() {
   return useQuery(authQueries.currentUser());
 }
 
-// Login mutation
 export function useLogin() {
   const queryClient = useQueryClient();
 
@@ -20,7 +18,6 @@ export function useLogin() {
     onSuccess: (user) => {
       queryClient.setQueryData(queryKeys.user.all(), user);
 
-      // Backend handles cart merging automatically via cookies
       queryClient.invalidateQueries({ queryKey: ["cart"] });
 
       toast.success(`Welcome back, ${user.name}!`);
@@ -31,7 +28,6 @@ export function useLogin() {
   });
 }
 
-// Register mutation
 export function useRegister() {
   const queryClient = useQueryClient();
 
@@ -40,7 +36,6 @@ export function useRegister() {
     onSuccess: (user) => {
       queryClient.setQueryData(queryKeys.user.all(), user);
 
-      // Backend handles cart merging automatically via cookies
       queryClient.invalidateQueries({ queryKey: ["cart"] });
 
       toast.success(`Welcome to Easy Bake, ${user.name}!`);
@@ -48,7 +43,6 @@ export function useRegister() {
     onError: (error: AxiosError<ApiErrorResponse>) => {
       const message = error.response?.data?.message || "Registration failed";
 
-      // Show validation errors if present
       if (error.response?.data?.errors) {
         const validationErrors = Object.values(error.response.data.errors).flat();
         validationErrors.forEach(err => toast.error(err));
@@ -59,7 +53,6 @@ export function useRegister() {
   });
 }
 
-// Logout mutation
 export function useLogout() {
   const queryClient = useQueryClient();
 
@@ -68,7 +61,6 @@ export function useLogout() {
     onSuccess: () => {
       queryClient.setQueryData(queryKeys.user.all(), null);
 
-      // Cart token persists - user becomes guest with same cart
       queryClient.invalidateQueries({ queryKey: ["cart"] });
       queryClient.invalidateQueries({ queryKey: ["orders"] });
       queryClient.invalidateQueries({ queryKey: ["addresses"] });
@@ -81,7 +73,6 @@ export function useLogout() {
   });
 }
 
-// Change password mutation
 export function useChangePassword() {
   return useMutation({
     mutationFn: changePassword,

@@ -6,29 +6,23 @@ import type { Cart, CartItem, ApiErrorResponse } from "@/lib/types";
 import { queryKeys } from "@/lib/utils/queryKeys";
 import { cartQueries } from "@/lib/queries/cart";
 
-// Get cart query
 export function useCart() {
   return useQuery(cartQueries.current());
 }
 
-// Add to cart mutation with optimistic updates
 export function useAddToCart() {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: addToCart,
     onMutate: async (newItem) => {
-      // Cancel outgoing refetches
       await queryClient.cancelQueries({ queryKey: queryKeys.cart.all() });
 
-      // Snapshot previous value
       const previousCart = queryClient.getQueryData<{ cart: Cart }>(queryKeys.cart.all());
 
-      // Optimistically add item to cart
       queryClient.setQueryData<{ cart: Cart }>(queryKeys.cart.all(), (old) => {
         if (!old?.cart) return old;
 
-        // Check if item already exists in cart
         const existingItemIndex = old.cart.items?.findIndex(
           (item: CartItem) =>
             item.product_id === newItem.product_id &&
@@ -45,7 +39,6 @@ export function useAddToCart() {
               : item
           ) || [];
         } else {
-          // Add new item (we'll use temporary data until server responds)
           const tempItem: Partial<CartItem> = {
             id: Date.now(), // Temporary ID
             product_id: newItem.product_id,
@@ -70,20 +63,17 @@ export function useAddToCart() {
       toast.success("Added to cart!");
     },
     onError: (error: AxiosError<ApiErrorResponse>, _variables, context) => {
-      // Rollback on error
       if (context?.previousCart) {
         queryClient.setQueryData(queryKeys.cart.all(), context.previousCart);
       }
       toast.error(error.response?.data?.message || "Failed to add item to cart");
     },
     onSettled: () => {
-      // Refresh cart with server data
       queryClient.invalidateQueries({ queryKey: queryKeys.cart.all() });
     },
   });
 }
 
-// Update cart item mutation with optimistic updates
 export function useUpdateCartItem() {
   const queryClient = useQueryClient();
 
@@ -91,13 +81,10 @@ export function useUpdateCartItem() {
     mutationFn: ({ itemId, quantity }: { itemId: number; quantity: number }) =>
       updateCartItem(itemId, quantity),
     onMutate: async ({ itemId, quantity }) => {
-      // Cancel outgoing refetches
       await queryClient.cancelQueries({ queryKey: queryKeys.cart.all() });
 
-      // Snapshot previous value
       const previousCart = queryClient.getQueryData<{ cart: Cart }>(queryKeys.cart.all());
 
-      // Optimistically update cart
       queryClient.setQueryData<{ cart: Cart }>(queryKeys.cart.all(), (old) => {
         if (!old?.cart) return old;
 
@@ -116,7 +103,6 @@ export function useUpdateCartItem() {
       return { previousCart };
     },
     onError: (error: AxiosError<ApiErrorResponse>, _variables, context) => {
-      // Rollback on error
       if (context?.previousCart) {
         queryClient.setQueryData(queryKeys.cart.all(), context.previousCart);
       }
@@ -128,20 +114,16 @@ export function useUpdateCartItem() {
   });
 }
 
-// Remove from cart mutation with optimistic updates
 export function useRemoveFromCart() {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: removeFromCart,
     onMutate: async (itemId: number) => {
-      // Cancel outgoing refetches
       await queryClient.cancelQueries({ queryKey: queryKeys.cart.all() });
 
-      // Snapshot previous value
       const previousCart = queryClient.getQueryData<{ cart: Cart }>(queryKeys.cart.all());
 
-      // Optimistically remove item
       queryClient.setQueryData<{ cart: Cart }>(queryKeys.cart.all(), (old) => {
         if (!old?.cart) return old;
 
@@ -159,7 +141,6 @@ export function useRemoveFromCart() {
       toast.success("Item removed from cart");
     },
     onError: (error: AxiosError<ApiErrorResponse>, _variables, context) => {
-      // Rollback on error
       if (context?.previousCart) {
         queryClient.setQueryData(queryKeys.cart.all(), context.previousCart);
       }
@@ -171,7 +152,6 @@ export function useRemoveFromCart() {
   });
 }
 
-// Clear cart mutation
 export function useClearCart() {
   const queryClient = useQueryClient();
 

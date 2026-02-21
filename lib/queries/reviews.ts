@@ -7,7 +7,7 @@ export const reviewQueries = {
     queryOptions({
       queryKey: queryKeys.reviews.list(productId, page),
       queryFn: () => getProductReviews(productId, page),
-      staleTime: 5 * 60 * 1000,
-      gcTime: 10 * 60 * 1000,
+      staleTime: 10 * 60 * 1000,
+      gcTime: 20 * 60 * 1000,
     }),
 };
