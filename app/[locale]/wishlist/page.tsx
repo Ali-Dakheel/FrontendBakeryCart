@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import { Link, useRouter } from "@/i18n/navigation";
 import { Heart, ShoppingCart, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -14,7 +14,6 @@ import { useAddToCart } from "@/lib/hooks/useCart";
 import { useUser } from "@/lib/hooks/useAuth";
 import { useUIStore } from "@/lib/stores/ui-store";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function WishlistPage() {

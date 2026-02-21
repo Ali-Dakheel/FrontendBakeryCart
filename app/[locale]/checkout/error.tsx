@@ -2,7 +2,7 @@
 
 import { AlertCircle, RefreshCw, ArrowLeft, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 
 /**
  * Checkout Error Boundary

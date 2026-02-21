@@ -1,7 +1,7 @@
 "use client";
 
 import { memo } from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 import { ShoppingCart, ShoppingBag } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";

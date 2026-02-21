@@ -67,7 +67,7 @@ export function CartDrawer() {
         ) : (
           <>
             {/* Cart Items */}
-            <ul aria-label={t('cart.title')} className="flex-1 overflow-y-auto space-y-4 py-4">
+            <ul aria-label={t('cart.title')} className="flex-1 overflow-y-auto scrollbar-thin space-y-4 py-4">
               {cartItems.map((item) => (
                 <li
                   key={item.id}

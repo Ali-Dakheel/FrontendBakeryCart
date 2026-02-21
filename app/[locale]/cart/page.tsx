@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { useCart, useClearCart } from "@/lib/hooks/useCart";
 import { usePriceCalculation } from "@/lib/hooks/usePriceCalculation";
