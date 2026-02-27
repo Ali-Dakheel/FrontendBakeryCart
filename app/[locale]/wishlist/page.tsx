@@ -27,7 +27,7 @@ export default function WishlistPage() {
 
   useEffect(() => {
     if (!authLoading && !isLoggedIn) {
-      router.replace("/login");
+      router.replace("/login?redirect=/wishlist");
     }
   }, [authLoading, isLoggedIn, router]);
 

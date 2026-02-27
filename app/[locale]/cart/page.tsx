@@ -20,8 +20,10 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { useTranslations } from "next-intl";
 
 export default function CartPage() {
+  const t = useTranslations();
   const { data: cart, isLoading } = useCart();
   const clearCart = useClearCart();
 
@@ -53,25 +55,25 @@ export default function CartPage() {
   return (
     <div className="min-h-screen bg-cream">
       {/* Header */}
-      <div className="bg-gradient-to-br from-cream via-cream-dark to-flour border-b border-border/40">
+      <div className="bg-linear-to-br from-cream via-cream-dark to-flour border-b border-border/40">
         <div className="container mx-auto px-4 py-12 md:py-16">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center space-x-3">
               <ShoppingBag className="h-8 w-8 text-sky" />
               <h1 className="font-display text-4xl md:text-5xl font-bold text-navy">
-                Shopping Cart
+                {t("cart.title")}
               </h1>
             </div>
             <Button variant="ghost" asChild className="text-navy hover:text-sky">
               <Link href="/products">
                 <ArrowLeft className="h-4 w-4 mr-2" />
-                Continue Shopping
+                {t("cart.continueShopping")}
               </Link>
             </Button>
           </div>
           {cartItems.length > 0 && (
             <p className="text-navy/70">
-              {cartItems.length} {cartItems.length === 1 ? "item" : "items"} in your cart
+              {t("cart.itemCount", { count: cartItems.length })}
             </p>
           )}
         </div>
@@ -82,10 +84,10 @@ export default function CartPage() {
         {cartItems.length === 0 ? (
           <EmptyState
             icon={ShoppingBag}
-            title="Your cart is empty"
-            description="Looks like you haven't added any products to your cart yet."
+            title={t("cart.empty")}
+            description={t("cart.emptyDescription")}
             action={{
-              label: "Start Shopping",
+              label: t("cart.startShopping"),
               href: "/products",
             }}
           />
@@ -97,7 +99,7 @@ export default function CartPage() {
               {/* Clear Cart Button */}
               <div className="flex justify-between items-center">
                 <h2 className="font-semibold text-navy text-lg">
-                  Cart Items ({cartItems.length})
+                  {t("cart.cartItems", { count: cartItems.length })}
                 </h2>
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
@@ -107,24 +109,23 @@ export default function CartPage() {
                       className="text-red-600 hover:text-red-700 hover:bg-red-50"
                     >
                       <Trash2 className="h-4 w-4 mr-2" />
-                      Clear Cart
+                      {t("cart.clearCart")}
                     </Button>
                   </AlertDialogTrigger>
                   <AlertDialogContent>
                     <AlertDialogHeader>
-                      <AlertDialogTitle>Clear your cart?</AlertDialogTitle>
+                      <AlertDialogTitle>{t("cart.clearCartTitle")}</AlertDialogTitle>
                       <AlertDialogDescription>
-                        This will remove all items from your cart. This action cannot be
-                        undone.
+                        {t("cart.clearCartDesc")}
                       </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
-                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogCancel>{t("common.cancel")}</AlertDialogCancel>
                       <AlertDialogAction
                         onClick={handleClearCart}
                         className="bg-red-600 hover:bg-red-700"
                       >
-                        Clear Cart
+                        {t("cart.clearCart")}
                       </AlertDialogAction>
                     </AlertDialogFooter>
                   </AlertDialogContent>

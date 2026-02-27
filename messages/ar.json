@@ -153,6 +153,7 @@
     "addToCart": "أضف إلى السلة",
     "outOfStock": "غير متوفر",
     "inStock": "متوفر",
+    "activeFilters": "نشط",
     "viewDetails": "عرض التفاصيل",
     "selectVariant": "اختر نوع",
     "noProducts": "لم يتم العثور على منتجات",
@@ -215,7 +216,27 @@
     "shopProducts": "تسوق المنتجات",
     "viewFullCart": "عرض السلة كاملة",
     "loadingCart": "جاري تحميل السلة...",
-    "cleared": "تم مسح السلة"
+    "cleared": "تم مسح السلة",
+    "addFailed": "فشلت إضافة المنتج إلى السلة",
+    "updateFailed": "فشل تحديث المنتج في السلة",
+    "removeFailed": "فشل حذف المنتج",
+    "clearFailed": "فشل مسح السلة",
+    "itemCount": "{count, plural, one {# عنصر} other {# عناصر}} في سلتك",
+    "cartItems": "عناصر السلة ({count})",
+    "clearCart": "مسح السلة",
+    "clearCartTitle": "مسح سلتك؟",
+    "clearCartDesc": "سيؤدي هذا إلى إزالة جميع العناصر من سلتك. لا يمكن التراجع عن هذا الإجراء.",
+    "emptyDescription": "يبدو أنك لم تضف أي منتجات إلى سلتك بعد.",
+    "startShopping": "ابدأ التسوق",
+    "haveCoupon": "هل لديك رمز خصم؟",
+    "couponPlaceholder": "أدخل الرمز",
+    "apply": "تطبيق",
+    "deliveryFee": "رسوم التوصيل",
+    "discount": "خصم",
+    "deliveryFeeNote": "سيتم احتساب رسوم التوصيل عند الدفع بناءً على موقعك",
+    "perPack": "للعبوة",
+    "perItem": "للقطعة",
+    "itemTotal": "إجمالي العنصر"
   },
   "checkout": {
     "title": "إتمام الطلب",
@@ -286,6 +307,10 @@
     "welcomeNewUser": "مرحباً بك في إيزي بيك، {name}!",
     "loginFailed": "فشل تسجيل الدخول",
     "logoutSuccess": "تم تسجيل الخروج بنجاح",
+    "logoutFailed": "فشل تسجيل الخروج",
+    "registrationFailed": "فشل إنشاء الحساب",
+    "passwordChanged": "تم تغيير كلمة المرور بنجاح",
+    "passwordChangeFailed": "فشل تغيير كلمة المرور",
     "login": {
       "title": "تسجيل الدخول",
       "subtitle": "مرحباً بعودتك",
@@ -368,7 +393,11 @@
     "addSuccess": "تمت إضافة العنوان بنجاح",
     "updateSuccess": "تم تحديث العنوان بنجاح",
     "deleteSuccess": "تم حذف العنوان بنجاح",
-    "setDefaultSuccess": "تم تحديث العنوان الافتراضي"
+    "setDefaultSuccess": "تم تحديث العنوان الافتراضي",
+    "addFailed": "فشلت إضافة العنوان",
+    "updateFailed": "فشل تحديث العنوان",
+    "deleteFailed": "فشل حذف العنوان",
+    "setDefaultFailed": "فشل تعيين العنوان الافتراضي"
   },
   "orders": {
     "title": "طلباتي",
@@ -383,7 +412,9 @@
     "reorder": "إعادة الطلب",
     "subtitle": "تتبع طلباتك وإدارتها",
     "emptyDescription": "ابدأ التسوق لتقديم طلبك الأول!",
-    "cancelSuccess": "تم إلغاء الطلب بنجاح"
+    "cancelSuccess": "تم إلغاء الطلب بنجاح",
+    "createFailed": "فشل إنشاء الطلب",
+    "cancelFailed": "فشل إلغاء الطلب"
   },
   "reviews": {
     "title": "التقييمات",
@@ -407,7 +438,17 @@
     "title": "مفضلتي",
     "empty": "قائمة المفضلة فارغة",
     "emptyDescription": "احفظ منتجاتك المفضلة لشرائها لاحقاً.",
-    "continueShopping": "تصفح المنتجات"
+    "continueShopping": "تصفح المنتجات",
+    "addedToast": "تمت الإضافة إلى المفضلة",
+    "removedToast": "تمت الإزالة من المفضلة",
+    "updateFailed": "فشل تحديث المفضلة"
+  },
+  "notFound": {
+    "title": "الصفحة غير موجودة",
+    "description": "الصفحة التي تبحث عنها غير موجودة أو تم نقلها. دعنا نعيدك إلى المسار الصحيح!",
+    "goHome": "الرئيسية",
+    "browseProducts": "تصفح المنتجات",
+    "lookingFor": "هل تبحث عن شيء محدد؟"
   },
   "footer": {
     "businessHours": "ساعات العمل",

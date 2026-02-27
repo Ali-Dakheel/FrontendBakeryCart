@@ -1,12 +1,17 @@
+"use client";
+
 import { Link } from "@/i18n/navigation";
 import { Home, ShoppingBag, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
 
 /**
  * Custom 404 Not Found Page
  * Full-screen overlay without header/footer
  */
 export default function NotFound() {
+  const t = useTranslations();
+
   return (
     <div className="fixed inset-0 bg-cream flex items-center justify-center p-4 z-50">
       <div className="w-full max-w-2xl mx-auto">
@@ -19,11 +24,10 @@ export default function NotFound() {
           {/* Message */}
           <div className="space-y-4">
             <h1 className="font-display text-5xl md:text-6xl font-bold text-navy">
-              Page Not Found
+              {t("notFound.title")}
             </h1>
             <p className="text-lg text-navy/60 max-w-md mx-auto leading-relaxed">
-              The page you're looking for doesn't exist or has been moved.
-              Let's get you back on track!
+              {t("notFound.description")}
             </p>
           </div>
 
@@ -36,7 +40,7 @@ export default function NotFound() {
             >
               <Link href="/" className="flex items-center justify-center">
                 <Home className="h-5 w-5 mr-2" />
-                Go Home
+                {t("notFound.goHome")}
               </Link>
             </Button>
             <Button
@@ -47,41 +51,41 @@ export default function NotFound() {
             >
               <Link href="/products" className="flex items-center justify-center">
                 <ShoppingBag className="h-5 w-5 mr-2" />
-                Browse Products
+                {t("notFound.browseProducts")}
               </Link>
             </Button>
           </div>
 
           {/* Helpful Links */}
           <div className="pt-8 border-t border-border/40 w-full max-w-md">
-            <p className="text-sm text-navy/60 mb-4">Looking for something specific?</p>
+            <p className="text-sm text-navy/60 mb-4">{t("notFound.lookingFor")}</p>
             <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-sm">
               <Link
                 href="/categories"
                 className="text-navy hover:text-sky transition-colors font-medium"
               >
-                Categories
+                {t("nav.categories")}
               </Link>
               <span className="text-navy/30">•</span>
               <Link
                 href="/about"
                 className="text-navy hover:text-sky transition-colors font-medium"
               >
-                About Us
+                {t("nav.about")}
               </Link>
               <span className="text-navy/30">•</span>
               <Link
                 href="/contact"
                 className="text-navy hover:text-sky transition-colors font-medium"
               >
-                Contact
+                {t("nav.contact")}
               </Link>
               <span className="text-navy/30">•</span>
               <Link
                 href="/orders"
                 className="text-navy hover:text-sky transition-colors font-medium"
               >
-                My Orders
+                {t("nav.orders")}
               </Link>
             </div>
           </div>

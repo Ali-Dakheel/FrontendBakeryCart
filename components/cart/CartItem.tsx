@@ -10,12 +10,14 @@ import { useUpdateCartItem, useRemoveFromCart } from "@/lib/hooks/useCart";
 import { getValidImageUrl } from "@/lib/utils/image";
 import { toNumber } from "@/lib/utils/formatters";
 import type { CartItem as CartItemType } from "@/lib/types";
+import { useTranslations } from "next-intl";
 
 interface CartItemProps {
   item: CartItemType;
 }
 
 export function CartItem({ item }: CartItemProps) {
+  const t = useTranslations();
   const updateCartItem = useUpdateCartItem();
   const removeFromCart = useRemoveFromCart();
 
@@ -77,7 +79,7 @@ export function CartItem({ item }: CartItemProps) {
           <div className="space-y-1">
             <PriceDisplay amount={item.price_snapshot} className="text-lg" />
             <p className="text-xs text-navy/50">
-              per {item.variant ? "pack" : "item"}
+              {t(item.variant ? "cart.perPack" : "cart.perItem")}
             </p>
           </div>
 
@@ -106,7 +108,7 @@ export function CartItem({ item }: CartItemProps) {
               disabled={removeFromCart.isPending}
             >
               <Trash2 className="h-5 w-5" />
-              <span className="sr-only">Remove item</span>
+              <span className="sr-only">{t("cart.remove")}</span>
             </Button>
           </div>
         </div>
@@ -114,7 +116,7 @@ export function CartItem({ item }: CartItemProps) {
         {/* Mobile Item Total */}
         <div className="sm:hidden pt-2 border-t border-border">
           <div className="flex items-center justify-between">
-            <span className="text-sm text-navy/60">Item Total:</span>
+            <span className="text-sm text-navy/60">{t("cart.itemTotal")}:</span>
             <PriceDisplay amount={itemTotal} className="text-xl" />
           </div>
         </div>

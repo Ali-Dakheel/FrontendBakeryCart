@@ -36,7 +36,7 @@ export function useCreateAddress() {
       toast.success(t("addSuccess"));
     },
     onError: (error: AxiosError<ApiErrorResponse>) => {
-      toast.error(error.response?.data?.message || "Failed to add address");
+      toast.error(error.response?.data?.message || t("addFailed"));
     },
   });
 }
@@ -52,7 +52,7 @@ export function useUpdateAddress() {
       toast.success(t("updateSuccess"));
     },
     onError: (error: AxiosError<ApiErrorResponse>) => {
-      toast.error(error.response?.data?.message || "Failed to update address");
+      toast.error(error.response?.data?.message || t("updateFailed"));
     },
   });
 }
@@ -68,7 +68,7 @@ export function useDeleteAddress() {
       toast.success(t("deleteSuccess"));
     },
     onError: (error: AxiosError<ApiErrorResponse>) => {
-      toast.error(error.response?.data?.message || "Failed to delete address");
+      toast.error(error.response?.data?.message || t("deleteFailed"));
     },
   });
 }
@@ -84,7 +84,7 @@ export function useSetDefaultAddress() {
       toast.success(t("setDefaultSuccess"));
     },
     onError: (error: AxiosError<ApiErrorResponse>) => {
-      toast.error(error.response?.data?.message || "Failed to set default address");
+      toast.error(error.response?.data?.message || t("setDefaultFailed"));
     },
   });
 }

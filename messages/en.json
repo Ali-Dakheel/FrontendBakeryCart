@@ -153,6 +153,7 @@
     "addToCart": "Add to Cart",
     "outOfStock": "Out of Stock",
     "inStock": "In Stock",
+    "activeFilters": "Active",
     "viewDetails": "View Details",
     "selectVariant": "Select Variant",
     "noProducts": "No products found",
@@ -215,7 +216,27 @@
     "shopProducts": "Shop Products",
     "viewFullCart": "View Full Cart",
     "loadingCart": "Loading cart...",
-    "cleared": "Cart cleared"
+    "cleared": "Cart cleared",
+    "addFailed": "Failed to add item to cart",
+    "updateFailed": "Failed to update cart item",
+    "removeFailed": "Failed to remove item",
+    "clearFailed": "Failed to clear cart",
+    "itemCount": "{count, plural, one {# item} other {# items}} in your cart",
+    "cartItems": "Cart Items ({count})",
+    "clearCart": "Clear Cart",
+    "clearCartTitle": "Clear your cart?",
+    "clearCartDesc": "This will remove all items from your cart. This action cannot be undone.",
+    "emptyDescription": "Looks like you haven't added any products to your cart yet.",
+    "startShopping": "Start Shopping",
+    "haveCoupon": "Have a coupon code?",
+    "couponPlaceholder": "Enter code",
+    "apply": "Apply",
+    "deliveryFee": "Delivery Fee",
+    "discount": "Discount",
+    "deliveryFeeNote": "Delivery fee will be calculated at checkout based on your location",
+    "perPack": "per pack",
+    "perItem": "per item",
+    "itemTotal": "Item Total"
   },
   "checkout": {
     "title": "Checkout",
@@ -286,6 +307,10 @@
     "welcomeNewUser": "Welcome to Easy Bake, {name}!",
     "loginFailed": "Login failed",
     "logoutSuccess": "Logged out successfully",
+    "logoutFailed": "Logout failed",
+    "registrationFailed": "Registration failed",
+    "passwordChanged": "Password changed successfully",
+    "passwordChangeFailed": "Failed to change password",
     "login": {
       "title": "Login",
       "subtitle": "Welcome back",
@@ -368,7 +393,11 @@
     "addSuccess": "Address added successfully",
     "updateSuccess": "Address updated successfully",
     "deleteSuccess": "Address deleted successfully",
-    "setDefaultSuccess": "Default address updated"
+    "setDefaultSuccess": "Default address updated",
+    "addFailed": "Failed to add address",
+    "updateFailed": "Failed to update address",
+    "deleteFailed": "Failed to delete address",
+    "setDefaultFailed": "Failed to set default address"
   },
   "orders": {
     "title": "My Orders",
@@ -383,7 +412,9 @@
     "reorder": "Reorder",
     "subtitle": "Track and manage your orders",
     "emptyDescription": "Start shopping to place your first order!",
-    "cancelSuccess": "Order cancelled successfully"
+    "cancelSuccess": "Order cancelled successfully",
+    "createFailed": "Failed to create order",
+    "cancelFailed": "Failed to cancel order"
   },
   "reviews": {
     "title": "Reviews",
@@ -407,7 +438,17 @@
     "title": "My Wishlist",
     "empty": "Your wishlist is empty",
     "emptyDescription": "Save your favorite products to buy them later.",
-    "continueShopping": "Browse Products"
+    "continueShopping": "Browse Products",
+    "addedToast": "Added to wishlist",
+    "removedToast": "Removed from wishlist",
+    "updateFailed": "Failed to update wishlist"
+  },
+  "notFound": {
+    "title": "Page Not Found",
+    "description": "The page you're looking for doesn't exist or has been moved. Let's get you back on track!",
+    "goHome": "Go Home",
+    "browseProducts": "Browse Products",
+    "lookingFor": "Looking for something specific?"
   },
   "footer": {
     "businessHours": "Business Hours",

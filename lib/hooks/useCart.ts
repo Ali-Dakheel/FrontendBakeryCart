@@ -68,7 +68,7 @@ export function useAddToCart() {
       if (context?.previousCart) {
         queryClient.setQueryData(queryKeys.cart.all(), context.previousCart);
       }
-      toast.error(error.response?.data?.message || "Failed to add item to cart");
+      toast.error(error.response?.data?.message || t("addFailed"));
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.cart.all() });
@@ -77,6 +77,7 @@ export function useAddToCart() {
 }
 
 export function useUpdateCartItem() {
+  const t = useTranslations("cart");
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -108,7 +109,7 @@ export function useUpdateCartItem() {
       if (context?.previousCart) {
         queryClient.setQueryData(queryKeys.cart.all(), context.previousCart);
       }
-      toast.error(error.response?.data?.message || "Failed to update cart item");
+      toast.error(error.response?.data?.message || t("updateFailed"));
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.cart.all() });
@@ -147,7 +148,7 @@ export function useRemoveFromCart() {
       if (context?.previousCart) {
         queryClient.setQueryData(queryKeys.cart.all(), context.previousCart);
       }
-      toast.error(error.response?.data?.message || "Failed to remove item");
+      toast.error(error.response?.data?.message || t("removeFailed"));
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.cart.all() });
@@ -166,7 +167,7 @@ export function useClearCart() {
       toast.success(t("cleared"));
     },
     onError: (error: AxiosError<ApiErrorResponse>) => {
-      toast.error(error.response?.data?.message || "Failed to clear cart");
+      toast.error(error.response?.data?.message || t("clearFailed"));
     },
   });
 }

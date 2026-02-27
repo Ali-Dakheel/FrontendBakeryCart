@@ -42,7 +42,7 @@ export function useRegister() {
       toast.success(t("welcomeNewUser", { name: user.name }));
     },
     onError: (error: AxiosError<ApiErrorResponse>) => {
-      const message = error.response?.data?.message || "Registration failed";
+      const message = error.response?.data?.message || t("registrationFailed");
 
       if (error.response?.data?.errors) {
         const validationErrors = Object.values(error.response.data.errors).flat();
@@ -69,19 +69,20 @@ export function useLogout() {
       toast.success(t("logoutSuccess"));
     },
     onError: (error: AxiosError<ApiErrorResponse>) => {
-      toast.error(error.response?.data?.message || "Logout failed");
+      toast.error(error.response?.data?.message || t("logoutFailed"));
     },
   });
 }
 
 export function useChangePassword() {
+  const t = useTranslations("auth");
   return useMutation({
     mutationFn: changePassword,
     onSuccess: () => {
-      toast.success("Password changed successfully");
+      toast.success(t("passwordChanged"));
     },
     onError: (error: AxiosError<ApiErrorResponse>) => {
-      toast.error(error.response?.data?.message || "Failed to change password");
+      toast.error(error.response?.data?.message || t("passwordChangeFailed"));
     },
   });
 }

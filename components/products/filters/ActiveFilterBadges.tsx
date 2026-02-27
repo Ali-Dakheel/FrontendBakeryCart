@@ -36,7 +36,7 @@ export function ActiveFilterBadges({
 
   return (
     <div className="flex items-center gap-2 flex-wrap pt-2">
-      <span className="text-sm text-navy/60">Active:</span>
+      <span className="text-sm text-navy/60">{t("products.activeFilters")}:</span>
       {filters.categoryId && (
         <Badge variant="secondary" className="gap-1">
           {categories?.find((c: CategoryWithParent) => c.id === filters.categoryId)?.name ||
@@ -57,7 +57,7 @@ export function ActiveFilterBadges({
       )}
       {filters.availability !== "all" && (
         <Badge variant="secondary" className="gap-1">
-          {filters.availability === "in-stock" ? "In Stock" : "Out of Stock"}
+          {filters.availability === "in-stock" ? t("products.inStock") : t("products.outOfStock")}
           <button onClick={() => onAvailabilityChange("all")} className="hover:text-sky">
             <X className="h-3 w-3" />
           </button>

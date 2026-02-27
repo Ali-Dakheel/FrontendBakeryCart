@@ -19,6 +19,7 @@ export function useOrder(id: number) {
 }
 
 export function useCreateOrder() {
+  const t = useTranslations("orders");
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -28,7 +29,7 @@ export function useCreateOrder() {
       queryClient.invalidateQueries({ queryKey: queryKeys.cart.all() });
     },
     onError: (error: AxiosError<ApiErrorResponse>) => {
-      toast.error(error.response?.data?.message || "Failed to create order");
+      toast.error(error.response?.data?.message || t("createFailed"));
     },
   });
 }
@@ -45,7 +46,7 @@ export function useCancelOrder() {
       toast.success(t("cancelSuccess"));
     },
     onError: (error: AxiosError<ApiErrorResponse>) => {
-      toast.error(error.response?.data?.message || "Failed to cancel order");
+      toast.error(error.response?.data?.message || t("cancelFailed"));
     },
   });
 }
