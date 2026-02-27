@@ -2,14 +2,12 @@
 
 import Image from "next/image";
 import { Link, useRouter } from "@/i18n/navigation";
-import { Heart, ShoppingCart, ShoppingBag } from "lucide-react";
+import { Heart, ShoppingCart, Croissant, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { PriceDisplay } from "@/components/shared/PriceDisplay";
 import { EmptyState } from "@/components/shared/EmptyState";
-import { WishlistButton } from "@/components/products/WishlistButton";
-import { useWishlist } from "@/lib/hooks/useWishlist";
+import { useWishlist, useToggleWishlist } from "@/lib/hooks/useWishlist";
 import { useAddToCart } from "@/lib/hooks/useCart";
 import { useUser } from "@/lib/hooks/useAuth";
 import { useUIStore } from "@/lib/stores/ui-store";
@@ -23,6 +21,7 @@ export default function WishlistPage() {
   const isLoggedIn = !!user;
 
   const { data: wishlistData, isPending } = useWishlist();
+  const toggle = useToggleWishlist();
   const addToCart = useAddToCart();
   const { openCart } = useUIStore();
 
@@ -37,9 +36,9 @@ export default function WishlistPage() {
       <div className="min-h-screen bg-cream">
         <div className="container mx-auto px-4 py-8">
           <Skeleton className="h-10 w-48 mb-8" />
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
             {[...Array(4)].map((_, i) => (
-              <Skeleton key={i} className="h-64 w-full rounded-lg" />
+              <Skeleton key={i} className="h-72 w-full rounded-2xl" />
             ))}
           </div>
         </div>
@@ -81,78 +80,86 @@ export default function WishlistPage() {
             action={{ label: t("wishlist.continueShopping"), href: "/products" }}
           />
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
             {items.map((item) => (
-              <Card
+              <div
                 key={item.id}
-                className="group overflow-hidden border border-navy/10 hover:border-sky/30 transition-all duration-300 bg-white hover:scale-[1.01]"
+                className="group flex flex-col rounded-2xl overflow-hidden bg-white border border-navy/8 hover:border-sky/30 hover:shadow-md transition-all duration-300"
               >
-                <CardContent className="p-0">
-                  {/* Image */}
-                  <div className="relative aspect-square bg-cream overflow-hidden">
-                    <Link href={`/products/${item.product.id}`}>
-                      {item.product.image ? (
-                        <Image
-                          src={item.product.image}
-                          alt={item.product.name}
-                          fill
-                          className="object-cover transition-transform duration-500 group-hover:scale-110"
-                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                        />
-                      ) : (
-                        <div className="h-full w-full flex items-center justify-center">
-                          <ShoppingBag className="h-16 w-16 text-navy/20" />
-                        </div>
-                      )}
-                    </Link>
-
-                    {/* Wishlist toggle (remove) */}
-                    <div className="absolute top-2 right-2">
-                      <WishlistButton productId={item.product.id} variant="icon" />
-                    </div>
-                  </div>
-
-                  {/* Info */}
-                  <div className="p-4 space-y-3">
-                    <Link href={`/products/${item.product.id}`}>
-                      <h3 className="font-display font-semibold text-navy line-clamp-2 hover:text-sky transition-colors">
-                        {item.product.name}
-                      </h3>
-                    </Link>
-
-                    <div className="flex items-center justify-between gap-2">
-                      <PriceDisplay
-                        amount={
-                          typeof item.product.price === "number"
-                            ? item.product.price
-                            : parseFloat(String(item.product.price))
-                        }
-                        className="text-xl font-bold text-sky"
+                {/* Image — fixed height, no aspect-square */}
+                <div className="relative h-44 sm:h-48 bg-cream overflow-hidden">
+                  <Link href={`/products/${item.product.id}`} className="block h-full">
+                    {item.product.image ? (
+                      <Image
+                        src={item.product.image}
+                        alt={item.product.name}
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
                       />
+                    ) : (
+                      <div className="h-full w-full flex items-center justify-center bg-sky/5">
+                        <Croissant className="h-14 w-14 text-sky/25" />
+                      </div>
+                    )}
+                  </Link>
 
-                      {item.product.is_available ? (
-                        <Button
-                          size="sm"
-                          onClick={() =>
-                            addToCart.mutate(
-                              { product_id: item.product.id, quantity: 1 },
-                              { onSuccess: () => openCart() }
-                            )
-                          }
-                          disabled={addToCart.isPending}
-                        >
-                          <ShoppingCart className="h-4 w-4 mr-1 rtl:ml-1 rtl:mr-0" />
-                          {t("products.add")}
-                        </Button>
-                      ) : (
-                        <span className="text-xs text-destructive font-medium">
-                          {t("products.outOfStock")}
-                        </span>
-                      )}
+                  {/* Hover gradient */}
+                  <div className="absolute inset-0 bg-linear-to-t from-navy/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+
+                  {/* Remove button */}
+                  <button
+                    onClick={() => toggle.mutate(item.product.id)}
+                    disabled={toggle.isPending}
+                    aria-label={t("wishlist.remove")}
+                    className="absolute top-2 right-2 rtl:left-2 rtl:right-auto z-10 p-1.5 rounded-full bg-white shadow-sm text-navy/40 hover:text-rose-500 hover:bg-rose-50 transition-all hover:scale-110 disabled:opacity-50"
+                  >
+                    <X className="h-3.5 w-3.5" />
+                  </button>
+
+                  {/* Out of stock overlay */}
+                  {!item.product.is_available && (
+                    <div className="absolute inset-0 bg-white/60 backdrop-blur-[2px] flex items-end pb-3 justify-center pointer-events-none">
+                      <span className="text-xs font-semibold text-destructive bg-white px-3 py-1 rounded-full shadow-sm">
+                        {t("products.outOfStock")}
+                      </span>
                     </div>
-                  </div>
-                </CardContent>
-              </Card>
+                  )}
+                </div>
+
+                {/* Info */}
+                <div className="flex flex-col flex-1 p-3 gap-2.5">
+                  <Link href={`/products/${item.product.id}`}>
+                    <h3 className="font-semibold text-navy text-sm leading-snug line-clamp-2 hover:text-sky transition-colors">
+                      {item.product.name}
+                    </h3>
+                  </Link>
+
+                  <PriceDisplay
+                    amount={
+                      typeof item.product.price === "number"
+                        ? item.product.price
+                        : parseFloat(String(item.product.price))
+                    }
+                    className="text-base font-bold text-sky"
+                  />
+
+                  <Button
+                    size="sm"
+                    className="w-full mt-auto gap-1.5 bg-navy hover:bg-navy-light text-white text-xs h-8"
+                    onClick={() =>
+                      addToCart.mutate(
+                        { product_id: item.product.id, quantity: 1 },
+                        { onSuccess: () => openCart() }
+                      )
+                    }
+                    disabled={!item.product.is_available || addToCart.isPending}
+                  >
+                    <ShoppingCart className="h-3.5 w-3.5" />
+                    {t("products.add")}
+                  </Button>
+                </div>
+              </div>
             ))}
           </div>
         )}

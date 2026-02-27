@@ -38,14 +38,14 @@ export function CartDrawer() {
   return (
     <Sheet open={isCartOpen} onOpenChange={closeCart}>
       <SheetContent
-        side={locale === 'ar' ? 'left' : 'right'}
+        side={locale === "ar" ? "left" : "right"}
         className="w-full sm:max-w-lg bg-cream flex flex-col"
       >
         <SheetHeader>
-          <SheetTitle className="font-display text-2xl text-navy">{t('cart.title')}</SheetTitle>
+          <SheetTitle className="font-display text-2xl text-navy">{t("cart.title")}</SheetTitle>
         </SheetHeader>
 
-        {/* Screen reader announcement for cart changes */}
+        {/* Screen reader announcement */}
         <div aria-live="polite" aria-atomic="true" className="sr-only">
           {cartItems.length > 0
             ? `Cart updated: ${cartItems.length} item${cartItems.length === 1 ? "" : "s"}`
@@ -54,109 +54,111 @@ export function CartDrawer() {
 
         {isLoading ? (
           <div className="flex-1 flex items-center justify-center">
-            <p className="text-navy/60">{t('cart.loadingCart')}</p>
+            <p className="text-navy/60">{t("cart.loadingCart")}</p>
           </div>
         ) : cartItems.length === 0 ? (
           <div className="flex-1 flex flex-col items-center justify-center space-y-4">
             <ShoppingBag className="h-16 w-16 text-navy/20" />
-            <p className="text-navy/60">{t('cart.empty')}</p>
+            <p className="text-navy/60">{t("cart.empty")}</p>
             <Button onClick={closeCart} asChild>
-              <Link href="/products">{t('cart.shopProducts')}</Link>
+              <Link href="/products">{t("cart.shopProducts")}</Link>
             </Button>
           </div>
         ) : (
           <>
             {/* Cart Items */}
-            <ul aria-label={t('cart.title')} className="flex-1 overflow-y-auto scrollbar-thin space-y-4 py-4">
-              {cartItems.map((item) => (
-                <li
-                  key={item.id}
-                  className="flex gap-4 bg-white rounded-lg border border-border p-4"
-                >
-                  {/* Product Image */}
-                  <div className="relative h-20 w-20 shrink-0 rounded-md overflow-hidden bg-cream-dark">
-                    {(() => {
-                      const { url: validUrl, isPlaceholder } = getValidImageUrl(item.product?.images, false);
-
-                      return validUrl ? (
+            <ul aria-label={t("cart.title")} className="flex-1 overflow-y-auto scrollbar-thin space-y-3 py-4">
+              {cartItems.map((item) => {
+                const { url: validUrl, isPlaceholder } = getValidImageUrl(item.product?.images, false);
+                return (
+                  <li
+                    key={item.id}
+                    className="flex gap-3 bg-white rounded-xl border border-border/60 shadow-sm p-3"
+                  >
+                    {/* Product Image */}
+                    <div className="relative h-20 w-20 shrink-0 rounded-lg overflow-hidden bg-cream-dark">
+                      {validUrl ? (
                         <Image
                           src={validUrl}
-                          alt={item.product?.name || "Product"}
+                          alt=""
                           fill
                           className="object-cover"
                           unoptimized={isPlaceholder}
                         />
                       ) : (
-                        <div className="h-full w-full flex items-center justify-center text-navy/30">
+                        <div className="h-full w-full flex items-center justify-center text-navy/20">
                           <ShoppingBag className="h-8 w-8" />
                         </div>
-                      );
-                    })()}
-                  </div>
-
-                  {/* Product Info */}
-                  <div className="flex-1 min-w-0">
-                    <h4 className="font-medium text-navy text-sm line-clamp-1">
-                      {item.product?.name || "Product"}
-                    </h4>
-                    {item.variant && (
-                      <p className="text-xs text-navy/60">{item.variant.name}</p>
-                    )}
-                    <PriceDisplay amount={item.price_snapshot} className="text-lg mt-1" />
-
-                    {/* Quantity Controls */}
-                    <div className="flex items-center gap-2 mt-2">
-                      <QuantityControl
-                        value={item.quantity}
-                        min={1}
-                        onChange={(newQty) => handleUpdateQuantity(item.id, newQty)}
-                        disabled={updateCartItem.isPending}
-                        size="sm"
-                        productName={item.product?.name}
-                      />
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-7 w-7 ml-auto text-red-600 hover:text-red-700 hover:bg-red-50"
-                        onClick={() => handleRemove(item.id)}
-                        disabled={removeFromCart.isPending}
-                        aria-label={`Remove ${item.product?.name || "item"} from cart`}
-                      >
-                        <Trash2 className="h-3 w-3" />
-                      </Button>
+                      )}
                     </div>
-                  </div>
-                </li>
-              ))}
+
+                    {/* Product Info */}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="min-w-0">
+                          <h4 className="font-semibold text-navy text-sm line-clamp-2 leading-snug">
+                            {item.product?.name || "Product"}
+                          </h4>
+                          {item.variant && (
+                            <p className="text-xs text-navy/55 mt-0.5">{item.variant.name}</p>
+                          )}
+                        </div>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-7 w-7 shrink-0 text-navy/25 hover:text-red-500 hover:bg-red-50"
+                          onClick={() => handleRemove(item.id)}
+                          disabled={removeFromCart.isPending}
+                          aria-label={`Remove ${item.product?.name || "item"} from cart`}
+                        >
+                          <Trash2 className="h-3.5 w-3.5" />
+                        </Button>
+                      </div>
+
+                      <PriceDisplay
+                        amount={item.price_snapshot}
+                        className="text-sm font-bold text-navy mt-1"
+                      />
+
+                      <div className="mt-2">
+                        <QuantityControl
+                          value={item.quantity}
+                          min={1}
+                          onChange={(newQty) => handleUpdateQuantity(item.id, newQty)}
+                          disabled={updateCartItem.isPending}
+                          size="sm"
+                          productName={item.product?.name}
+                        />
+                      </div>
+                    </div>
+                  </li>
+                );
+              })}
             </ul>
 
             {/* Cart Summary */}
-            <div className="border-t pt-4 space-y-4">
+            <div className="border-t pt-4 space-y-3">
               <div className="space-y-2 text-sm">
-                <div className="flex justify-between text-navy/70">
-                  <span>{t('common.subtotal')}</span>
+                <div className="flex justify-between text-navy/60">
+                  <span>{t("common.subtotal")}</span>
                   <PriceDisplay amount={subtotal} className="text-sm font-normal" />
                 </div>
-                <div className="flex justify-between text-navy/70">
-                  <span>{t('common.tax')} (10%)</span>
+                <div className="flex justify-between text-navy/60">
+                  <span>{t("common.tax")} (10%)</span>
                   <PriceDisplay amount={vat} className="text-sm font-normal" />
                 </div>
                 <Separator />
-                <div className="flex justify-between font-semibold text-navy text-base">
-                  <span>{t('common.total')}</span>
-                  <PriceDisplay amount={total} className="text-xl" />
+                <div className="flex justify-between items-center font-semibold text-navy">
+                  <span className="text-base">{t("common.total")}</span>
+                  <PriceDisplay amount={total} className="text-xl font-bold" />
                 </div>
               </div>
 
               <Button asChild className="w-full bg-navy hover:bg-navy-light" size="lg">
-                <Link href="/checkout">{t('cart.checkout')}</Link>
+                <Link href="/checkout" onClick={closeCart}>{t("cart.checkout")}</Link>
               </Button>
-              <Button
-                variant="outline"
-                className="w-full"
-                asChild
-              >
-                <Link href="/cart">{t('cart.viewFullCart')}</Link>
+              <Button variant="outline" className="w-full" asChild>
+                <Link href="/cart" onClick={closeCart}>{t("cart.viewFullCart")}</Link>
               </Button>
             </div>
           </>

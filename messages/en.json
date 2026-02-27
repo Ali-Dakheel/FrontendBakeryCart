@@ -24,7 +24,8 @@
     "profile": "Profile",
     "addresses": "Addresses",
     "account": "Account",
-    "menu": "Menu"
+    "menu": "Menu",
+    "wishlist": "Wishlist"
   },
   "common": {
     "search": "Search",

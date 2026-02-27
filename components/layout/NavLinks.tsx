@@ -3,6 +3,7 @@
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
+import { Heart } from "lucide-react";
 import type { User } from "@/lib/types";
 
 interface NavLinksProps {
@@ -43,6 +44,10 @@ export function NavLinks({ user, orientation = "horizontal", onLinkClick }: NavL
       )}
       {isVertical && user && (
         <>
+          <Link href="/wishlist" className={cn(linkClass, "flex items-center gap-2")} onClick={onLinkClick}>
+            <Heart className="h-4 w-4" />
+            {t("wishlist.title")}
+          </Link>
           <Link href="/account/profile" className={linkClass} onClick={onLinkClick}>
             {t("nav.profile")}
           </Link>

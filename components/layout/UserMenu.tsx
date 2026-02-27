@@ -1,6 +1,6 @@
 "use client";
 
-import { User, LogOut } from "lucide-react";
+import { User, LogOut, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import {
@@ -46,6 +46,12 @@ export function UserMenu() {
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
               <Link href="/orders">{t("nav.orders")}</Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href="/wishlist" className="flex items-center gap-2">
+                <Heart className="h-4 w-4" />
+                {t("wishlist.title")}
+              </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
               <Link href="/account/addresses">{t("nav.addresses")}</Link>
