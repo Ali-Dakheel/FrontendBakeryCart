@@ -16,6 +16,9 @@ const nextConfig: NextConfig = {
   // Enable React 19.2 Compiler (automatic memoization)
   reactCompiler: true,
 
+  // Standalone output for Docker deployment (reduces image size significantly)
+  output: 'standalone',
+
   // Image Optimization
   images: {
     remotePatterns: [
@@ -27,6 +30,11 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'easybake.test',
+        pathname: '/storage/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'api.dakheel.site',
         pathname: '/storage/**',
       },
       {
