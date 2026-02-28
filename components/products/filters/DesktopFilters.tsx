@@ -2,14 +2,6 @@
 
 import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Separator } from "@/components/ui/separator";
 import type { CategoryWithParent } from "@/lib/types";
 import type { FilterValues } from "../ProductFilters";
 import { FilterOptions, getActiveFilterCount } from "./FilterOptions";
@@ -22,7 +14,6 @@ interface DesktopFiltersProps {
   onCategoryChange: (value: string) => void;
   onPriceRangeChange: (value: string) => void;
   onAvailabilityChange: (value: string) => void;
-  onSortChange: (value: string) => void;
   onReset: () => void;
 }
 
@@ -33,7 +24,6 @@ export function DesktopFilters({
   onCategoryChange,
   onPriceRangeChange,
   onAvailabilityChange,
-  onSortChange,
   onReset,
 }: DesktopFiltersProps) {
   const t = useTranslations();
@@ -41,8 +31,7 @@ export function DesktopFilters({
   const hasActiveFilters = activeFilterCount > 0;
 
   return (
-    <div className="hidden lg:flex items-center gap-2">
-      {/* Filter dropdowns */}
+    <div className="hidden lg:flex items-center gap-2 flex-wrap">
       <FilterOptions
         filters={filters}
         categories={categories}
@@ -53,27 +42,6 @@ export function DesktopFilters({
         layout="horizontal"
       />
 
-      <Separator orientation="vertical" className="h-5 mx-1 bg-border/60" />
-
-      {/* Sort */}
-      <Select value={filters.sortBy} onValueChange={onSortChange}>
-        <SelectTrigger
-          className="h-9 min-w-40 text-sm rounded-full bg-white border-border hover:border-sky/50 hover:bg-sky/5 transition-colors"
-          aria-label="Sort products by"
-        >
-          <SelectValue placeholder={t("products.sortBy")} />
-        </SelectTrigger>
-        <SelectContent className="bg-white">
-          <SelectItem value="featured">{t("products.sortFeatured")}</SelectItem>
-          <SelectItem value="-created_at">{t("products.sortNewest")}</SelectItem>
-          <SelectItem value="created_at">{t("products.sortOldest")}</SelectItem>
-          <SelectItem value="price">{t("products.sortPriceLow")}</SelectItem>
-          <SelectItem value="-price">{t("products.sortPriceHigh")}</SelectItem>
-          <SelectItem value="-sales_count">{t("products.sortPopular")}</SelectItem>
-        </SelectContent>
-      </Select>
-
-      {/* Clear Filters */}
       {hasActiveFilters && (
         <Button
           variant="ghost"

@@ -35,33 +35,35 @@ export function ActiveFilterBadges({
   }
 
   return (
-    <div className="flex items-center gap-2 flex-wrap">
-      <span className="text-sm text-navy/60">{t("products.activeFilters")}:</span>
+    <div className="flex items-center gap-1.5 flex-wrap">
       {filters.categoryId && (
-        <Badge variant="secondary" className="gap-1">
+        <button
+          onClick={() => onCategoryChange("all")}
+          className="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full bg-sky/10 text-sky border border-sky/20 hover:bg-sky/20 transition-colors"
+        >
           {categories?.find((c: CategoryWithParent) => c.id === filters.categoryId)?.name ||
             categories?.find((c: CategoryWithParent) => c.id === filters.categoryId)?.translations?.[0]?.name ||
             "Category"}
-          <button onClick={() => onCategoryChange("all")} className="hover:text-sky">
-            <X className="h-3 w-3" />
-          </button>
-        </Badge>
+          <X className="h-3 w-3 shrink-0" />
+        </button>
       )}
       {filters.priceRange !== "all" && (
-        <Badge variant="secondary" className="gap-1">
+        <button
+          onClick={() => onPriceRangeChange("all")}
+          className="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full bg-sky/10 text-sky border border-sky/20 hover:bg-sky/20 transition-colors"
+        >
           {filters.priceRange} {t('common.currency')}
-          <button onClick={() => onPriceRangeChange("all")} className="hover:text-sky">
-            <X className="h-3 w-3" />
-          </button>
-        </Badge>
+          <X className="h-3 w-3 shrink-0" />
+        </button>
       )}
       {filters.availability !== "all" && (
-        <Badge variant="secondary" className="gap-1">
+        <button
+          onClick={() => onAvailabilityChange("all")}
+          className="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full bg-sky/10 text-sky border border-sky/20 hover:bg-sky/20 transition-colors"
+        >
           {filters.availability === "in-stock" ? t("products.inStock") : t("products.outOfStock")}
-          <button onClick={() => onAvailabilityChange("all")} className="hover:text-sky">
-            <X className="h-3 w-3" />
-          </button>
-        </Badge>
+          <X className="h-3 w-3 shrink-0" />
+        </button>
       )}
     </div>
   );

@@ -5,6 +5,13 @@ import { useProducts } from "@/lib/hooks/useProducts";
 import { ProductGrid } from "@/components/products/ProductGrid";
 import { ProductFilters, type FilterValues } from "@/components/products/ProductFilters";
 import { Pagination } from "@/components/products/Pagination";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import type { ProductFilters as APIFilters, SortOption } from "@/lib/api/products";
 import { useTranslations } from "next-intl";
 
@@ -111,7 +118,7 @@ export default function ProductsPage() {
       {/* Main Content */}
       <div className="container mx-auto px-4 py-6 md:py-8">
         {/* Filters */}
-        <div className="mb-8">
+        <div className="mb-4">
           <ProductFilters
             filters={filters}
             onFilterChange={handleFilterChange}
@@ -119,12 +126,30 @@ export default function ProductsPage() {
           />
         </div>
 
-        {/* Results Count */}
-        {!isLoading && (
-          <div className="mb-6 text-sm text-navy/60">
-            {t('products.showing')} {products.length} {t('products.of')} {totalCount} {t('products.productsCount')}
+        {/* Results count + Sort */}
+        <div className="flex items-center justify-between mb-6 gap-4">
+          <p className="text-sm text-navy/60 shrink-0">
+            {!isLoading && `${t('products.showing')} ${products.length} ${t('products.of')} ${totalCount} ${t('products.productsCount')}`}
+          </p>
+          <div className="hidden lg:block">
+            <Select
+              value={filters.sortBy}
+              onValueChange={(v) => handleFilterChange({ ...filters, sortBy: v })}
+            >
+              <SelectTrigger className="h-9 min-w-44 text-sm rounded-full bg-white border-border hover:border-sky/50 hover:bg-sky/5 transition-colors">
+                <SelectValue placeholder={t('products.sortBy')} />
+              </SelectTrigger>
+              <SelectContent className="bg-white">
+                <SelectItem value="featured">{t('products.sortFeatured')}</SelectItem>
+                <SelectItem value="-created_at">{t('products.sortNewest')}</SelectItem>
+                <SelectItem value="created_at">{t('products.sortOldest')}</SelectItem>
+                <SelectItem value="price">{t('products.sortPriceLow')}</SelectItem>
+                <SelectItem value="-price">{t('products.sortPriceHigh')}</SelectItem>
+                <SelectItem value="-sales_count">{t('products.sortPopular')}</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
-        )}
+        </div>
 
         {/* Product Grid */}
         <ProductGrid

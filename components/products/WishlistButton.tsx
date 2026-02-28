@@ -51,12 +51,12 @@ export function WishlistButton({ productId, variant = "icon", className }: Wishl
       disabled={toggle.isPending}
       aria-label={isInWishlist ? t("wishlist.remove") : t("wishlist.add")}
       className={cn(
-        "p-1.5 rounded-full bg-white/80 backdrop-blur-sm shadow-sm transition-all hover:scale-110",
-        isInWishlist ? "text-rose-500" : "text-navy/40 hover:text-rose-400",
+        "h-8 w-8 flex items-center justify-center rounded-full bg-white shadow-sm ring-1 transition-all hover:scale-110 hover:shadow-md shrink-0",
+        isInWishlist ? "text-rose-500 ring-rose-200" : "text-navy/40 ring-gray-200 hover:text-rose-400 hover:ring-rose-200",
         className
       )}
     >
-      <Heart className={cn("h-4 w-4", isInWishlist && "fill-rose-500")} />
+      <Heart className={cn("h-4.5 w-4.5 shrink-0", isInWishlist && "fill-rose-500")} />
     </button>
   );
 }

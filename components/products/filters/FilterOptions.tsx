@@ -8,7 +8,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
-import { Filter } from "lucide-react";
+import { cn } from "@/lib/utils";
 import type { CategoryWithParent } from "@/lib/types";
 import type { FilterValues } from "../ProductFilters";
 import { useTranslations } from "next-intl";
@@ -34,6 +34,11 @@ export function getActiveFilterCount(filters: FilterValues): number {
   ].filter(Boolean).length;
 }
 
+// Shared pill class builder
+const pillBase = "h-9 text-sm rounded-full border transition-colors";
+const pillIdle = "bg-white border-sky/20 hover:border-sky/50 hover:bg-sky/5";
+const pillActive = "bg-sky text-white border-sky hover:bg-sky/90 hover:border-sky";
+
 export function FilterOptions({
   filters,
   categories,
@@ -46,16 +51,19 @@ export function FilterOptions({
   const t = useTranslations();
   const isVertical = layout === "vertical";
 
+  const categoryIsActive = !!filters.categoryId;
+  const priceIsActive = filters.priceRange !== "all";
+  const availabilityIsActive = filters.availability !== "all";
+
   const categorySelect = (
     <Select
       value={filters.categoryId?.toString() || "all"}
       onValueChange={onCategoryChange}
     >
       <SelectTrigger
-        className={isVertical ? "w-full" : "h-9 text-sm rounded-full bg-white border-border hover:border-sky/50 hover:bg-sky/5 transition-colors"}
+        className={isVertical ? "w-full" : cn(pillBase, categoryIsActive ? pillActive : pillIdle)}
         aria-label="Filter by category"
       >
-        {!isVertical && <Filter className="h-3.5 w-3.5 me-1.5 text-sky/60 shrink-0" />}
         <SelectValue placeholder={t('products.allCategories')} />
       </SelectTrigger>
       <SelectContent className={isVertical ? undefined : "bg-white"}>
@@ -74,7 +82,7 @@ export function FilterOptions({
   const priceSelect = (
     <Select value={filters.priceRange} onValueChange={onPriceRangeChange}>
       <SelectTrigger
-        className={isVertical ? "w-full" : "h-9 text-sm rounded-full bg-white border-border hover:border-sky/50 hover:bg-sky/5 transition-colors"}
+        className={isVertical ? "w-full" : cn(pillBase, priceIsActive ? pillActive : pillIdle)}
         aria-label="Filter by price range"
       >
         <SelectValue placeholder={t('products.priceRange')} />
@@ -92,7 +100,7 @@ export function FilterOptions({
   const availabilitySelect = (
     <Select value={filters.availability} onValueChange={onAvailabilityChange}>
       <SelectTrigger
-        className={isVertical ? "w-full" : "h-9 text-sm rounded-full bg-white border-border hover:border-sky/50 hover:bg-sky/5 transition-colors"}
+        className={isVertical ? "w-full" : cn(pillBase, availabilityIsActive ? pillActive : pillIdle)}
         aria-label="Filter by availability"
       >
         <SelectValue placeholder={t('products.availability')} />

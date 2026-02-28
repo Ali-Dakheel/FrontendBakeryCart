@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { SlidersHorizontal } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -47,12 +48,18 @@ export function MobileFilters({
   const [isOpen, setIsOpen] = useState(false);
   const t = useTranslations();
   const activeFilterCount = getActiveFilterCount(filters);
+  const sortIsActive = filters.sortBy !== "featured" && filters.sortBy !== "";
 
   return (
     <div className="lg:hidden flex items-center gap-2 w-full">
       <Select value={filters.sortBy} onValueChange={onSortChange}>
         <SelectTrigger
-          className="flex-1 h-9 text-sm rounded-full bg-white border-border hover:border-sky/50 hover:bg-sky/5 transition-colors"
+          className={cn(
+            "flex-1 h-9 text-sm rounded-full border transition-colors",
+            sortIsActive
+              ? "bg-sky text-white border-sky hover:bg-sky/90 hover:border-sky"
+              : "bg-white border-border hover:border-sky/50 hover:bg-sky/5"
+          )}
           aria-label="Sort products by"
         >
           <SelectValue placeholder={t("products.sortBy")} />

@@ -84,7 +84,7 @@ function ProductCardComponent({ product, index = 0 }: ProductCardProps) {
       onMouseEnter={handleMouseEnter}
     >
       <Link href={`/products/${product.id}`}>
-        <Card className="card-depth group h-full overflow-hidden border border-navy/10 hover:border-sky/30 transition-all duration-300 bg-white hover:scale-[1.01]">
+        <Card className="card-depth group h-full overflow-hidden border border-navy/10 hover:border-sky/30 transition-all duration-300 bg-white hover:scale-[1.01] py-0 gap-0">
           <CardContent className="p-0">
             {/* Product Image */}
             <div className="relative aspect-square overflow-hidden bg-cream">
@@ -106,21 +106,18 @@ function ProductCardComponent({ product, index = 0 }: ProductCardProps) {
                 </div>
               )}
 
-              {/* Badges + Wishlist — one container, structurally impossible to overlap */}
-              <div className="absolute top-3 inset-x-3 flex items-start justify-between gap-2">
-                <div className="flex flex-col gap-1.5">
-                  {product.is_featured && (
-                    <Badge className="bg-sky text-white text-xs font-medium shadow-sm w-fit">
-                      {t('products.featured')}
-                    </Badge>
-                  )}
-                  {!product.is_available && (
-                    <Badge variant="destructive" className="text-xs w-fit">
-                      {t('products.outOfStock')}
-                    </Badge>
-                  )}
-                </div>
-                <WishlistButton productId={product.id} variant="icon" />
+              {/* Badges */}
+              <div className="absolute top-3 start-3 flex flex-col gap-1.5">
+                {product.is_featured && (
+                  <Badge className="bg-sky text-white text-xs font-medium shadow-sm w-fit">
+                    {t('products.featured')}
+                  </Badge>
+                )}
+                {!product.is_available && (
+                  <Badge variant="destructive" className="text-xs w-fit">
+                    {t('products.outOfStock')}
+                  </Badge>
+                )}
               </div>
             </div>
 
@@ -151,24 +148,27 @@ function ProductCardComponent({ product, index = 0 }: ProductCardProps) {
                   )}
                 </div>
 
-                <Button
-                  size="sm"
-                  onClick={handleAddToCart}
-                  disabled={!product.is_available || addToCart.isPending}
-                  className="rtl:flex-row-reverse"
-                >
-                  {addToCart.isPending ? (
-                    <>
-                      <div className="h-4 w-4 me-1 shrink-0 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                      {t('products.adding')}
-                    </>
-                  ) : (
-                    <>
-                      <ShoppingCart className="h-4 w-4 me-1" />
-                      {t('products.add')}
-                    </>
-                  )}
-                </Button>
+                <div className="flex items-center gap-1.5 shrink-0">
+                  <WishlistButton productId={product.id} variant="icon" />
+                  <Button
+                    size="sm"
+                    onClick={handleAddToCart}
+                    disabled={!product.is_available || addToCart.isPending}
+                    className="rtl:flex-row-reverse"
+                  >
+                    {addToCart.isPending ? (
+                      <>
+                        <div className="h-4 w-4 me-1 shrink-0 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        {t('products.adding')}
+                      </>
+                    ) : (
+                      <>
+                        <ShoppingCart className="h-4 w-4 me-1" />
+                        {t('products.add')}
+                      </>
+                    )}
+                  </Button>
+                </div>
               </div>
             </div>
           </CardContent>

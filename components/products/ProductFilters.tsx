@@ -80,7 +80,6 @@ export function ProductFilters({ filters, onFilterChange, onReset }: ProductFilt
           onCategoryChange={handleCategoryChange}
           onPriceRangeChange={handlePriceRangeChange}
           onAvailabilityChange={handleAvailabilityChange}
-          onSortChange={handleSortChange}
           onReset={onReset}
         />
         <MobileFilters
