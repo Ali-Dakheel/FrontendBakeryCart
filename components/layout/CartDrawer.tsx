@@ -48,8 +48,8 @@ export function CartDrawer() {
         {/* Screen reader announcement */}
         <div aria-live="polite" aria-atomic="true" className="sr-only">
           {cartItems.length > 0
-            ? `Cart updated: ${cartItems.length} item${cartItems.length === 1 ? "" : "s"}`
-            : "Cart is empty"}
+            ? t("cart.cartItems", { count: cartItems.length })
+            : t("cart.empty")}
         </div>
 
         {isLoading ? (
@@ -109,7 +109,7 @@ export function CartDrawer() {
                           className="h-7 w-7 shrink-0 text-navy/25 hover:text-red-500 hover:bg-red-50"
                           onClick={() => handleRemove(item.id)}
                           disabled={removeFromCart.isPending}
-                          aria-label={`Remove ${item.product?.name || "item"} from cart`}
+                          aria-label={t("cart.remove")}
                         >
                           <Trash2 className="h-3.5 w-3.5" />
                         </Button>

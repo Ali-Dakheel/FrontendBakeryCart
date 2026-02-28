@@ -3,9 +3,8 @@ import type { Address, AddressForm, ApiResponse } from "@/lib/types";
 
 // Get all user addresses
 export async function getAddresses(): Promise<Address[]> {
-  const response = await apiClient.get<ApiResponse<Address[]>>("/addresses");
-  // List endpoints return { data: [...] } without a top-level success field
-  return (response.data as { data?: Address[] }).data || [];
+  const response = await apiClient.get("/addresses");
+  return (response.data as { data?: { addresses?: Address[] } }).data?.addresses || [];
 }
 
 // Get single address

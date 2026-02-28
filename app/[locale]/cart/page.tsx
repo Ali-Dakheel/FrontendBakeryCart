@@ -66,7 +66,7 @@ export default function CartPage() {
             </div>
             <Button variant="ghost" asChild className="text-navy hover:text-sky">
               <Link href="/products">
-                <ArrowLeft className="h-4 w-4 mr-2" />
+                <ArrowLeft className="h-4 w-4 me-2 rtl:rotate-180" />
                 {t("cart.continueShopping")}
               </Link>
             </Button>
@@ -108,7 +108,7 @@ export default function CartPage() {
                       size="sm"
                       className="text-red-600 hover:text-red-700 hover:bg-red-50"
                     >
-                      <Trash2 className="h-4 w-4 mr-2" />
+                      <Trash2 className="h-4 w-4 me-2" />
                       {t("cart.clearCart")}
                     </Button>
                   </AlertDialogTrigger>

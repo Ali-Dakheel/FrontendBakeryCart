@@ -5,7 +5,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { PAYMENT_METHODS, PAYMENT_METHOD_LABELS } from "@/lib/utils/constants";
+import { PAYMENT_METHODS } from "@/lib/utils/constants";
 import { useTranslations } from "next-intl";
 
 interface PaymentMethodSelectorProps {
@@ -22,14 +22,14 @@ export function PaymentMethodSelector({
   const paymentMethods = [
     {
       value: PAYMENT_METHODS.CASH,
-      label: PAYMENT_METHOD_LABELS.cash,
+      label: t("checkout.paymentCash"),
       icon: Banknote,
       description: t("checkout.paymentCashDesc"),
       available: true,
     },
     {
       value: PAYMENT_METHODS.CARD,
-      label: PAYMENT_METHOD_LABELS.card,
+      label: t("checkout.paymentCard"),
       icon: CreditCard,
       description: t("checkout.paymentCardDesc"),
       available: false,
@@ -37,7 +37,7 @@ export function PaymentMethodSelector({
     },
     {
       value: PAYMENT_METHODS.BENEFIT_PAY,
-      label: PAYMENT_METHOD_LABELS.benefit_pay,
+      label: t("checkout.paymentBenefitPay"),
       icon: Wallet,
       description: t("checkout.paymentBenefitDesc"),
       available: false,

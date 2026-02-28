@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "@/i18n/navigation";
 import { Link } from "@/i18n/navigation";
-import { ArrowLeft, ShoppingBag, CheckCircle, LogIn } from "lucide-react";
+import { ArrowLeft, ShoppingBag, CheckCircle, LogIn, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
@@ -17,6 +17,7 @@ import { useCreateOrder } from "@/lib/hooks/useOrders";
 import { usePriceCalculation } from "@/lib/hooks/usePriceCalculation";
 import { AddressSelector } from "@/components/checkout/AddressSelector";
 import { AddressForm } from "@/components/checkout/AddressForm";
+import { DeliveryTypeSelector } from "@/components/checkout/DeliveryTypeSelector";
 import dynamic from "next/dynamic";
 
 const PaymentMethodSelector = dynamic(
@@ -36,11 +37,13 @@ export default function CheckoutPage() {
   const tCart = useTranslations("cart");
   const tNav = useTranslations("nav");
   const tAuth = useTranslations("auth");
+  const tRoot = useTranslations();
   const { data: user, isLoading: userLoading } = useUser();
   const { data: cart, isLoading: cartLoading } = useCart();
   const { data: addresses, isLoading: addressesLoading } = useAddresses();
   const createOrder = useCreateOrder();
 
+  const [deliveryType, setDeliveryType] = useState<"delivery" | "pickup">("delivery");
   const [showAddressForm, setShowAddressForm] = useState(false);
   const [selectedAddressId, setSelectedAddressId] = useState<number | undefined>();
   const [newAddress, setNewAddress] = useState<AddressFormData | undefined>();
@@ -58,20 +61,27 @@ export default function CheckoutPage() {
 
   const cartItems = cart?.items || [];
   const { subtotal, vat, total: cartTotal } = usePriceCalculation(cartItems);
-  const deliveryFee = 0;
-  const total = cartTotal + deliveryFee;
+  const total = cartTotal;
+
+  const canPlaceOrder = deliveryType === "pickup" || !!selectedAddressId || !!newAddress;
 
   const handlePlaceOrder = async () => {
-    if (!selectedAddressId && !newAddress) {
-      return;
-    }
+    if (!canPlaceOrder) return;
 
-    const orderData = {
-      address_id: selectedAddressId,
-      address: newAddress,
-      payment_method: paymentMethod,
-      notes: notes || undefined,
-    };
+    const orderData =
+      deliveryType === "pickup"
+        ? {
+            delivery_type: "pickup" as const,
+            payment_method: paymentMethod,
+            notes: notes || undefined,
+          }
+        : {
+            delivery_type: "delivery" as const,
+            address_id: selectedAddressId,
+            address: newAddress,
+            payment_method: paymentMethod,
+            notes: notes || undefined,
+          };
 
     createOrder.mutate(orderData, {
       onSuccess: (order) => {
@@ -169,42 +179,63 @@ export default function CheckoutPage() {
       <div className="container mx-auto px-4 py-8 md:py-12">
         <div className="grid lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-8">
+            {/* Delivery Type Selection */}
             <div className="bg-white rounded-lg border border-border p-6">
-              {showAddressForm ? (
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <h2 className="font-display text-2xl font-bold text-navy">
-                      {t("addNewAddress")}
-                    </h2>
-                    {addresses && addresses.length > 0 && (
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => setShowAddressForm(false)}
-                      >
-                        {tCommon("cancel")}
-                      </Button>
-                    )}
-                  </div>
-                  <AddressForm
-                    onChange={(data) => {
-                      setNewAddress(data);
-                      setSelectedAddressId(undefined);
-                    }}
-                  />
-                </div>
-              ) : (
-                <AddressSelector
-                  addresses={addresses || []}
-                  selectedAddressId={selectedAddressId}
-                  onAddressChange={(id) => {
-                    setSelectedAddressId(id);
-                    setNewAddress(undefined);
-                  }}
-                  onAddNew={() => setShowAddressForm(true)}
-                />
-              )}
+              <DeliveryTypeSelector value={deliveryType} onChange={setDeliveryType} />
             </div>
+
+            {/* Address Section — only for delivery */}
+            {deliveryType === "delivery" && (
+              <div className="bg-white rounded-lg border border-border p-6">
+                {showAddressForm ? (
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <h2 className="font-display text-2xl font-bold text-navy">
+                        {t("addNewAddress")}
+                      </h2>
+                      {addresses && addresses.length > 0 && (
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => setShowAddressForm(false)}
+                        >
+                          {tCommon("cancel")}
+                        </Button>
+                      )}
+                    </div>
+                    <AddressForm
+                      onChange={(data) => {
+                        setNewAddress(data);
+                        setSelectedAddressId(undefined);
+                      }}
+                    />
+                  </div>
+                ) : (
+                  <AddressSelector
+                    addresses={addresses || []}
+                    selectedAddressId={selectedAddressId}
+                    onAddressChange={(id) => {
+                      setSelectedAddressId(id);
+                      setNewAddress(undefined);
+                    }}
+                    onAddNew={() => setShowAddressForm(true)}
+                  />
+                )}
+              </div>
+            )}
+
+            {/* Pickup Location Info */}
+            {deliveryType === "pickup" && (
+              <div className="bg-white rounded-lg border border-border p-6">
+                <h2 className="font-display text-2xl font-bold text-navy mb-4">
+                  {t("pickupLocationTitle")}
+                </h2>
+                <div className="flex items-start gap-3 text-navy/80">
+                  <MapPin className="h-5 w-5 text-sky shrink-0 mt-0.5" />
+                  <p className="text-sm leading-relaxed">{tRoot("location")}</p>
+                </div>
+              </div>
+            )}
 
             <div className="bg-white rounded-lg border border-border p-6">
               <PaymentMethodSelector
@@ -271,7 +302,11 @@ export default function CheckoutPage() {
                 </div>
                 <div className="flex justify-between text-navy/70">
                   <span>{t("deliveryFee")}</span>
-                  <span className="text-sm">{t("deliveryFeeCalculated")}</span>
+                  {deliveryType === "pickup" ? (
+                    <span className="text-sm font-medium text-emerald-600">{t("deliveryFree")}</span>
+                  ) : (
+                    <span className="text-sm">{t("deliveryFeeCalculated")}</span>
+                  )}
                 </div>
                 <Separator />
                 <div className="flex justify-between font-semibold text-navy text-lg pt-2">
@@ -284,10 +319,7 @@ export default function CheckoutPage() {
                 size="lg"
                 className="w-full bg-navy hover:bg-navy-light"
                 onClick={handlePlaceOrder}
-                disabled={
-                  (!selectedAddressId && !newAddress) ||
-                  createOrder.isPending
-                }
+                disabled={!canPlaceOrder || createOrder.isPending}
               >
                 {createOrder.isPending ? (
                   t("processing")

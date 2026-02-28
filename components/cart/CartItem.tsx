@@ -69,7 +69,7 @@ export function CartItem({ item }: CartItemProps) {
           </Link>
           {item.variant && (
             <p className="text-sm text-navy/60 mt-1">
-              {item.variant.name} ({item.variant.quantity} pieces)
+              {item.variant.name} ({item.variant.quantity} {item.variant.quantity === 1 ? t("products.piece") : t("products.pieces")})
             </p>
           )}
         </div>

@@ -28,6 +28,7 @@ export interface Order {
   id: number;
   user_id?: number;
   order_number: string;
+  delivery_type: string;
   status: string;
   customer_name: string;
   customer_email: string;

@@ -9,6 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Separator } from "@/components/ui/separator";
 import type { CategoryWithParent } from "@/lib/types";
 import type { FilterValues } from "../ProductFilters";
 import { FilterOptions, getActiveFilterCount } from "./FilterOptions";
@@ -40,7 +41,8 @@ export function DesktopFilters({
   const hasActiveFilters = activeFilterCount > 0;
 
   return (
-    <div className="hidden lg:flex items-center gap-3 flex-wrap">
+    <div className="hidden lg:flex items-center gap-2">
+      {/* Filter dropdowns */}
       <FilterOptions
         filters={filters}
         categories={categories}
@@ -51,32 +53,36 @@ export function DesktopFilters({
         layout="horizontal"
       />
 
+      <Separator orientation="vertical" className="h-5 mx-1 bg-border/60" />
+
       {/* Sort */}
-      <div className="min-w-50">
-        <Select value={filters.sortBy} onValueChange={onSortChange}>
-          <SelectTrigger className="h-11 bg-white border-sky/20 hover:border-sky/40 transition-all shadow-sm" aria-label="Sort products by">
-            <SelectValue placeholder={t('products.sortBy')} />
-          </SelectTrigger>
-          <SelectContent className="bg-white">
-            <SelectItem value="featured">{t('products.sortFeatured')}</SelectItem>
-            <SelectItem value="-created_at">{t('products.sortNewest')}</SelectItem>
-            <SelectItem value="created_at">{t('products.sortOldest')}</SelectItem>
-            <SelectItem value="price">{t('products.sortPriceLow')}</SelectItem>
-            <SelectItem value="-price">{t('products.sortPriceHigh')}</SelectItem>
-            <SelectItem value="-sales_count">{t('products.sortPopular')}</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
+      <Select value={filters.sortBy} onValueChange={onSortChange}>
+        <SelectTrigger
+          className="h-9 min-w-40 text-sm rounded-full bg-white border-border hover:border-sky/50 hover:bg-sky/5 transition-colors"
+          aria-label="Sort products by"
+        >
+          <SelectValue placeholder={t("products.sortBy")} />
+        </SelectTrigger>
+        <SelectContent className="bg-white">
+          <SelectItem value="featured">{t("products.sortFeatured")}</SelectItem>
+          <SelectItem value="-created_at">{t("products.sortNewest")}</SelectItem>
+          <SelectItem value="created_at">{t("products.sortOldest")}</SelectItem>
+          <SelectItem value="price">{t("products.sortPriceLow")}</SelectItem>
+          <SelectItem value="-price">{t("products.sortPriceHigh")}</SelectItem>
+          <SelectItem value="-sales_count">{t("products.sortPopular")}</SelectItem>
+        </SelectContent>
+      </Select>
 
       {/* Clear Filters */}
       {hasActiveFilters && (
         <Button
           variant="ghost"
+          size="sm"
           onClick={onReset}
-          className="h-11 text-navy hover:text-sky hover:bg-sky/10 transition-all"
+          className="h-9 text-sm rounded-full text-muted-foreground hover:text-foreground hover:bg-muted/60 gap-1.5"
         >
-          <X className="h-4 w-4 mr-2 rtl:ml-2 rtl:mr-0" />
-          {t('products.clearFilters')} ({activeFilterCount})
+          <X className="h-3.5 w-3.5" />
+          {t("products.clearFilters")} ({activeFilterCount})
         </Button>
       )}
     </div>

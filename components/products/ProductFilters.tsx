@@ -63,39 +63,39 @@ export function ProductFilters({ filters, onFilterChange, onReset }: ProductFilt
   };
 
   return (
-    <div className="space-y-6">
-      {/* Primary Search Bar */}
+    <div className="space-y-3">
+      {/* Search bar — standalone */}
       <SearchBar
         value={filters.search}
         onChange={handleSearchChange}
         placeholder={t('products.searchPlaceholder')}
       />
 
-      {/* Desktop Filters */}
-      <DesktopFilters
-        filters={filters}
-        categories={flattenedCategories}
-        categoriesLoading={categoriesLoading}
-        onCategoryChange={handleCategoryChange}
-        onPriceRangeChange={handlePriceRangeChange}
-        onAvailabilityChange={handleAvailabilityChange}
-        onSortChange={handleSortChange}
-        onReset={onReset}
-      />
+      {/* Pill-style filter chips */}
+      <div className="flex items-center gap-2 flex-wrap">
+        <DesktopFilters
+          filters={filters}
+          categories={flattenedCategories}
+          categoriesLoading={categoriesLoading}
+          onCategoryChange={handleCategoryChange}
+          onPriceRangeChange={handlePriceRangeChange}
+          onAvailabilityChange={handleAvailabilityChange}
+          onSortChange={handleSortChange}
+          onReset={onReset}
+        />
+        <MobileFilters
+          filters={filters}
+          categories={flattenedCategories}
+          categoriesLoading={categoriesLoading}
+          onCategoryChange={handleCategoryChange}
+          onPriceRangeChange={handlePriceRangeChange}
+          onAvailabilityChange={handleAvailabilityChange}
+          onSortChange={handleSortChange}
+          onReset={onReset}
+        />
+      </div>
 
-      {/* Mobile Filters */}
-      <MobileFilters
-        filters={filters}
-        categories={flattenedCategories}
-        categoriesLoading={categoriesLoading}
-        onCategoryChange={handleCategoryChange}
-        onPriceRangeChange={handlePriceRangeChange}
-        onAvailabilityChange={handleAvailabilityChange}
-        onSortChange={handleSortChange}
-        onReset={onReset}
-      />
-
-      {/* Active Filters Display */}
+      {/* Active filter badges */}
       <ActiveFilterBadges
         filters={filters}
         categories={flattenedCategories}

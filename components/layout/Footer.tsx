@@ -11,9 +11,9 @@ export function Footer() {
   return (
     <footer className="border-t-2 border-sky/10 bg-white">
       <div className="container mx-auto px-4 py-12 md:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 md:gap-12">
           {/* Brand */}
-          <div className="space-y-4">
+          <div className="space-y-4 sm:col-span-2 md:col-span-1">
             <div className="flex items-center gap-3">
               <div className="relative w-12 h-12">
                 <Image
@@ -78,7 +78,7 @@ export function Footer() {
                     { href: "/orders", label: t('nav.orders') },
                   ].map(({ href, label }) => (
                     <li key={href}>
-                      <Link href={href} className="text-navy/70 hover:text-sky hover:translate-x-1 transition-all inline-flex">
+                      <Link href={href} className="text-navy/70 hover:text-sky transition-colors inline-flex">
                         {label}
                       </Link>
                     </li>

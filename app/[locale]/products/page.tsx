@@ -93,21 +93,23 @@ export default function ProductsPage() {
   return (
     <div className="min-h-screen bg-cream">
       {/* Header */}
-      <div className="bg-gradient-to-br from-cream via-cream-dark to-flour border-b border-border/40">
-        <div className="container mx-auto px-4 py-12 md:py-16">
-          <div className="text-center space-y-4">
-            <h1 className="font-display text-4xl md:text-5xl font-bold text-navy">
-              {t('products.ourProducts')}
-            </h1>
-            <p className="text-navy/70 max-w-2xl mx-auto text-base md:text-lg">
-              {t('products.subtitle')}
-            </p>
+      <div className="bg-linear-to-b from-sky/5 via-cream to-cream border-b border-border/40">
+        <div className="container mx-auto px-4 py-8 md:py-10">
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-2">
+            <div>
+              <h1 className="font-display text-3xl md:text-4xl font-bold text-navy">
+                {t('products.ourProducts')}
+              </h1>
+              <p className="text-navy/60 mt-1 text-sm md:text-base">
+                {t('products.subtitle')}
+              </p>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="container mx-auto px-4 py-8 md:py-12">
+      <div className="container mx-auto px-4 py-6 md:py-8">
         {/* Filters */}
         <div className="mb-8">
           <ProductFilters

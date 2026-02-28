@@ -31,10 +31,10 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b-2 border-sky/10 bg-white backdrop-blur-sm shadow-sm">
       <div className="container mx-auto px-4 md:px-8">
-        <div className="grid grid-cols-[1fr_auto_1fr] items-center h-20 gap-4">
+        <div className="flex items-center justify-between h-16 md:h-20 md:grid md:grid-cols-[1fr_auto_1fr] md:gap-4">
           {/* Logo - Left */}
           <Link href="/" className="flex items-center space-x-3 rtl:space-x-reverse group">
-            <div className="relative w-12 h-12 md:w-14 md:h-14 transition-transform group-hover:scale-105">
+            <div className="relative w-10 h-10 md:w-14 md:h-14 shrink-0 transition-transform group-hover:scale-105">
               <Image
                 src="/logo.png"
                 alt={t("footer.logoAlt")}
@@ -44,7 +44,7 @@ export function Header() {
               />
             </div>
             <div className="flex flex-col">
-              <h1 className="font-display text-xl md:text-2xl font-bold leading-tight">
+              <h1 className="font-display text-lg md:text-2xl font-bold leading-tight whitespace-nowrap">
                 <span className="text-navy">{t("brand.name").split(" ")[0]}</span>{" "}
                 <span className="text-sky">{t("brand.name").split(" ")[1]}</span>
               </h1>
@@ -60,16 +60,16 @@ export function Header() {
           </nav>
 
           {/* Actions - Right */}
-          <div className="flex items-center justify-end gap-1">
+          <div className="flex items-center justify-end gap-0.5 md:gap-1">
             <LanguageSwitcher />
 
-            {/* Wishlist Button — only when logged in */}
+            {/* Wishlist Button — only when logged in, hidden on mobile (accessible via menu) */}
             {user && (
               <Button
                 variant="ghost"
                 size="icon"
                 asChild
-                className="relative text-navy hover:text-rose-500 hover:bg-rose-50"
+                className="relative hidden md:inline-flex text-navy hover:text-rose-500 hover:bg-rose-50"
               >
                 <Link
                   href="/wishlist"

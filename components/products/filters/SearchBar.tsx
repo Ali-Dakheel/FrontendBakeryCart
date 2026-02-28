@@ -11,22 +11,22 @@ interface SearchBarProps {
 
 export function SearchBar({ value, onChange, placeholder = "Search..." }: SearchBarProps) {
   return (
-    <div className="relative group">
-      <Search className="absolute left-4 rtl:right-4 rtl:left-auto top-1/2 -translate-y-1/2 h-5 w-5 text-sky/60 transition-colors group-focus-within:text-sky" />
+    <div className="relative flex items-center group">
+      <Search className="absolute start-4 h-4 w-4 text-muted-foreground group-focus-within:text-sky transition-colors pointer-events-none" />
       <Input
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="pl-12 rtl:pr-12 rtl:pl-4 h-14 text-base bg-white/80 backdrop-blur-sm border-2 border-sky/20 focus:border-sky focus:bg-white shadow-sm hover:shadow-md transition-all"
+        className="h-11 ps-11 pe-10 border border-sky/25 focus:border-sky bg-white shadow-sm rounded-xl text-sm placeholder:text-muted-foreground/60 hover:border-sky/40 transition-colors focus-visible:ring-0 focus-visible:ring-offset-0"
         dir="auto"
       />
       {value && (
         <button
           onClick={() => onChange("")}
-          className="absolute right-4 rtl:left-4 rtl:right-auto top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-sky/10 transition-colors"
+          className="absolute end-3 top-1/2 -translate-y-1/2 p-1 rounded-full text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
           aria-label="Clear search"
         >
-          <X className="h-4 w-4 text-navy/60" />
+          <X className="h-3.5 w-3.5" />
         </button>
       )}
     </div>

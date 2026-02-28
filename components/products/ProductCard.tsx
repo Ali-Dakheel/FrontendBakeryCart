@@ -106,26 +106,26 @@ function ProductCardComponent({ product, index = 0 }: ProductCardProps) {
                 </div>
               )}
 
-              {/* Badges */}
-              <div className="absolute top-3 left-3 flex flex-col gap-2">
-                {product.is_featured && (
-                  <Badge className="bg-sky text-white shadow-sm font-handwritten text-base">
-                    {t('products.featured')}
-                  </Badge>
-                )}
-                {!product.is_available && (
-                  <Badge variant="destructive">{t('products.outOfStock')}</Badge>
-                )}
-              </div>
-
-              {/* Wishlist button */}
-              <div className="absolute top-3 right-3">
+              {/* Badges + Wishlist — one container, structurally impossible to overlap */}
+              <div className="absolute top-3 inset-x-3 flex items-start justify-between gap-2">
+                <div className="flex flex-col gap-1.5">
+                  {product.is_featured && (
+                    <Badge className="bg-sky text-white text-xs font-medium shadow-sm w-fit">
+                      {t('products.featured')}
+                    </Badge>
+                  )}
+                  {!product.is_available && (
+                    <Badge variant="destructive" className="text-xs w-fit">
+                      {t('products.outOfStock')}
+                    </Badge>
+                  )}
+                </div>
                 <WishlistButton productId={product.id} variant="icon" />
               </div>
             </div>
 
             {/* Product Info */}
-            <div className="p-5 sm:p-6 space-y-3">
+            <div className="p-3 sm:p-5 space-y-3">
               <div className="space-y-1.5">
                 <h3 className="font-display font-semibold text-navy text-base md:text-lg line-clamp-2 group-hover:text-sky transition-colors duration-300">
                   {product.name || "Unnamed Product"}
@@ -159,12 +159,12 @@ function ProductCardComponent({ product, index = 0 }: ProductCardProps) {
                 >
                   {addToCart.isPending ? (
                     <>
-                      <div className="h-4 w-4 mr-1 rtl:ml-1 rtl:mr-0 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      <div className="h-4 w-4 me-1 shrink-0 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                       {t('products.adding')}
                     </>
                   ) : (
                     <>
-                      <ShoppingCart className="h-4 w-4 mr-1 rtl:ml-1 rtl:mr-0" />
+                      <ShoppingCart className="h-4 w-4 me-1" />
                       {t('products.add')}
                     </>
                   )}

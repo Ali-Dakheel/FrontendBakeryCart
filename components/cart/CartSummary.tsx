@@ -87,7 +87,7 @@ export function CartSummary({
       {/* Checkout Button */}
       <Button asChild size="lg" className="w-full bg-navy hover:bg-navy-light">
         <Link href="/checkout">
-          <ShoppingCart className="mr-2 h-5 w-5" />
+          <ShoppingCart className="me-2 h-5 w-5" />
           {t("cart.checkout")}
         </Link>
       </Button>

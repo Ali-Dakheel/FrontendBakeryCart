@@ -52,10 +52,10 @@ export function FilterOptions({
       onValueChange={onCategoryChange}
     >
       <SelectTrigger
-        className={isVertical ? "w-full" : "h-11 bg-white border-sky/20 hover:border-sky/40 transition-all shadow-sm"}
+        className={isVertical ? "w-full" : "h-9 text-sm rounded-full bg-white border-border hover:border-sky/50 hover:bg-sky/5 transition-colors"}
         aria-label="Filter by category"
       >
-        {!isVertical && <Filter className="h-4 w-4 mr-2 rtl:ml-2 rtl:mr-0 text-sky" />}
+        {!isVertical && <Filter className="h-3.5 w-3.5 me-1.5 text-sky/60 shrink-0" />}
         <SelectValue placeholder={t('products.allCategories')} />
       </SelectTrigger>
       <SelectContent className={isVertical ? undefined : "bg-white"}>
@@ -74,7 +74,7 @@ export function FilterOptions({
   const priceSelect = (
     <Select value={filters.priceRange} onValueChange={onPriceRangeChange}>
       <SelectTrigger
-        className={isVertical ? "w-full" : "h-11 bg-white border-sky/20 hover:border-sky/40 transition-all shadow-sm"}
+        className={isVertical ? "w-full" : "h-9 text-sm rounded-full bg-white border-border hover:border-sky/50 hover:bg-sky/5 transition-colors"}
         aria-label="Filter by price range"
       >
         <SelectValue placeholder={t('products.priceRange')} />
@@ -92,7 +92,7 @@ export function FilterOptions({
   const availabilitySelect = (
     <Select value={filters.availability} onValueChange={onAvailabilityChange}>
       <SelectTrigger
-        className={isVertical ? "w-full" : "h-11 bg-white border-sky/20 hover:border-sky/40 transition-all shadow-sm"}
+        className={isVertical ? "w-full" : "h-9 text-sm rounded-full bg-white border-border hover:border-sky/50 hover:bg-sky/5 transition-colors"}
         aria-label="Filter by availability"
       >
         <SelectValue placeholder={t('products.availability')} />
@@ -126,9 +126,9 @@ export function FilterOptions({
 
   return (
     <>
-      <div className="min-w-45">{categorySelect}</div>
-      <div className="min-w-40">{priceSelect}</div>
-      <div className="min-w-40">{availabilitySelect}</div>
+      <div className="min-w-40">{categorySelect}</div>
+      <div className="min-w-36">{priceSelect}</div>
+      <div className="min-w-36">{availabilitySelect}</div>
     </>
   );
 }

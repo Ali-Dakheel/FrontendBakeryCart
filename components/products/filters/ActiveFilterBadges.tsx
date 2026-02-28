@@ -35,7 +35,7 @@ export function ActiveFilterBadges({
   }
 
   return (
-    <div className="flex items-center gap-2 flex-wrap pt-2">
+    <div className="flex items-center gap-2 flex-wrap">
       <span className="text-sm text-navy/60">{t("products.activeFilters")}:</span>
       {filters.categoryId && (
         <Badge variant="secondary" className="gap-1">

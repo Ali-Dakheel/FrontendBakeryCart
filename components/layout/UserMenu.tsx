@@ -62,7 +62,7 @@ export function UserMenu() {
               disabled={logout.isPending}
               className="text-red-600 focus:text-red-600"
             >
-              <LogOut className="mr-2 h-4 w-4" />
+              <LogOut className="me-2 h-4 w-4" />
               {logout.isPending ? `${t("nav.logout")}...` : t("nav.logout")}
             </DropdownMenuItem>
           </>

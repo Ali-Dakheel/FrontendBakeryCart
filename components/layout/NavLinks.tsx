@@ -2,7 +2,8 @@
 
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
+import { usePathname } from "next/navigation";
 import { Heart } from "lucide-react";
 import type { User } from "@/lib/types";
 
@@ -16,11 +17,21 @@ const BASE_LINK_CLASS = "text-base text-navy hover:text-sky transition-colors";
 
 export function NavLinks({ user, orientation = "horizontal", onLinkClick }: NavLinksProps) {
   const t = useTranslations();
+  const locale = useLocale();
+  const pathname = usePathname();
   const isVertical = orientation === "vertical";
 
-  const linkClass = cn(
+  const isActive = (href: string) => {
+    if (href === "/") {
+      return pathname === `/${locale}` || pathname === `/${locale}/`;
+    }
+    return pathname.startsWith(`/${locale}${href}`);
+  };
+
+  const linkClass = (href: string) => cn(
     BASE_LINK_CLASS,
-    isVertical ? "font-medium" : "font-semibold"
+    isVertical ? "font-medium" : "font-semibold",
+    isActive(href) && "text-sky underline underline-offset-4"
   );
 
   const sharedLinks = [
@@ -33,35 +44,35 @@ export function NavLinks({ user, orientation = "horizontal", onLinkClick }: NavL
   return (
     <>
       {sharedLinks.map(({ href, label }) => (
-        <Link key={href} href={href} className={linkClass} onClick={onLinkClick}>
+        <Link key={href} href={href} className={linkClass(href)} onClick={onLinkClick}>
           {label}
         </Link>
       ))}
       {user && (
-        <Link href="/orders" className={linkClass} onClick={onLinkClick}>
+        <Link href="/orders" className={linkClass("/orders")} onClick={onLinkClick}>
           {t("nav.orders")}
         </Link>
       )}
       {isVertical && user && (
         <>
-          <Link href="/wishlist" className={cn(linkClass, "flex items-center gap-2")} onClick={onLinkClick}>
+          <Link href="/wishlist" className={cn(linkClass("/wishlist"), "flex items-center gap-2")} onClick={onLinkClick}>
             <Heart className="h-4 w-4" />
             {t("wishlist.title")}
           </Link>
-          <Link href="/account/profile" className={linkClass} onClick={onLinkClick}>
+          <Link href="/account/profile" className={linkClass("/account/profile")} onClick={onLinkClick}>
             {t("nav.profile")}
           </Link>
-          <Link href="/account/addresses" className={linkClass} onClick={onLinkClick}>
+          <Link href="/account/addresses" className={linkClass("/account/addresses")} onClick={onLinkClick}>
             {t("nav.addresses")}
           </Link>
         </>
       )}
       {isVertical && !user && (
         <>
-          <Link href="/login" className={linkClass} onClick={onLinkClick}>
+          <Link href="/login" className={linkClass("/login")} onClick={onLinkClick}>
             {t("nav.login")}
           </Link>
-          <Link href="/register" className={linkClass} onClick={onLinkClick}>
+          <Link href="/register" className={linkClass("/register")} onClick={onLinkClick}>
             {t("nav.register")}
           </Link>
         </>

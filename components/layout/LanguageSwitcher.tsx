@@ -3,6 +3,7 @@
 import { useTransition } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useLocale } from "next-intl";
+import { Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { type Locale } from "@/i18n.config";
 
@@ -30,9 +31,10 @@ export function LanguageSwitcher() {
       disabled={isPending}
       aria-busy={isPending}
       aria-label="Change language"
-      className="text-navy hover:text-sky hover:bg-sky/10 font-semibold"
+      className="text-navy hover:text-sky hover:bg-sky/10 font-semibold gap-1.5 px-2 md:px-3"
     >
-      {locale === "en" ? "العربية" : "English"}
+      <Globe className="h-4 w-4 shrink-0" />
+      <span className="hidden md:inline">{locale === "en" ? "العربية" : "English"}</span>
     </Button>
   );
 }
